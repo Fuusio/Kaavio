@@ -20,7 +20,7 @@ package org.fuusio.kaavio.node.validation
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
- *  [Validator] TODO
+ *  [ValidatorFun] is a node that uses the given [function] to validate the received input.
  */
 class ValidatorFun<I :Any>(name: String? = null, val function: (I) -> Boolean)
     : SingleInputSingleOutputNode<I,Boolean>(name) {

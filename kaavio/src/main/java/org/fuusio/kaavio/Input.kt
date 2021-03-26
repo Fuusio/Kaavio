@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2021 Marko Salmela
  *
  * http://fuusio.org
  *

@@ -17,6 +17,10 @@
  */
 package org.fuusio.kaavio
 
+/**
+ * [SingleInputSingleOutputNode] is an abstract base class for all [Node] implementations that have
+ * only single [Input] and [output].
+ */
 abstract class SingleInputSingleOutputNode<I :Any,O :Any>(name: String? = null) : Node(name) {
     @Suppress("LeakingThis")
     val input = inputOf<I>(this)

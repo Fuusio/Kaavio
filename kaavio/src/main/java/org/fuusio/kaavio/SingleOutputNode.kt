@@ -17,6 +17,10 @@
  */
 package org.fuusio.kaavio
 
+/**
+ * [SingleOutputNode] is an abstract base class for all [Node] implementations that have only single
+ * [output].
+ */
 abstract class SingleOutputNode<O :Any>(name: String? = null) : Node(name) {
     @Suppress("LeakingThis")
     val output = outputOf<O>(this)

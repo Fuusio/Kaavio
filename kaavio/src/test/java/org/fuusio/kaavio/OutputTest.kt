@@ -15,7 +15,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.debug
+package org.fuusio.kaavio
 
-class GraphState {
+import org.fuusio.kaavio.node.stream.IntSink
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+class OutputTest : KaavioTest() {
+
+    @Test
+    fun `Test transmitting a value`() {
+        // Given
+        val output = Output<Int>()
+        val sink = IntSink()
+
+        output connect sink.input
+
+        // When
+        output.transmit(42)
+
+        // Then
+        assertTrue(sink.hasValue())
+        assertEquals(42, sink.value)
+    }
 }

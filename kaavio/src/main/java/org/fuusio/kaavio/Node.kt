@@ -19,6 +19,9 @@ package org.fuusio.kaavio
 
 import org.fuusio.kaavio.graph.Graph
 
+/**
+ * [Node] is the abstract base class for all node types used in any [Graph] implementation.
+ */
 abstract class Node(name: String? = null) {
     private var _name: String? = name
 
@@ -41,7 +44,7 @@ abstract class Node(name: String? = null) {
         onFired()
     }
 
-    abstract fun onFired() // TODO : Rename? invoke, process, onInvoke, onProcess
+    abstract fun onFired()
 
     companion object {
         fun <I :Any> actionInputOf(node: Node, action: (I) -> Unit): Input<I> = Kaavio.actionInput(node, action)

@@ -19,6 +19,9 @@ package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
+/**
+ * [Validator] provides an abstract base class for implementing validator nodes.
+ */
 abstract class Validator<I :Any>(name: String? = null) : SingleInputSingleOutputNode<I,Boolean>(name) {
 
     override fun onFired() {

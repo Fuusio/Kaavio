@@ -23,19 +23,19 @@ import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
 
+/**
+ * [GraphDebugger] TODO
+ */
 object GraphDebugger {
 
     private const val DEFAULT_INPUT_NAME = "input"
-
     private const val DEFAULT_OUTPUT_NAME = "output"
 
-    private const val ARROW = "->"  // '⇨' HTML decimal: &#8702; HTML hex: &#x21FE;
+    private val debugEntries = mutableListOf<DebugEntry>()
 
-    val debugEntries = mutableListOf<DebugEntry>()
+    private fun isDebuggingEnabled() = Kaavio.isDebugMode
 
-    fun isDebuggingEnabled() = Kaavio.debugMode
-
-    fun getNodeName(node: Node): String {
+    private fun getNodeName(node: Node): String {
         val name = node.name
         return when {
             name.isNotBlank() -> name
