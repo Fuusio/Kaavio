@@ -1,0 +1,3 @@
+include ':kaavio'
+include ':app'
+rootProject.name = "Kaavio"

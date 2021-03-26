@@ -1,0 +1,64 @@
+/*
+ * Copyright (C) 2019 - 2021 Marko Salmela
+ *
+ * http://fuusio.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.fuusio.kaavio.node.stream
+
+import org.fuusio.kaavio.SingleInputNode
+import org.fuusio.kaavio.StatefulNode
+import org.fuusio.kaavio.node.state.Var
+
+/**
+ * [Sink] is a [org.fuusio.kaavio.Node] that has only an input of specified type. [Sink] is
+ * capable of receive a value, but it does not transmit the received value. An instance of [Sink]
+ * represents a terminal node in a [org.fuusio.kaavio.graph.Graph]. A [Sink] stores only the latest
+ * value it has received.
+ */
+open class Sink<I :Any>(name: String? = null) : SingleInputNode<I>(name), StatefulNode<I> {
+    private var _value: I? = null
+
+    override val state: I?
+        get() = value
+
+    val value: I?
+        get() = _value
+
+    override fun onFired() {
+        _value = input.value
+    }
+
+    fun hasValue(): Boolean = _value != null
+}
+
+class AnySink(name: String? = null) : Sink<Any>(name)
+
+class BooleanSink(name: String? = null) : Sink<Boolean>(name)
+
+class ByteSink(name: String? = null) : Sink<Byte>(name)
+
+class CharSink(name: String? = null) : Sink<Char>(name)
+
+class DoubleSink(name: String? = null) : Sink<Double>(name)
+
+class FloatSink(name: String? = null) : Sink<Float>(name)
+
+class IntSink(name: String? = null) : Sink<Int>(name)
+
+class LongSink(name: String? = null) : Sink<Long>(name)
+
+class ShortSink(name: String? = null) : Sink<Short>(name)
+
+class StringSink(name: String? = null) : Sink<String>(name)
