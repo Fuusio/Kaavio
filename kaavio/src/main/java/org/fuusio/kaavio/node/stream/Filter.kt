@@ -19,33 +19,15 @@ package org.fuusio.kaavio.node.stream
 
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
-class Buffer<I :Any>(name: String? = null, private val capacity: Int = Int.MAX_VALUE)
-    : SingleInputSingleOutputNode<I, List<I>>(name) {
-
-    val flush = actionInputOf<Unit>(this) { flush() }
-
-    private val buffer = mutableListOf<I>()
+/**
+ * [Filter] is node that uses the given [function] to filter which received values are further
+ * transmitter via the output of the [Filter].
+ */
+class Filter<I :Any>(private val function: (I) -> Boolean, name: String? = null)
+    : SingleInputSingleOutputNode<I,I>(name) {
 
     override fun onFired() {
-        buffer.add(input.value)
-        if (buffer.size >= capacity) {
-            flush()
-        }
-    }
-
-    fun flush() {
-        output.transmit(buffer)
-        clear()
-    }
-
-    fun clear() {
-        buffer.clear()
-    }
-
-    fun get(isBufferCleared: Boolean = true): List<I> {
-        val items = mutableListOf<I>()
-        items.addAll(buffer)
-        if (isBufferCleared) clear()
-        return items
+        val value = input.value
+        if (function.invoke(value)) emit(value)
     }
 }

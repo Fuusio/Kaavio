@@ -15,11 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.function
+package org.fuusio.kaavio.node.stream
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.node.stream.Sink
 
 import org.junit.Assert.*
 import org.junit.Test
@@ -30,16 +28,21 @@ class MapTest : KaavioTest() {
     fun `Test mapping String to Int`() {
         // Given
         val map = Map { string: String -> string.length }
-        val output = Output<String>()
-        val sink = Sink<Int>()
-        output connect map.input
+        val injector = StringInjector()
+        val sink = IntSink()
+
+        injector.output connect map.input
         map.output connect sink.input
 
         // When
-        output.transmit("foo")
+        injector.inject(INPUT_STRING)
 
         // Then
         assertTrue(sink.hasValue())
-        assertEquals(3, sink.value)
+        assertEquals(INPUT_STRING.length, sink.value)
+    }
+
+    companion object {
+        const val INPUT_STRING = "foo"
     }
 }

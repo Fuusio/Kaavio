@@ -18,7 +18,7 @@
 package org.fuusio.kaavio
 
 /**
- * [Inlet] implements a mechanism that makes it possible to dynamically attach any number of
+ * [Inlet] implements a mechanism that enables dynamically attaching any number of
  * transmitters [Tx] to a receiver [Node]. Each transmitter is bound to a dedicated instance of
  * [Input].
  */
@@ -46,8 +46,7 @@ class Inlet<I :Any>(private val node: Node) : Rx<I> {
     override fun onReceive(value: I) {}
 }
 
-fun <T : Any> txs(vararg transmitters: Tx<T>): List<Tx<T>> {
-    val list = mutableListOf<Tx<T>>()
-    transmitters.forEach { transmitter -> list.add(transmitter) }
-    return list
-}
+/**
+ * Returns a [List] of [Tx] instances created from the given [transmitters].
+ */
+fun <T : Any> txs(vararg transmitters: Tx<T>): List<Tx<T>> = mutableListOf(*transmitters)

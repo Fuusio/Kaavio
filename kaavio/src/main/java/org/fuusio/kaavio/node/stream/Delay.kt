@@ -24,15 +24,18 @@ import kotlinx.coroutines.launch
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 import java.util.concurrent.TimeUnit
 
+/**
+ * [Delay] waits for the specified [delay] before the transmitting the received value via output.
+ */
 class Delay<I :Any>(
-    private val period: Long,
+    private val delay: Long,
     private val timeUnit: TimeUnit = TimeUnit.MILLISECONDS
 ) : SingleInputSingleOutputNode<I,I>() {
 
     override fun onFired() {
         val value = input.value
         GlobalScope.launch(Dispatchers.Main) {
-            delay(timeUnit.toMillis(period))
+            delay(timeUnit.toMillis(delay))
             output.transmit(value)
         }
     }

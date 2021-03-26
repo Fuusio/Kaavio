@@ -21,6 +21,10 @@ import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.Inlet
 
+/**
+ * [Equals] is a node that outputs [Boolean] true value if the values received via all the inputs
+ * are equal to each other. Otherwise [Boolean] false is transmitted.
+ */
 class Equals<I :Any>(name: String? = null) : Node(name) {
     val input: Inlet<I> = Inlet(this)
     val output = Output<Boolean>()

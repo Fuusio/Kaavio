@@ -15,15 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.filter
+package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
-class Filter<I :Any>(private val function: (I) -> Boolean, name: String? = null)
-    : SingleInputSingleOutputNode<I,I>(name) {
+/**
+ * [If] is a node that uses the given [function] and received input value to select either the
+ * [onTrue] or [onFalse] output transmission.
+ */
+class If<I : Any>(name: String? = null, val function: (I) -> Boolean) : SingleInputSingleOutputNode<I, Unit>(name) {
+    val onTrue = outputOf<Unit>(this)
+    val onFalse = outputOf<Unit>(this)
 
     override fun onFired() {
-        val value = input.value
-        if (function.invoke(value)) emit(value)
+        when (function(input.value)) {
+            true -> onTrue.transmit(Unit)
+            false -> onFalse.transmit(Unit)
+        }
     }
 }

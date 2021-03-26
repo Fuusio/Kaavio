@@ -15,6 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.function
+package org.fuusio.kaavio.node.stream
 
-class Map<I: Any, O: Any>(name: String? = null, mapFunction: (I) -> O) : Fun<I,O>(name, mapFunction)
+import org.fuusio.kaavio.node.function.Fun
+
+/**
+ * [Map] is a node that uses the given map function to convert the received input value to an output
+ * value.
+ */
+class Map<I: Any, O: Any>(name: String? = null, mapFunction: (I) -> O) : Fun<I, O>(name, mapFunction)

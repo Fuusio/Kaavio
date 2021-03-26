@@ -21,6 +21,7 @@ import org.fuusio.kaavio.node.comparison.Equals
 import org.fuusio.kaavio.node.logic.And
 import org.fuusio.kaavio.node.state.StringVar
 import org.fuusio.kaavio.node.state.Var
+import org.fuusio.kaavio.node.stream.BooleanSink
 import org.fuusio.kaavio.node.stream.Sink
 import org.fuusio.kaavio.node.validation.EmailValidator
 import org.fuusio.kaavio.node.validation.ValidatorFun
@@ -33,7 +34,7 @@ data class SignUpGraph(
     val emailValidator: EmailValidator = EmailValidator(),
     val emailsEquals: Equals<String> = Equals(),
     val and: And = And(),
-    val result: Sink<Boolean> = Sink()
+    val result: BooleanSink = BooleanSink()
 ) : AbstractGraph() {
 
     override fun onConnectNodes() {
