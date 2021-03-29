@@ -23,12 +23,12 @@ import org.fuusio.kaavio.node.stream.Sink
 import org.junit.Assert
 import org.junit.Test
 
-class IfTest : KaavioTest() {
+class IfElseTest : KaavioTest() {
 
     @Test
     fun `Test if function evaluating to true`() {
         // Given
-        val `if` = If {int: Int -> int > 10}
+        val `if` = IfElse { int: Int -> int > 10}
         val injector = Injector<Int>()
         val trueSink = Sink<Unit>()
         val falseSink = Sink<Unit>()
@@ -48,7 +48,7 @@ class IfTest : KaavioTest() {
     @Test
     fun `Test if function evaluating to false`() {
         // Given
-        val `if` = If {int: Int -> int > 10}
+        val `if` = IfElse { int: Int -> int > 10}
         val injector = Injector<Int>()
         val trueSink = Sink<Unit>()
         val falseSink = Sink<Unit>()

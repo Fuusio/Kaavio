@@ -17,7 +17,9 @@
  */
 package org.fuusio.kaavio.graph
 
+import kotlinx.coroutines.CoroutineScope
 import org.fuusio.kaavio.Node
+import org.fuusio.kaavio.coroutines.CoroutinesConfig
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
@@ -28,12 +30,31 @@ import kotlin.reflect.jvm.javaField
  */
 interface Graph {
 
+    /**
+     * The [GraphContext] for this instance of [Graph].
+     */
     val context: GraphContext
+
+    /**
+     * The [CoroutinesConfig] for this instance of [Graph].
+     */
+    val coroutinesConfig: CoroutinesConfig
+
+    /**
+     * A [CoroutineScope] to be used by the [org.fuusio.kaavio.Node]s of the [Graph].
+     */
+    val coroutineScope: CoroutineScope
 
     /**
      * An instance of [Graph] needs to be activated using this function before it can be used.
      */
     fun activate()
+
+    /**
+     * An instance of [Graph] needs to be disposed when it is no more needed, for instance,
+     * to clean coroutine scopes.
+     */
+    fun dispose()
 
     /**
      * This function is invoked by function [activate].
@@ -50,7 +71,14 @@ interface Graph {
      * This function is invoked by function [activate]. This default implementation of this function
      * does nothing.
      */
-    fun onInitialize() {}
+    fun onInitialize()
+
+    /**
+     * An implementation of this function can perform the addition finalization for this [Graph].
+     * This function is invoked by function [dispose]. This default implementation of this function
+     * does nothing.
+     */
+    fun onDispose()
 
     companion object {
         /**

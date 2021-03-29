@@ -15,43 +15,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.graph
+package org.fuusio.kaavio.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
-/**
- * [GraphContext] is a context object for a [Graph] which is made available for all
- * [org.fuusio.kaavio.Node]s contained by the [Graph].
- */
-data class GraphContext(val graph: Graph) {
+interface CoroutinesConfig {
 
     /**
-     * Gets the Default [CoroutineDispatcher].
+     * The [CoroutineScope] to be used within a [org.fuusio.kaavio.graph.Graph].
+     */
+    val graphCoroutineScope: CoroutineScope
+
+    /**
+     * The Default [CoroutineDispatcher].
      */
     val defaultDispatcher: CoroutineDispatcher
-        get() = graph.coroutinesConfig.defaultDispatcher
 
     /**
-     * Gets the IO [CoroutineDispatcher].
+     * The IO [CoroutineDispatcher].
      */
     val ioDispatcher: CoroutineDispatcher
-        get() = graph.coroutinesConfig.ioDispatcher
 
     /**
-     * Gets the Main [CoroutineDispatcher].
+     * The Main [CoroutineDispatcher].
      */
     val mainDispatcher: CoroutineDispatcher
-        get() = graph.coroutinesConfig.mainDispatcher
-    /**
-     * Gets the Unconfined [CoroutineDispatcher].
-     */
-    val unconfinedDispatcher: CoroutineDispatcher
-        get() = graph.coroutinesConfig.unconfinedDispatcher
 
     /**
-     * A [CoroutineScope] to be used by the [org.fuusio.kaavio.Node]s of the [Graph].
+     * The Unconfined [CoroutineDispatcher].
      */
-    val coroutineScope: CoroutineScope
-        get() = graph.coroutineScope
+    val unconfinedDispatcher: CoroutineDispatcher
 }

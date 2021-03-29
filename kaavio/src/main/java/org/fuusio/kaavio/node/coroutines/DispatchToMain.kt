@@ -15,22 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.controlflow
+package org.fuusio.kaavio.node.coroutines
 
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
- * [If] is a node that uses the given [function] and received input value to select either the
- * [onTrue] or [onFalse] output transmission.
+ * [DispatchToMain] is a [org.fuusio.kaavio.Node] that transmits the received value to main thread.
  */
-class If<I : Any>(name: String? = null, val function: (I) -> Boolean) : SingleInputSingleOutputNode<I, Unit>(name) {
-    val onTrue = outputOf<Unit>()
-    val onFalse = outputOf<Unit>()
+class DispatchToMain<I: Any>(name: String? = null) : SingleInputSingleOutputNode<I,I>(name) {
 
     override fun onFired() {
-        when (function(input.value)) {
-            true -> onTrue.transmit(Unit)
-            false -> onFalse.transmit(Unit)
+        context.coroutineScope.launch {
+            withContext(context.mainDispatcher) {
+                output.transmit(input.value)
+            }
         }
     }
 }

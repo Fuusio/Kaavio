@@ -1,5 +1,6 @@
 package org.fuusio.kaavio.node.state
 
+import io.mockk.mockk
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.fuusio.kaavio.KaavioTest
@@ -35,6 +36,9 @@ class LiveDataTest : KaavioTest() {
         }
 
         // When
-        // TODO liveData.observe(mockk<LifecycleOwner>(),)
+        //liveData.observe(mockk(),mockk())
+
+        // Then
+        // Assert.assertTrue(liveData.hasObservers())
     }
 }

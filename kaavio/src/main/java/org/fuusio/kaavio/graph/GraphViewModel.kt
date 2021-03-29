@@ -18,6 +18,10 @@
 package org.fuusio.kaavio.graph
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import org.fuusio.kaavio.Kaavio
+import org.fuusio.kaavio.coroutines.CoroutinesConfig
 
 /**
  * A [GraphViewModel] extends [ViewModel] to provide an abstract base class for implementing view
@@ -29,15 +33,14 @@ abstract class GraphViewModel : ViewModel(), Graph {
 
     private var _context: GraphContext? = null
 
-    /**
-     * Returns the [GraphContext] of this [Graph].
-     */
     override val context: GraphContext
         get() = _context ?: GraphContext(this).also { _context = it }
 
-    /**
-     * An instance of [Graph] needs to be activated using this function before it can be used.
-     */
+    override val coroutineScope: CoroutineScope
+        get() = viewModelScope
+
+    override val coroutinesConfig: CoroutinesConfig = Kaavio.coroutinesConfig
+
     final override fun activate() {
         Graph.attachNodesToGraph(this)
         onConnectNodes()
@@ -45,15 +48,11 @@ abstract class GraphViewModel : ViewModel(), Graph {
         onInitialize()
     }
 
-    /**
-     * This function is invoked by function [activate].
-     */
+    final override fun dispose() {
+        onDispose()
+    }
+
     override fun onActivate() {}
 
-    /**
-     * An implementation of this function can perform additional initializations for this [Graph].
-     * This function is invoked by function [activate]. This default implementation of this function
-     * does nothing.
-     */
     override fun onInitialize() {}
 }

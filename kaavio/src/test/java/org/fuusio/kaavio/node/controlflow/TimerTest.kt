@@ -57,7 +57,7 @@ class TimerTest : KaavioTest() {
 
         // Then
         runBlocking {
-            delay(1000L)
+            delay(2000L)
         }
         Assert.assertTrue(sink.hasValue())
         Assert.assertEquals(42, sink.value)
