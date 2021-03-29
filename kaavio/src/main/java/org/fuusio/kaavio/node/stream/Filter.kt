@@ -23,11 +23,11 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
  * [Filter] is node that uses the given [function] to filter which received values are further
  * transmitter via the output of the [Filter].
  */
-class Filter<I :Any>(private val function: (I) -> Boolean, name: String? = null)
+class Filter<I :Any>(name: String? = null, private val function: (I) -> Boolean)
     : SingleInputSingleOutputNode<I,I>(name) {
 
     override fun onFired() {
         val value = input.value
-        if (function.invoke(value)) emit(value)
+        if (function.invoke(value)) transmit(value)
     }
 }

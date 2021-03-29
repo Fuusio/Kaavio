@@ -18,37 +18,38 @@
 package org.fuusio.kaavio
 
 import org.fuusio.kaavio.graph.Graph
+import org.fuusio.kaavio.graph.GraphContext
 
 /**
- * [Node] is the abstract base class for all node types used in any [Graph] implementation.
+ * [Node] defines an interface for all node types used in any [Graph] implementation. A [Node]
+ * has zero more typed [Input]s and zero more typed [Output]. A [Node] is set to be fired when all
+ * of its inputs have received a value. In such case, function [Node.onFired] is invoked to node to
+ * execute its defined function. Invocation may cause output value(s) to be transmitted via
+ * [Output]s.
+ *
+ * Essentially, a [Node] acts as a function - it maps input values to output values.
  */
-abstract class Node(name: String? = null) {
-    private var _name: String? = name
-
-    var graph: Graph? = null
-
+interface Node {
+    val context: GraphContext
     var name: String
-        get() = _name ?: this::class.simpleName!!
-        set(value) {
-            _name = value
-        }
 
-    private val inputs: MutableList<Input<*>> = mutableListOf()
+    /**
+     * Attaches the given [Input] to this [Node].
+     */
+    fun attachInput(input: Input<*>)
 
-    internal open fun addInput(input: Input<*>) {
-        inputs.add(input)
-    }
+    /**
+     * Invoked to initialize this [Node] with the given [GraphContext].
+     */
+    fun onInit(context: GraphContext)
 
-    internal open fun onInputReceived() {
-        inputs.forEach { input -> if (!input.hasValue()) return }
-        onFired()
-    }
+    /**
+     * Invoked when a value has been received by the given [receivingInput].
+     */
+    fun onInputValueReceived(receivingInput: Input<*>)
 
-    abstract fun onFired()
-
-    companion object {
-        fun <I :Any> actionInputOf(node: Node, action: (I) -> Unit): Input<I> = Kaavio.actionInput(node, action)
-        fun <I :Any> inputOf(node: Node): Input<I> = Kaavio.input(node)
-        fun <O :Any> outputOf(node: Node): Output<O> = Kaavio.output(node)
-    }
+    /**
+     * Invoked when all attached [Input]s have received a value.
+     */
+    fun onFired()
 }

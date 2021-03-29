@@ -18,11 +18,17 @@
 package org.fuusio.kaavio
 
 /**
- * [ActionInput] is an [Input] which receives values to trigger the given [action] function.
+ * [ActionInput] is an [Input] which, when a value is received, executes he given [action]
+ * function without notifying the bound [Node] about the received value.
  */
 open class ActionInput<I: Any>(node: Node, private val action: (I) -> Unit) : Input<I>(node) {
 
     override fun onReceive(value: I) {
         action(value)
     }
+
+    /**
+     * [ActionInput] is interpreted to always to have value.
+     */
+    override fun hasValue(): Boolean  = true
 }

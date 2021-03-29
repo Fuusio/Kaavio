@@ -34,36 +34,36 @@ class Fun2Test : KaavioTest() {
         val output2 = Output<String>()
         val receiver = Input<String>(mock())
 
-        output1 connect node.input1
-        output2 connect node.input2
+        output1 connect node.arg1
+        output2 connect node.arg2
         node.output connect receiver
 
         // When
-        output1.transmit("foo")
-        output2.transmit("bar")
+        output1.transmit("Hello ")
+        output2.transmit("World!")
 
         // Then
         assertTrue(receiver.hasValue())
-        assertEquals("foobar", receiver.value)
+        assertEquals("Hello World!", receiver.value)
     }
 
     @Test
     fun `Test multiplication of two Ints`() {
         // Given
-        val node = Fun2 { int1: Int, int2: Int -> int1 * int2 }
+        val node = Fun2 { int1: Int, int2: Int -> int1 + int2 }
         val output1 = Output<Int>()
         val output2 = Output<Int>()
         val receiver = Input<Int>(mock())
-        output1 connect node.input1
-        output2 connect node.input2
+        output1 connect node.arg1
+        output2 connect node.arg2
         node.output connect receiver
 
         // When
-        output1.transmit(21)
-        output2.transmit(2)
+        output1.transmit(1)
+        output2.transmit(10)
 
         // Then
         assertTrue(receiver.hasValue())
-        assertEquals(42, receiver.value)
+        assertEquals(11, receiver.value)
     }
 }

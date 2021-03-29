@@ -21,13 +21,13 @@ import org.fuusio.kaavio.SingleOutputNode
 
 class Fun5<I1 :Any,I2 :Any,I3 :Any,I4 :Any,I5 :Any,O :Any>(name: String? = null, val function: (I1, I2, I3, I4, I5) -> O)
     : SingleOutputNode<O>(name) {
-    val input1 = inputOf<I1>(this)
-    val input2 = inputOf<I2>(this)
-    val input3 = inputOf<I3>(this)
-    val input4 = inputOf<I4>(this)
-    val input5 = inputOf<I5>(this)
+    val arg1 = inputOf<I1>()
+    val arg2 = inputOf<I2>()
+    val arg3 = inputOf<I3>()
+    val arg4 = inputOf<I4>()
+    val arg5 = inputOf<I5>()
 
     override fun onFired() {
-        output.transmit(function(input1.value, input2.value, input3.value, input4.value, input5.value))
+        output.transmit(function(arg1.value, arg2.value, arg3.value, arg4.value, arg5.value))
     }
 }

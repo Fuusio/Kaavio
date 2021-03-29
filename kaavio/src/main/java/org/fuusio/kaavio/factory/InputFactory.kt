@@ -37,7 +37,6 @@ interface InputFactory {
      */
     fun <I :Any> createDebugActionInput(node: Node, action: (I) -> Unit): ActionInput<I>
 
-
     /**
      * Creates and returns an [Input] with debug functions for the given [node].
      */

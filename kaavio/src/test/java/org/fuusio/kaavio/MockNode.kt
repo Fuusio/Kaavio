@@ -17,13 +17,13 @@
  */
 package org.fuusio.kaavio
 
-class MockNode : Node() {
+class MockNode(name: String? = null) : AbstractNode(name) {
 
     var onInputReceived = false
 
-    override fun onInputReceived() {
-        super.onInputReceived()
+    override fun onInputValueReceived(receivingInput: Input<*>) {
         onInputReceived = true
+        super.onInputValueReceived(receivingInput)
     }
 
     override fun onFired() {}

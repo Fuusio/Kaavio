@@ -17,13 +17,13 @@
  */
 package org.fuusio.kaavio.node.logic
 
-import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Inlet
+import org.fuusio.kaavio.SingleOutputNode
 
-class Or(name: String? = null)  : Node(name) {
-    val input: Inlet<Boolean> = Inlet(this)
-    val output = Output<Boolean>()
+/**
+ * [Or] TODO
+ */
+class Or(name: String? = null) : SingleOutputNode<Boolean>(name) {
+    val input = inletOf<Boolean>()
 
     override fun onFired() {
         input.values.forEach { value ->

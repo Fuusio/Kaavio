@@ -20,8 +20,8 @@ package org.fuusio.kaavio.node.controlflow
 import org.fuusio.kaavio.SingleInputNode
 
 class BooleanSwitch(name: String? = null) : SingleInputNode<Boolean>(name) {
-    val onTrue = outputOf<Unit>(this)
-    val onFalse = outputOf<Unit>(this)
+    val onTrue = outputOf<Unit>()
+    val onFalse = outputOf<Unit>()
 
     override fun onFired() {
         when (input.value) {

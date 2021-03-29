@@ -25,12 +25,14 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
 class LiveData<I : Any>(name: String? = null)
-    : SingleInputSingleOutputNode<I, I>(name), StatefulNode<I> {
+    : SingleInputSingleOutputNode<I,I>(name), StatefulNode<I> {
 
     private val data = MutableLiveData<I>()
 
     override val state: I?
         get() = data.value
+
+    fun hasValue(): Boolean = data.value != null
 
     fun observe(owner: LifecycleOwner, observer: Observer<I>) {
         data.observe(owner, observer)

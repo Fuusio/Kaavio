@@ -24,8 +24,8 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
  * [onTrue] or [onFalse] output transmission.
  */
 class If<I : Any>(name: String? = null, val function: (I) -> Boolean) : SingleInputSingleOutputNode<I, Unit>(name) {
-    val onTrue = outputOf<Unit>(this)
-    val onFalse = outputOf<Unit>(this)
+    val onTrue = outputOf<Unit>()
+    val onFalse = outputOf<Unit>()
 
     override fun onFired() {
         when (function(input.value)) {

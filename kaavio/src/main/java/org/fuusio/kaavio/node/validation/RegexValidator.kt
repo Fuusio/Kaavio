@@ -30,7 +30,8 @@ package org.fuusio.kaavio.node.validation
  *
  * @param pattern the regular expression as a [Regex]
  */
-open class RegexValidator(private val pattern: Regex, name: String? = null) : Validator<String>(name) {
+open class RegexValidator(private val pattern: Regex, name: String? = null)
+    : Validator<String>(name) {
 
     constructor(pattern: String, name: String? = null) : this(Regex(pattern), name)
 

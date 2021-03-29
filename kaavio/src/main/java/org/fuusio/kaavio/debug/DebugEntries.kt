@@ -36,4 +36,4 @@ data class OnException(override val node: Node, val exception: Exception) : Debu
 
 data class OnValueReceivedEntry(val input: DebugInput<*>, val value: Any) : DebugEntry(input.node)
 
-data class OnValueSentEntry(val output: DebugOutput<*>, val value: Any, val receiver: Rx<*>) : DebugEntry(output.node)
+data class OnValueTransmittedEntry(val output: DebugOutput<*>, val value: Any, val receiver: Rx<*>) : DebugEntry(output.node)

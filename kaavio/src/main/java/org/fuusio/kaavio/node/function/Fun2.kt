@@ -21,10 +21,10 @@ import org.fuusio.kaavio.SingleOutputNode
 
 class Fun2<I1 :Any,I2 :Any,O :Any>(name: String? = null, val function: (I1, I2) -> O)
     : SingleOutputNode<O>(name) {
-    val input1 = inputOf<I1>(this)
-    val input2 = inputOf<I2>(this)
+    val arg1 = inputOf<I1>()
+    val arg2 = inputOf<I2>()
 
     override fun onFired() {
-        output.transmit(function(input1.value, input2.value))
+        output.transmit(function(arg1.value, arg2.value))
     }
 }

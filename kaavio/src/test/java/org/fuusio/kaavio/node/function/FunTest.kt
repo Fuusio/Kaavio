@@ -34,7 +34,7 @@ class FunTest : KaavioTest() {
         val node = Fun { string: String -> string.reversed() }
         val output = Output<String>()
         val receiver = Input<String>(mock())
-        output connect node.input
+        output connect node.arg
         node.output connect receiver
 
         // When
@@ -51,7 +51,7 @@ class FunTest : KaavioTest() {
         val node = Fun { double: Double -> floor(double).toLong() }
         val output = Output<Double>()
         val receiver = Input<Long>(mock())
-        output connect node.input
+        output connect node.arg
         node.output connect receiver
 
         // When

@@ -24,24 +24,16 @@ import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
 
 /**
- * [GraphDebugger] TODO
+ * [GraphDebugger] is a utility for graph debugging.
  */
 object GraphDebugger {
 
     private const val DEFAULT_INPUT_NAME = "input"
     private const val DEFAULT_OUTPUT_NAME = "output"
 
-    private val debugEntries = mutableListOf<DebugEntry>()
-
     private fun isDebuggingEnabled() = Kaavio.isDebugMode
 
-    private fun getNodeName(node: Node): String {
-        val name = node.name
-        return when {
-            name.isNotBlank() -> name
-            else -> Graph.getNodeName(node)
-        }
-    }
+    val debugEntries = mutableListOf<DebugEntry>()
 
     fun onValueReceived(input: DebugInput<*>, value: Any) {
         if (isDebuggingEnabled()) {
@@ -55,10 +47,9 @@ object GraphDebugger {
         }
     }
 
-    fun onValueEmitted(output: DebugOutput<*>, value: Any, receiver: Rx<*>) {
+    fun onValueTransmitted(output: DebugOutput<*>, value: Any, receiver: Rx<*>) {
         if (isDebuggingEnabled()) {
-            debugEntries.add(OnValueSentEntry(output, value, receiver))
-
+            debugEntries.add(OnValueTransmittedEntry(output, value, receiver))
 
             val inputNode = when (receiver) {
                 is Node -> receiver
@@ -74,6 +65,14 @@ object GraphDebugger {
             val receiverName = if (inputName == DEFAULT_INPUT_NAME) "[$inputNodeName]" else "[$inputNodeName.$inputName]"
 
             println("$senderName - $valueString -> $receiverName")
+        }
+    }
+
+    private fun getNodeName(node: Node): String {
+        val name = node.name
+        return when {
+            name.isNotBlank() -> name
+            else -> Graph.getNodeName(node)
         }
     }
 

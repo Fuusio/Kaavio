@@ -26,7 +26,7 @@ import org.fuusio.kaavio.input.DebugInput
 class DefaultInputFactory: InputFactory {
 
     override fun <I :Any> createDebugActionInput(node: Node, action: (I) -> Unit) =
-        DebugActionInput(node, action)
+        DebugActionInput(node, action = action)
 
     override fun <I :Any> createDebugInput(node: Node) =
         DebugInput<I>(node)

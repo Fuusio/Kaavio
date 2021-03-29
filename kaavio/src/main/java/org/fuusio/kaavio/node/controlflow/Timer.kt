@@ -17,7 +17,6 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,7 +24,7 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 import java.util.concurrent.TimeUnit
 
 /**
- * TODO
+ * [Timer] TODO
  */
 class Timer(
     private val period: Long,
@@ -35,19 +34,19 @@ class Timer(
 ) : SingleInputSingleOutputNode<Unit,Unit>(name) {
 
     override fun onFired() {
-        startTimer()
+        start()
     }
 
     private fun timerExpired() {
         output.transmit(Unit)
 
         if (periodic) {
-            startTimer()
+            start()
         }
     }
 
-    private fun startTimer() {
-        GlobalScope.launch(Dispatchers.Main) {
+    private fun start() {
+        GlobalScope.launch {
             delay(timeUnit.toMillis(period))
             timerExpired()
         }

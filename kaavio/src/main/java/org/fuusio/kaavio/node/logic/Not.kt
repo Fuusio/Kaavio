@@ -20,7 +20,7 @@ package org.fuusio.kaavio.node.logic
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
- * TODO
+ * [Not] TODO
  */
 class Not(name: String? = null) : SingleInputSingleOutputNode<Boolean,Boolean>(name) {
 

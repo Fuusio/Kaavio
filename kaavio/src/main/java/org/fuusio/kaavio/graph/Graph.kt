@@ -22,9 +22,13 @@ import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
 /**
- * A [Graph] consists of [Node]s which are executed as functions.
+ * A [Graph] consists of [Node]s which are executed as functions. An initialized [Graph] forms
+ * a directed graph, where its [Node]s are the vertices of the graph, and the connections from node
+ * outputs to node inputs are the edges of the graph.
  */
 interface Graph {
+
+    val context: GraphContext
 
     /**
      * An instance of [Graph] needs to be activated using this function before it can be used.
@@ -53,7 +57,7 @@ interface Graph {
          * Attach [Graph] to the [Node] it contains.
          */
         fun attachNodesToGraph(graph: Graph) {
-            getNodes(graph).forEach { node -> node.graph = graph }
+            getNodes(graph).forEach { node -> node.onInit(graph.context) }
         }
 
         /**
@@ -70,7 +74,9 @@ interface Graph {
                     val value = field[this]
 
                     if (value is Node) {
-                        value.name = field.name
+                        if (value.name == value::class.simpleName!!) {
+                            value.name = field.name
+                        }
                         nodes.add(value)
                     }
                 }

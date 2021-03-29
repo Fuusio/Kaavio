@@ -21,7 +21,6 @@ import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.SingleInputNode
 
 abstract class EnumSwitch<I: Enum<*>>(name: String? = null) : SingleInputNode<I>(name) {
-
     private val caseOutputs = mutableMapOf<I, Output<Unit>>()
 
     /**
@@ -29,7 +28,7 @@ abstract class EnumSwitch<I: Enum<*>>(name: String? = null) : SingleInputNode<I>
      * @return an [Output]
      */
     protected fun caseOutput(value: I): Output<Unit> {
-        val output = outputOf<Unit>(this)
+        val output = outputOf<Unit>()
         caseOutputs[value] = output
         return output
     }

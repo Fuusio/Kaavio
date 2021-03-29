@@ -17,7 +17,6 @@
  */
 package org.fuusio.kaavio.node.stream
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -34,7 +33,7 @@ class Delay<I :Any>(
 
     override fun onFired() {
         val value = input.value
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch {
             delay(timeUnit.toMillis(delay))
             output.transmit(value)
         }

@@ -19,5 +19,9 @@ package org.fuusio.kaavio
 
 abstract class KaavioTest {
 
-    protected fun mock(): MockNode = MockNode()
+    protected fun mock(name: String? = null): MockNode = MockNode(name)
+
+    companion object {
+        const val FOO = "foo"
+    }
 }

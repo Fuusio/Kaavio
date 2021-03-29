@@ -15,14 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.controlflow
+package org.fuusio.kaavio
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.junit.Assert.*
+import org.junit.Test
 
-class Repeat(
-    private val count: Int,
-    name: String? = null,
-) : SingleInputSingleOutputNode<Unit,Unit>(name) {
+internal class ActionInputTest : KaavioTest() {
 
-    override fun onFired() = repeat(count) { emit(Unit) }
+    @Test
+    fun `Test triggering action`() {
+        // Given
+        var boolean = false
+        val actionInput = ActionInput<Int>(mock()) { int -> boolean = int > 10 }
+
+        // When
+        actionInput.onReceive(42)
+
+        // Then
+        assertTrue(boolean)
+    }
 }

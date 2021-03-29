@@ -25,12 +25,12 @@ open class Input<I :Any>(val node: Node) : Rx<I> {
         get() = _value!!
 
     init {
-        node.addInput(this)
+        node.attachInput(this)
     }
 
     override fun onReceive(value: I) {
         storeValue(value)
-        node.onInputReceived()
+        node.onInputValueReceived(this)
     }
 
     open fun storeValue(value: I) {

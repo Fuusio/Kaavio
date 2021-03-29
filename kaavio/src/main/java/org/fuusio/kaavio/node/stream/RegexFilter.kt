@@ -31,6 +31,6 @@ class RegexFilter(private val pattern: Regex, name: String? = null)
 
     override fun onFired() {
         val value = input.value
-        if (pattern.matches(value)) emit(value)
+        if (pattern.matches(value)) transmit(value)
     }
 }

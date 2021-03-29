@@ -21,11 +21,11 @@ import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.debug.GraphDebugger
 
-class DebugOutput<O: Any>(val node: Node) : Output<O>() {
+class DebugOutput<O: Any>(val node: Node, val name: String? = null) : Output<O>() {
 
     override fun transmit() {
         value?.let { receivers.forEach { receiver ->
-            GraphDebugger.onValueEmitted(this, it, receiver)
+            GraphDebugger.onValueTransmitted(this, it, receiver)
             receiver.onReceive(it) }
         }
     }

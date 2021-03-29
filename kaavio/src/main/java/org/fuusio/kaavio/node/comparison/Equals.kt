@@ -17,17 +17,15 @@
  */
 package org.fuusio.kaavio.node.comparison
 
-import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Inlet
+import org.fuusio.kaavio.AbstractNode
 
 /**
  * [Equals] is a node that outputs [Boolean] true value if the values received via all the inputs
  * are equal to each other. Otherwise [Boolean] false is transmitted.
  */
-class Equals<I :Any>(name: String? = null) : Node(name) {
-    val input: Inlet<I> = Inlet(this)
-    val output = Output<Boolean>()
+class Equals<I :Any>(name: String? = null) : AbstractNode(name) {
+    val input = inletOf<I>()
+    val output = outputOf<Boolean>()
 
     override fun onFired() {
         val values = input.values

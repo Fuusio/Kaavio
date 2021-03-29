@@ -17,12 +17,13 @@
  */
 package org.fuusio.kaavio.node.function
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.SingleOutputNode
 
 open class Fun<I :Any,O :Any>(name: String? = null, val function: (I) -> O)
-    : SingleInputSingleOutputNode<I,O>(name) {
+    : SingleOutputNode<O>(name) {
+    val arg = inputOf<I>()
 
     override fun onFired() {
-        output.transmit(function(input.value))
+        output.transmit(function(arg.value))
     }
 }

@@ -36,7 +36,7 @@ open class Injector<O :Any>(name: String? = null) : SingleInputSingleOutputNode<
         onFired()
     }
 
-    override fun onFired() = emit(value!!)
+    override fun onFired() = transmit(value!!)
 }
 
 class AnyInjector(name: String? = null) : Injector<Any>(name)

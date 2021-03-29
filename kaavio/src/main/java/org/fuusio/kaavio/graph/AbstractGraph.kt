@@ -24,6 +24,14 @@ import org.fuusio.kaavio.Node
  */
 abstract class AbstractGraph : Graph {
 
+    private var _context: GraphContext? = null
+
+    /**
+     * Returns the [GraphContext] of this [Graph].
+     */
+    override val context: GraphContext
+        get() = _context ?: GraphContext(this).also { _context = it }
+
     /**
      * An instance of [Graph] needs to be activated using this function before it can be used.
      */

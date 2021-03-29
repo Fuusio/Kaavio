@@ -19,10 +19,10 @@ package org.fuusio.kaavio.node.stream
 
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
-class Buffer<I :Any>(name: String? = null, private val capacity: Int = Int.MAX_VALUE)
+class Buffer<I :Any>(private val capacity: Int = Int.MAX_VALUE, name: String? = null)
     : SingleInputSingleOutputNode<I, List<I>>(name) {
 
-    val flush = actionInputOf<Unit>(this) { flush() }
+    val flush = actionInputOf<Unit> { flush() }
 
     private val buffer = mutableListOf<I>()
 
@@ -34,13 +34,21 @@ class Buffer<I :Any>(name: String? = null, private val capacity: Int = Int.MAX_V
     }
 
     fun flush() {
-        output.transmit(buffer)
+        val items = mutableListOf<I>()
+        items.addAll(buffer)
+        output.transmit(items)
         clear()
     }
 
     fun clear() {
         buffer.clear()
     }
+
+    fun size(): Int = buffer.size
+
+    fun isEmpty(): Boolean = buffer.isEmpty()
+
+    fun isNotEmpty(): Boolean = buffer.isNotEmpty()
 
     fun get(isBufferCleared: Boolean = true): List<I> {
         val items = mutableListOf<I>()

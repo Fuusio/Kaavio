@@ -17,10 +17,16 @@
  */
 package org.fuusio.kaavio.node.stream
 
-import org.fuusio.kaavio.node.function.Fun
+import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
  * [Map] is a node that uses the given map function to convert the received input value to an output
  * value.
  */
-class Map<I: Any, O: Any>(name: String? = null, mapFunction: (I) -> O) : Fun<I, O>(name, mapFunction)
+class Map<I: Any, O: Any>(name: String? = null, private val mapFunction: (I) -> O)
+    : SingleInputSingleOutputNode<I, O>(name) {
+
+    override fun onFired() {
+        output.transmit(mapFunction(input.value))
+    }
+}
