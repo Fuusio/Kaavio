@@ -19,7 +19,7 @@ package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.SingleInputNode
 
-class BooleanSwitch(name: String? = null) : SingleInputNode<Boolean>(name) {
+class BooleanSwitch : SingleInputNode<Boolean>() {
     val onTrue = outputOf<Unit>()
     val onFalse = outputOf<Unit>()
 

@@ -19,9 +19,6 @@ package org.fuusio.kaavio.debug
 
 import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.GraphDebugger
-import org.fuusio.kaavio.debug.OnValueReceivedEntry
-import org.fuusio.kaavio.debug.OnValueTransmittedEntry
 import org.fuusio.kaavio.node.stream.IntInjector
 import org.fuusio.kaavio.node.stream.IntSink
 import org.junit.After

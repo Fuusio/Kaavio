@@ -15,37 +15,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.state
+package org.fuusio.kaavio.node.coroutines
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
+import org.fuusio.kaavio.coroutines.DispatcherType
 
 /**
- * [LiveData] TODO
+ * [AsyncLiveData] TODO
  */
-class LiveData<I : Any> : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
+class AsyncLiveData<I : Any, O : Any>(
+    private val dispatcherType: DispatcherType = DispatcherType.DEFAULT,
+    private val liveDataFunction: suspend (I) -> O,
+) : SingleInputSingleOutputNode<I, O>(), StatefulNode<O> {
 
-    private val data = MutableLiveData<I>()
+    private val data = MutableLiveData<O>()
 
-    override val state: I?
+    override val state: O?
         get() = data.value
 
     fun hasValue(): Boolean = data.value != null
 
-    fun observe(owner: LifecycleOwner, observer: Observer<I>) {
+    fun observe(owner: LifecycleOwner, observer: Observer<O>) {
         data.observe(owner, observer)
     }
 
-    fun observer(owner: () -> Lifecycle, observer: (I) -> Unit) {
+    fun observer(owner: () -> Lifecycle, observer: (O) -> Unit) {
         data.observe(owner, observer)
     }
 
-    fun observeForever(observer: Observer<I>) {
-        data.observeForever(observer)
-    }
-
-    fun removeObserver(observer: Observer<I>) {
+    fun removeObserver(observer: Observer<O>) {
         data.removeObserver(observer)
     }
 
@@ -53,21 +55,19 @@ class LiveData<I : Any> : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
         data.removeObservers(owner)
     }
 
-    fun postValue(value: I) {
-        data.postValue(value)
-    }
-
-    fun setValue(value: I) {
-        data.value = value
-    }
-
     fun hasActiveObservers(): Boolean = data.hasActiveObservers()
 
     fun hasObservers(): Boolean = data.hasObservers()
 
     override fun onFired() {
-        val value = input.value
-        data.value = value
-        output.transmit(value)
+        context.coroutineScope.launch {
+            withContext(context.dispatcher(dispatcherType)) {
+                val value = liveDataFunction(input.value)
+                withContext(context.mainDispatcher) {
+                    data.value = value
+                    output.transmit(value)
+                }
+            }
+        }
     }
 }

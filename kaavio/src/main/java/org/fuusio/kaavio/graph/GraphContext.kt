@@ -19,6 +19,7 @@ package org.fuusio.kaavio.graph
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import org.fuusio.kaavio.coroutines.DispatcherType
 
 /**
  * [GraphContext] is a context object for a [Graph] which is made available for all
@@ -54,4 +55,10 @@ data class GraphContext(val graph: Graph) {
      */
     val coroutineScope: CoroutineScope
         get() = graph.coroutineScope
+
+    /**
+     * Returns a [CoroutineDispatcher] for the given [type] specified as [DispatcherType].
+     */
+    fun dispatcher(type: DispatcherType): CoroutineDispatcher =
+        graph.coroutinesConfig.dispatcher(type)
 }

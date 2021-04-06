@@ -24,7 +24,7 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
  * is capable of transmitting a given value Am [Injector] stores the latest given value so it can
  * be transmitter when ever the [Injector] is triggered to transmit the value.
  */
-open class Injector<O :Any>(name: String? = null) : SingleInputSingleOutputNode<Unit, O>(name) {
+open class Injector<O :Any> : SingleInputSingleOutputNode<Unit, O>() {
 
     var value: O? = null
 
@@ -39,22 +39,22 @@ open class Injector<O :Any>(name: String? = null) : SingleInputSingleOutputNode<
     override fun onFired() = transmit(value!!)
 }
 
-class AnyInjector(name: String? = null) : Injector<Any>(name)
+class AnyInjector : Injector<Any>()
 
-class BooleanInjector(name: String? = null) : Injector<Boolean>(name)
+class BooleanInjector : Injector<Boolean>()
 
-class ByteInjector(name: String? = null) : Injector<Byte>(name)
+class ByteInjector : Injector<Byte>()
 
-class CharInjector(name: String? = null) : Injector<Char>(name)
+class CharInjector : Injector<Char>()
 
-class DoubleInjector(name: String? = null) : Injector<Double>(name)
+class DoubleInjector : Injector<Double>()
 
-class FloatInjector(name: String? = null) : Injector<Float>(name)
+class FloatInjector : Injector<Float>()
 
-class IntInjector(name: String? = null) : Injector<Int>(name)
+class IntInjector : Injector<Int>()
 
-class LongInjector(name: String? = null) : Injector<Long>(name)
+class LongInjector : Injector<Long>()
 
-class ShortInjector(name: String? = null) : Injector<Short>(name)
+class ShortInjector : Injector<Short>()
 
-class StringInjector(name: String? = null) : Injector<String>(name)
+class StringInjector : Injector<String>()

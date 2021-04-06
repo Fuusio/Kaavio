@@ -20,9 +20,11 @@ package org.fuusio.kaavio.node.logic
 import org.fuusio.kaavio.SingleOutputNode
 
 /**
- * [And] TODO
+ * [And] implements logical and function which takes any number of input values and outputs
+ * [Boolean] true when all the input values are true when the node is fired. Otherwise
+ * the node outputs false.
  */
-class And(name: String? = null) : SingleOutputNode<Boolean>(name) {
+class And : SingleOutputNode<Boolean>() {
     val input = inletOf<Boolean>()
 
     override fun onFired() {

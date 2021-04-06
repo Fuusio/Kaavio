@@ -23,9 +23,9 @@ import org.fuusio.kaavio.graph.GraphContext
 /**
  * [AbstractNode] provides an abstract base class for concrete implementations of [Node]s.
  */
-abstract class AbstractNode(name: String? = null) : Node {
+abstract class AbstractNode : Node {
     private var _context: GraphContext? = null
-    private var _name: String? = name
+    private var _name: String? = null
 
     override val context: GraphContext
         get() = _context!!

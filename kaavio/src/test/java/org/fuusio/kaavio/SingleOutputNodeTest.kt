@@ -7,7 +7,7 @@ import org.junit.Test
 
 class SingleOutputNodeTest : KaavioTest() {
 
-    class FooNode : SingleOutputNode<Int>("Foo") {
+    class FooNode : SingleOutputNode<Int>() {
         var input = inputOf<Int>()
         var isFired = false
 

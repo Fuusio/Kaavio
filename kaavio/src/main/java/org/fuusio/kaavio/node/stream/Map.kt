@@ -23,8 +23,8 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
  * [Map] is a node that uses the given map function to convert the received input value to an output
  * value.
  */
-class Map<I: Any, O: Any>(name: String? = null, private val mapFunction: (I) -> O)
-    : SingleInputSingleOutputNode<I, O>(name) {
+class Map<I: Any, O: Any>(private val mapFunction: (I) -> O)
+    : SingleInputSingleOutputNode<I, O>() {
 
     override fun onFired() {
         output.transmit(mapFunction(input.value))

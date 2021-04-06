@@ -20,9 +20,11 @@ package org.fuusio.kaavio.node.logic
 import org.fuusio.kaavio.SingleOutputNode
 
 /**
- * [Or] TODO
+ * [Or] implements logical or function which takes any number of input values and outputs
+ * [Boolean] true when at least one of the input values is true when the node is fired. Otherwise
+ * the node outputs false.
  */
-class Or(name: String? = null) : SingleOutputNode<Boolean>(name) {
+class Or : SingleOutputNode<Boolean>() {
     val input = inletOf<Boolean>()
 
     override fun onFired() {

@@ -43,7 +43,7 @@ interface CoroutinesConfig {
     val mainDispatcher: CoroutineDispatcher
 
     /**
-     * The Unconfined [CoroutineDispatcher].
+     * Returns a [CoroutineDispatcher] for the given [type] specified as [DispatcherType].
      */
-    val unconfinedDispatcher: CoroutineDispatcher
+    fun dispatcher(type: DispatcherType): CoroutineDispatcher
 }

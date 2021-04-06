@@ -32,5 +32,10 @@ object DefaultCoroutinesConfig : CoroutinesConfig {
 
     override val mainDispatcher: CoroutineDispatcher = Dispatchers.Main
 
-    override val unconfinedDispatcher: CoroutineDispatcher = Dispatchers.Unconfined
+    override fun dispatcher(type: DispatcherType): CoroutineDispatcher =
+        when (type) {
+            DispatcherType.DEFAULT -> defaultDispatcher
+            DispatcherType.IO -> ioDispatcher
+            DispatcherType.MAIN -> mainDispatcher
+        }
 }

@@ -7,7 +7,7 @@ import org.junit.Test
 
 class AbstractNodeTest : KaavioTest() {
 
-    class FooNode : AbstractNode("Foo") {
+    class FooNode : AbstractNode() {
         var input = inputOf<Int>()
         var output = outputOf<Int>()
         var isFired = false

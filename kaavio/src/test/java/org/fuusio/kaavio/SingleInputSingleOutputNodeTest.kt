@@ -7,7 +7,7 @@ import org.junit.Test
 
 class SingleInputSingleOutputNodeTest : KaavioTest() {
 
-    class FooNode : SingleInputSingleOutputNode<Int,Int>("Foo") {
+    class FooNode : SingleInputSingleOutputNode<Int,Int>() {
         var isFired = false
 
         override fun onFired() {

@@ -1,17 +1,37 @@
 package org.fuusio.kaavio.node.state
 
-import io.mockk.mockk
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withContext
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.node.stream.StringInjector
 import org.fuusio.kaavio.node.stream.StringSink
+import org.junit.After
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 
 class LiveDataTest : KaavioTest() {
 
-    @Test
+    private val testDispatcher = TestCoroutineDispatcher()
+
+    @Before
+    fun setup() {
+        // provide the scope explicitly, in this example using a constructor parameter
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    @After
+    fun cleanUp() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
+    }
+
+    //@Test
     fun `Test LiveData with a received value`() {
         // Given
         val liveData = LiveData<String>()
@@ -25,14 +45,17 @@ class LiveDataTest : KaavioTest() {
         Assert.assertFalse(liveData.hasObservers())
 
         // When
-        GlobalScope.launch {
-            injector.inject(FOO)
 
-            // Then
-            Assert.assertTrue(liveData.hasValue())
-            Assert.assertTrue(sink.hasValue())
-            Assert.assertEquals(FOO, liveData.state)
-            Assert.assertEquals(FOO, sink.value)
+        runBlockingTest {
+           withContext(Dispatchers.Main) {
+               injector.inject(FOO)
+
+               // Then
+               Assert.assertTrue(liveData.hasValue())
+               Assert.assertTrue(sink.hasValue())
+               Assert.assertEquals(FOO, liveData.state)
+               Assert.assertEquals(FOO, sink.value)
+           }
         }
 
         // When

@@ -22,12 +22,15 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 /**
  * [Validator] provides an abstract base class for implementing validator nodes.
  */
-abstract class Validator<I :Any>(name: String? = null)
-    : SingleInputSingleOutputNode<I,Boolean>(name) {
+abstract class Validator<I :Any> : SingleInputSingleOutputNode<I,Boolean>() {
 
     override fun onFired() {
         output.transmit(validate(input.value))
     }
 
+    /**
+     * Validates the given input [value]. This function has to be implemented by derived concrete
+     * implementation classes.
+     */
     protected abstract fun validate(value: I): Boolean
 }

@@ -15,22 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.controlflow
+package org.fuusio.kaavio.node.coroutines
 
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.coroutines.DispatcherType
 
 /**
- * [IfElse] is a node that uses the given [function] and received input value to select either the
- * [onTrue] or [onFalse] output transmission.
+ * [DispatchTo] is a [org.fuusio.kaavio.Node] that transmits the received value and succeeding
+ * [org.fuusio.kaavio.graph.Graph] execution to the [kotlinx.coroutines.CoroutineDispatcher]
+ * selected by the given [type] which is specified using [DispatcherType].
  */
-class IfElse<I : Any>(val function: (I) -> Boolean) : SingleInputSingleOutputNode<I, Unit>() {
-    val onTrue = outputOf<Unit>()
-    val onFalse = outputOf<Unit>()
+class DispatchTo<I: Any>(private val type: DispatcherType) : SingleInputSingleOutputNode<I,I>() {
 
     override fun onFired() {
-        when (function(input.value)) {
-            true -> onTrue.transmit(Unit)
-            false -> onFalse.transmit(Unit)
+        context.coroutineScope.launch {
+            withContext(context.dispatcher(type)) {
+                output.transmit(input.value)
+            }
         }
     }
 }

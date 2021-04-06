@@ -18,17 +18,10 @@
 package org.fuusio.kaavio.node.validation
 
 /**
- * [EmailValidator] is a [RegexValidator] that can be used validate emails.
- *
- * # Inputs:
- * - [input]: [String]
- *
- * # Outputs:
- * - [output]: [Boolean]
- *
- * @param emailPattern a regex pattern used for validating emails
+ * [EmailValidator] is a [RegexValidator] that can be used validate emails based on the given
+ * regular expression [pattern]. [EmailValidator] uses the default pattern of:
+ * `^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$`
  */
 class EmailValidator(
     pattern: String = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
-    name: String? = null,
-) : RegexValidator(pattern, name)
+) : RegexValidator(pattern)

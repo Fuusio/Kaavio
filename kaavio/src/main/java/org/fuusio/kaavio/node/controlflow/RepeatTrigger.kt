@@ -19,10 +19,7 @@ package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
-class RepeatTrigger(
-    private val count: Int,
-    name: String? = null,
-) : SingleInputSingleOutputNode<Unit,Unit>(name) {
+class RepeatTrigger(private val count: Int) : SingleInputSingleOutputNode<Unit,Unit>() {
 
     override fun onFired() = repeat(count) {
         transmit(Unit) }

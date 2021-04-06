@@ -24,10 +24,10 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
  * the [String] values received by the node. The received [String] value is transmitted to output
  * only if the value matches to the specified pattern.
  */
-class RegexFilter(private val pattern: Regex, name: String? = null)
-    : SingleInputSingleOutputNode<String,String>(name) {
+class RegexFilter(private val pattern: Regex)
+    : SingleInputSingleOutputNode<String,String>() {
 
-    constructor(pattern: String, name: String? = null) : this(Regex(pattern), name)
+    constructor(pattern: String) : this(Regex(pattern))
 
     override fun onFired() {
         val value = input.value

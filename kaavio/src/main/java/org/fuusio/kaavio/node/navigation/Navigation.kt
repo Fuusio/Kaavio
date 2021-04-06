@@ -23,7 +23,7 @@ import org.fuusio.kaavio.SingleInputNode
 /**
  * [Navigation] is a node that TODO
  */
-class Navigation(@IdRes private val resId: Int, name: String? = null) : SingleInputNode<Unit>() {
+class Navigation(@IdRes private val resId: Int) : SingleInputNode<Unit>() {
 
     override fun onFired() {
         TODO("Not yet implemented")

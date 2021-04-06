@@ -21,19 +21,10 @@ package org.fuusio.kaavio.node.validation
  * [RegexValidator] implements a [ValidatorFun] that uses the given regular expression, [pattern], for
  * validating a received input [String]. The regular expression can be also defined as a [String]
  * using the secondary constructor.
- *
- * # Inputs:
- * - [input]: [String]
- *
- * # Outputs:
- * - [output]: [Boolean]
- *
- * @param pattern the regular expression as a [Regex]
  */
-open class RegexValidator(private val pattern: Regex, name: String? = null)
-    : Validator<String>(name) {
+open class RegexValidator(private val pattern: Regex) : Validator<String>() {
 
-    constructor(pattern: String, name: String? = null) : this(Regex(pattern), name)
+    constructor(pattern: String) : this(Regex(pattern))
 
     override fun validate(value: String) = pattern.matches(value)
 }

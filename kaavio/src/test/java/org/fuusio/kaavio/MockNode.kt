@@ -17,7 +17,11 @@
  */
 package org.fuusio.kaavio
 
-class MockNode(name: String? = null) : AbstractNode(name) {
+class MockNode(name: String? = null) : AbstractNode() {
+
+    init {
+        name?.let { this.name = name }
+    }
 
     var onInputReceived = false
 

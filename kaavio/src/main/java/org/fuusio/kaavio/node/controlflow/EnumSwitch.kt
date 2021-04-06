@@ -20,7 +20,7 @@ package org.fuusio.kaavio.node.controlflow
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.SingleInputNode
 
-abstract class EnumSwitch<I: Enum<*>>(name: String? = null) : SingleInputNode<I>(name) {
+abstract class EnumSwitch<I: Enum<*>> : SingleInputNode<I>() {
     private val caseOutputs = mutableMapOf<I, Output<Unit>>()
 
     /**

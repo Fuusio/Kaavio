@@ -27,7 +27,7 @@ import org.fuusio.kaavio.node.state.Var
  * represents a terminal node in a [org.fuusio.kaavio.graph.Graph]. A [Sink] stores only the latest
  * value it has received.
  */
-open class Sink<I :Any>(name: String? = null) : SingleInputNode<I>(name), StatefulNode<I> {
+open class Sink<I :Any> : SingleInputNode<I>(), StatefulNode<I> {
     private var _value: I? = null
 
     override val state: I?
@@ -43,22 +43,22 @@ open class Sink<I :Any>(name: String? = null) : SingleInputNode<I>(name), Statef
     fun hasValue(): Boolean = _value != null
 }
 
-class AnySink(name: String? = null) : Sink<Any>(name)
+class AnySink : Sink<Any>()
 
-class BooleanSink(name: String? = null) : Sink<Boolean>(name)
+class BooleanSink : Sink<Boolean>()
 
-class ByteSink(name: String? = null) : Sink<Byte>(name)
+class ByteSink : Sink<Byte>()
 
-class CharSink(name: String? = null) : Sink<Char>(name)
+class CharSink : Sink<Char>()
 
-class DoubleSink(name: String? = null) : Sink<Double>(name)
+class DoubleSink : Sink<Double>()
 
-class FloatSink(name: String? = null) : Sink<Float>(name)
+class FloatSink : Sink<Float>()
 
-class IntSink(name: String? = null) : Sink<Int>(name)
+class IntSink : Sink<Int>()
 
-class LongSink(name: String? = null) : Sink<Long>(name)
+class LongSink : Sink<Long>()
 
-class ShortSink(name: String? = null) : Sink<Short>(name)
+class ShortSink : Sink<Short>()
 
-class StringSink(name: String? = null) : Sink<String>(name)
+class StringSink : Sink<String>()

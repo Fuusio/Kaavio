@@ -1,8 +1,6 @@
 /*
- * Copyright (C) 2016 - 2019 Marko Salmela
- * 
- * http://floxp.com
- * http://robopupu.com
+ * Copyright (C) 2019 - 2021 Marko Salmela
+ *
  * http://fuusio.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.robopupu.kaavio.api.util
-
+package org.fuusio.kaavio.util
 
 data class Triple<T1, T2, T3>(val value1: T1, val value2: T2, val value3: T3)

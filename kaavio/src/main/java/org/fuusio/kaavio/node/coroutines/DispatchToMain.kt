@@ -22,9 +22,10 @@ import kotlinx.coroutines.withContext
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
- * [DispatchToMain] is a [org.fuusio.kaavio.Node] that transmits the received value to main thread.
+ * [DispatchToMain] is a [org.fuusio.kaavio.Node] that transmits the received value and succeeding
+ * [org.fuusio.kaavio.graph.Graph] execution to main thread.
  */
-class DispatchToMain<I: Any>(name: String? = null) : SingleInputSingleOutputNode<I,I>(name) {
+class DispatchToMain<I: Any>: SingleInputSingleOutputNode<I,I>() {
 
     override fun onFired() {
         context.coroutineScope.launch {

@@ -30,8 +30,7 @@ class Timer(
     private val period: Long,
     private val timeUnit: TimeUnit = TimeUnit.MILLISECONDS,
     private val periodic: Boolean = false,
-    name: String? = null
-) : SingleInputSingleOutputNode<Unit,Unit>(name) {
+) : SingleInputSingleOutputNode<Unit,Unit>() {
 
     override fun onFired() {
         start()

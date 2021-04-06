@@ -23,7 +23,7 @@ import org.fuusio.kaavio.AbstractNode
  * [Equals] is a node that outputs [Boolean] true value if the values received via all the inputs
  * are equal to each other. Otherwise [Boolean] false is transmitted.
  */
-class Equals<I :Any>(name: String? = null) : AbstractNode(name) {
+class Equals<I :Any> : AbstractNode() {
     val input = inletOf<I>()
     val output = outputOf<Boolean>()
 

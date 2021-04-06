@@ -20,9 +20,11 @@ package org.fuusio.kaavio.node.logic
 import org.fuusio.kaavio.SingleOutputNode
 
 /**
- * [Xor] TODO
+ * [Xor] implements logical xor function which takes any number of input values and outputs
+ * [Boolean] true when only single of the input values is true when the node is fired. Otherwise
+ * the node outputs false.
  */
-class Xor(name: String? = null) : SingleOutputNode<Boolean>(name) {
+class Xor : SingleOutputNode<Boolean>() {
     val input = inletOf<Boolean>()
 
     override fun onFired() {

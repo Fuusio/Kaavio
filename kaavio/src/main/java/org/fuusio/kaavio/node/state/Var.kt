@@ -20,7 +20,10 @@ package org.fuusio.kaavio.node.state
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
-open class Var<I :Any>(name: String? = null) : SingleInputSingleOutputNode<I,I>(name), StatefulNode<I> {
+/**
+ * [Var] TODO
+ */
+open class Var<I :Any> : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
     private var _value: I? = null
 
     override val state: I?
@@ -37,22 +40,22 @@ open class Var<I :Any>(name: String? = null) : SingleInputSingleOutputNode<I,I>(
     fun hasValue(): Boolean = _value != null
 }
 
-class AnyVar(name: String? = null) : Var<Any>(name)
+class AnyVar : Var<Any>()
 
-class BooleanVar(name: String? = null) : Var<Boolean>(name)
+class BooleanVar : Var<Boolean>()
 
-class ByteVar(name: String? = null) : Var<Byte>(name)
+class ByteVar : Var<Byte>()
 
-class CharVar(name: String? = null) : Var<Char>(name)
+class CharVar : Var<Char>()
 
-class DoubleVar(name: String? = null) : Var<Double>(name)
+class DoubleVar : Var<Double>()
 
-class FloatVar(name: String? = null) : Var<Float>(name)
+class FloatVar : Var<Float>()
 
-class IntVar(name: String? = null) : Var<Int>(name)
+class IntVar : Var<Int>()
 
-class LongVar(name: String? = null) : Var<Long>(name)
+class LongVar : Var<Long>()
 
-class ShortVar(name: String? = null) : Var<Short>(name)
+class ShortVar : Var<Short>()
 
-class StringVar(name: String? = null) : Var<String>(name)
+class StringVar : Var<String>()
