@@ -23,12 +23,12 @@ package org.fuusio.kaavio
 interface Tx<O :Any> {
 
     /**
-     * Request this [Tx] to transmit the latest value if any.
+     * Request this [Tx] to transmit the latest cached value if any.
      */
     fun transmit()
 
     /**
-     * Connects the given receiver [Rx] object to this transmitter.
+     * Connects the given [receiver] object given as [Rx] object to this transmitter.
      */
     infix fun connect(receiver: Rx<O>)
 }

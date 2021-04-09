@@ -17,7 +17,10 @@
  */
 package org.fuusio.kaavio.node.state
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 

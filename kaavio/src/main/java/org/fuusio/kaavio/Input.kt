@@ -17,26 +17,46 @@
  */
 package org.fuusio.kaavio
 
+import androidx.annotation.CallSuper
+
+/**
+ * [Input] is an object that implement [Rx] to receive values for the owner [node]. Inputs are typed.
+ * When an input receives a value it invokes [Node.onInputValueReceived] for the owner node.
+ */
 @Suppress("LeakingThis")
 open class Input<I :Any>(val node: Node) : Rx<I> {
     private var _value: I? = null
 
-    val value: I
+    /**
+     * The received value (if any). See [hasValue].
+     */
+    internal val value: I
         get() = _value!!
 
     init {
         node.attachInput(this)
     }
 
+    /**
+     * Invoked for this [Input] to receive the given [value]. By default the received is cached and
+     * the owned [Node] is notified about the received value by invoking [Node.onInputValueReceived].
+     */
     override fun onReceive(value: I) {
-        storeValue(value)
+        cacheValue(value)
         node.onInputValueReceived(this)
     }
 
-    open fun storeValue(value: I) {
+    /**
+     * Cache the given value to internal cache.
+     */
+    internal open fun cacheValue(value: I) {
         _value = value
     }
 
+    /**
+     * Resets this [Input] by removing the received value.
+     */
+    @CallSuper
     open fun reset() {
         _value = null
     }
@@ -50,14 +70,22 @@ open class Input<I :Any>(val node: Node) : Rx<I> {
             else -> this
         }
 
+    /**
+     * Connects the [transmitters], given as [List] of [Tx]s, to this [Input].
+     */
     infix fun connect(transmitters: List<Tx<I>>) {
         transmitters.forEach { transmitter -> this connect transmitter }
     }
 
+    /**
+     * Connects the [transmitters], given as variable length list of [Tx]s, to this [Input].
+     */
     fun connect(vararg transmitters: Tx<I>) {
         transmitters.forEach { transmitter -> this connect transmitter }
     }
 
-
+    /**
+     * Tests if this [Input] has received a value.
+     */
     open fun hasValue(): Boolean = _value != null
 }

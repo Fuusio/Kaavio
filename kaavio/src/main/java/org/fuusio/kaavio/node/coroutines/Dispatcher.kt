@@ -23,16 +23,17 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.coroutines.DispatcherType
 
 /**
- * [DispatchTo] is a [org.fuusio.kaavio.Node] that transmits the received value and succeeding
+ * [Dispatcher] is a [org.fuusio.kaavio.Node] that transmits the received value and succeeding
  * [org.fuusio.kaavio.graph.Graph] execution to the [kotlinx.coroutines.CoroutineDispatcher]
- * selected by the given [type] which is specified using [DispatcherType].
+ * selected by the given [type] which is specified as [DispatcherType].
  */
-class DispatchTo<I: Any>(private val type: DispatcherType) : SingleInputSingleOutputNode<I,I>() {
+class Dispatcher<I: Any>(private val type: DispatcherType = DispatcherType.DEFAULT)
+    : SingleInputSingleOutputNode<I, I>() {
 
     override fun onFired() {
         context.coroutineScope.launch {
             withContext(context.dispatcher(type)) {
-                output.transmit(input.value)
+                output.transmit(input.value!!)
             }
         }
     }

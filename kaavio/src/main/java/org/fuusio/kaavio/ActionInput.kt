@@ -19,7 +19,7 @@ package org.fuusio.kaavio
 
 /**
  * [ActionInput] is an [Input] which, when a value is received, executes he given [action]
- * function without notifying the bound [Node] about the received value.
+ * function without notifying the owner [Node] about the received value.
  */
 open class ActionInput<I: Any>(node: Node, private val action: (I) -> Unit) : Input<I>(node) {
 

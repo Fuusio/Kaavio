@@ -44,11 +44,6 @@ data class GraphContext(val graph: Graph) {
      */
     val mainDispatcher: CoroutineDispatcher
         get() = graph.coroutinesConfig.mainDispatcher
-    /**
-     * Gets the Unconfined [CoroutineDispatcher].
-     */
-    val unconfinedDispatcher: CoroutineDispatcher
-        get() = graph.coroutinesConfig.unconfinedDispatcher
 
     /**
      * A [CoroutineScope] to be used by the [org.fuusio.kaavio.Node]s of the [Graph].

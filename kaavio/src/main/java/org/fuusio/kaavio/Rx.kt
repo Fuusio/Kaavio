@@ -28,7 +28,8 @@ interface Rx<I :Any> {
     fun onReceive(value: I)
 
     /**
-     * Connects the given [transmitter] object to this transmitter [Tx].
+     * Connects the given [transmitter] object to this or some other receiver object returned
+     * as [Rx].
      */
     infix fun connect(transmitter: Tx<I>): Rx<I>
 }

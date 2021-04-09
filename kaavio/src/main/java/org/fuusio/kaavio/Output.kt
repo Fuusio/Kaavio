@@ -17,27 +17,47 @@
  */
 package org.fuusio.kaavio
 
+/**
+ * [Output] acts as a port to dispatch or transmit the given value to connected receiving [Node]s.
+ * An output is typed.
+ */
 open class Output<O :Any> : Tx<O> {
     protected var value: O? = null
     protected var receivers: MutableSet<Rx<O>> = mutableSetOf()
 
+    /**
+     * Transmits the given [value] to connected, receiving [Rx] objects. The value is optionally
+     * cached (see [Output.isValueCached].
+     */
     internal open fun transmit(value: O) {
         this.value = value
         transmit()
         if (!isValueCached()) { this.value = null }
     }
 
+    /**
+     * Transmits the cached [value], if any, to connected, receiving [Rx] objects.
+     */
     override fun transmit() {
         value?.let { receivers.forEach { receiver -> receiver.onReceive(it) } }
     }
 
+    /**
+     * Connects the [receiver] given as a [Rx] object to receive values from this [Output].
+     */
     override infix fun connect(receiver: Rx<O>) {
         receivers.add(receiver connect this)
     }
 
+    /**
+     * Adds the [receiver] given as a [Rx] object to receive values from this [Output].
+     */
     internal fun addReceiver(receiver: Rx<O>) {
         receivers.add(receiver)
     }
 
+    /**
+     * Specifies if the transmitted value is cached for this [Output].
+     */
     open fun isValueCached(): Boolean = false
 }

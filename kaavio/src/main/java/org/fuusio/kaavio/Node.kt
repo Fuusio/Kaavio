@@ -21,11 +21,11 @@ import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.graph.GraphContext
 
 /**
- * [Node] defines an interface for all node types used in any [Graph] implementation. A [Node]
- * has zero more typed [Input]s and zero more typed [Output]. A [Node] is set to be fired when all
- * of its inputs have received a value. In such case, function [Node.onFired] is invoked to node to
+ * [Node] defines an interface for all node objects used in any [Graph] implementation. A node
+ * has zero or more typed [Input]s and zero or more typed [Output]. A node fires when all of its
+ * inputs have received a value. When a node fires, function [Node.onFired] is invoked to node to
  * execute its defined function. Invocation may cause output value(s) to be transmitted via
- * [Output]s.
+ * one or more [Output]s.
  *
  * Essentially, a [Node] acts as a function - it maps input values to output values.
  */
@@ -44,9 +44,9 @@ interface Node {
     fun onInit(context: GraphContext)
 
     /**
-     * Invoked when a value has been received by the given [receivingInput].
+     * Invoked when a value has been received by the given [input].
      */
-    fun onInputValueReceived(receivingInput: Input<*>)
+    fun onInputValueReceived(input: Input<*>)
 
     /**
      * Invoked when all attached [Input]s have received a value.

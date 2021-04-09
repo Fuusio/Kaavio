@@ -25,9 +25,9 @@ class MockNode(name: String? = null) : AbstractNode() {
 
     var onInputReceived = false
 
-    override fun onInputValueReceived(receivingInput: Input<*>) {
+    override fun onInputValueReceived(input: Input<*>) {
         onInputReceived = true
-        super.onInputValueReceived(receivingInput)
+        super.onInputValueReceived(input)
     }
 
     override fun onFired() {}

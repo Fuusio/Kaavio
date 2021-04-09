@@ -47,8 +47,8 @@ abstract class AbstractNode : Node {
     }
 
     @CallSuper
-    override fun onInputValueReceived(receivingInput: Input<*>) {
-        inputs.forEach { input -> if (!input.hasValue()) return }
+    override fun onInputValueReceived(input: Input<*>) {
+        inputs.forEach {if (!it.hasValue()) return }
         onFired()
     }
 
