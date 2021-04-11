@@ -18,23 +18,29 @@
 package org.fuusio.kaavio.graph
 
 import org.fuusio.kaavio.node.comparison.Equals
+import org.fuusio.kaavio.node.function.Fun2
+import org.fuusio.kaavio.node.function.Fun3
 import org.fuusio.kaavio.node.logic.And
 import org.fuusio.kaavio.node.state.StringVar
-import org.fuusio.kaavio.node.state.Var
 import org.fuusio.kaavio.node.stream.BooleanSink
-import org.fuusio.kaavio.node.stream.Sink
 import org.fuusio.kaavio.node.validation.EmailValidator
 import org.fuusio.kaavio.node.validation.ValidatorFun
 
 data class SignUpGraph(
     val userName: StringVar = StringVar(),
-    val userNameValidator: ValidatorFun<String> = ValidatorFun { string: String -> string.length > 6 },
+    val userNameValidator: ValidatorFun<String> = ValidatorFun { string -> string.length > 6 },
     val email: StringVar = StringVar(),
     val emailConfirm: StringVar = StringVar(),
     val emailValidator: EmailValidator = EmailValidator(),
     val emailsEquals: Equals<String> = Equals(),
+    val password: StringVar = StringVar(),
+    val passwordConfirm: StringVar = StringVar(),
+    val passwordsEquals: Equals<String> = Equals(),
+    val passwordValidator: ValidatorFun<String> = ValidatorFun { string -> string.length >= 8 },
     val and: And = And(),
-    val result: BooleanSink = BooleanSink()
+    val result: BooleanSink = BooleanSink(),
+    val loginInfo: Fun3<String, String, String, LoginInfo> =
+        Fun3 { email, password, userName -> LoginInfo(email = email, password = password, userName = userName) },
 ) : AbstractGraph() {
 
     override fun onConnectNodes() {
@@ -48,6 +54,12 @@ data class SignUpGraph(
         and.input connect userNameValidator.output
         and.input connect emailValidator.output
         and.input connect emailsEquals.output
+        and.input connect passwordsEquals.output
+        and.input connect passwordValidator.output
         and.output connect result.input
+
+        loginInfo.arg1 connect email.output
+        loginInfo.arg2 connect password.output
+        loginInfo.arg3 connect userName.output
     }
 }

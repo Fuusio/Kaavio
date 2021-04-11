@@ -1,39 +1,80 @@
 package org.fuusio.kaavio
 
-import org.fuusio.kaavio.node.stream.IntInjector
-import org.fuusio.kaavio.node.stream.IntSink
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.*
 
-class AbstractNodeTest : KaavioTest() {
+@DisplayName("Given AbstractNode implementation")
+internal class AbstractNodeTest : KaavioTest() {
 
-    class FooNode : AbstractNode() {
-        var input = inputOf<Int>()
-        var output = outputOf<Int>()
-        var isFired = false
+    class IntInputsNode : AbstractNode() {
+        val input1 = inputOf<Int>()
+        val input2 = inputOf<Int>()
+        val input3 = inputOf<Int>()
+
+        var isOnFiredInvoked = false
 
         override fun onFired() {
-            isFired = true
-            output.transmit(input.value)
+            isOnFiredInvoked = true
         }
     }
 
-    @Test
-    fun `Test FooNode with a received value`() {
-        // Given
-        val foo = FooNode()
-        val injector = IntInjector()
-        val sink = IntSink()
+    @DisplayName("When receiving value via input1")
+    @Nested
+    inner class OnReceiveInput1Cases {
 
-        injector.output connect foo.input
-        foo.output connect sink.input
+        // Test subject
+        private val node = IntInputsNode()
 
-        // When
-        injector.inject(42)
+        @BeforeEach
+        fun beforeCase() {
+            node.input1.onReceive(1)
+        }
 
-        // Then
-        Assert.assertTrue(foo.isFired)
-        Assert.assertTrue(sink.hasValue())
-        Assert.assertEquals(42, sink.value)
+        @Test
+        @DisplayName("Then the method onFired should not be invoked")
+        fun case1() {
+            assertFalse(node.isOnFiredInvoked)
+        }
+    }
+
+    @DisplayName("When receiving values via input1 and input2")
+    @Nested
+    inner class OnReceiveInput1Input2Cases {
+
+        // Test subject
+        private val node = IntInputsNode()
+
+        @BeforeEach
+        fun beforeCase() {
+            node.input1.onReceive(1)
+            node.input2.onReceive(2)
+        }
+
+        @Test
+        @DisplayName("Then the method onFired should not be invoked")
+        fun case1() {
+            assertFalse(node.isOnFiredInvoked)
+        }
+    }
+
+    @DisplayName("When receiving value via all inputs")
+    @Nested
+    inner class OnReceiveAllInputsCases {
+
+        // Test subject
+        private val node = IntInputsNode()
+
+        @BeforeEach
+        fun beforeCase() {
+            node.input1.onReceive(1)
+            node.input2.onReceive(2)
+            node.input3.onReceive(2)
+        }
+
+        @Test
+        @DisplayName("Then the method onFired should be invoked")
+        fun case1() {
+            assertTrue(node.isOnFiredInvoked)
+        }
     }
 }

@@ -18,6 +18,21 @@
 package org.fuusio.kaavio.graph
 
 import org.fuusio.kaavio.KaavioTest
+import org.junit.After
+import org.junit.Before
 
-class GraphTest : KaavioTest() {
+/**
+ * [GraphTest] provides an abstract base class for implementing tests for [Graph]s.
+ */
+abstract class GraphTest : KaavioTest() {
+
+    @Before
+    fun setupTesting() {
+
+    }
+
+    @After
+    fun finalizeTesting() {
+
+    }
 }

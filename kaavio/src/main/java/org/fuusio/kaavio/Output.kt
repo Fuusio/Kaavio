@@ -60,4 +60,9 @@ open class Output<O :Any> : Tx<O> {
      * Specifies if the transmitted value is cached for this [Output].
      */
     open fun isValueCached(): Boolean = false
+
+    /**
+     * Tests if this [Output] has the given [receiver] as connected receiver.
+     */
+    fun hasReceiver(receiver: Rx<Int>): Boolean = receivers.contains(receiver)
 }

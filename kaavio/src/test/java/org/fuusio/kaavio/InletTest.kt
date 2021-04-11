@@ -1,20 +1,32 @@
 package org.fuusio.kaavio
 
-import org.junit.Assert.assertNotNull
-import org.junit.Test
+import io.mockk.verify
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.*
 
-class InletTest : KaavioTest() {
+@DisplayName("Given Inlet")
+internal class InletTest : KaavioTest() {
 
-    @Test
-    fun `Test connecting an transmitter`() {
-        // Given
-        val transmitter = Output<Int>()
-        val inlet = Inlet<Int>(mock())
+    // Test subject
+    private val inlet = Inlet<Int>(mockNode())
 
-        // When
-        val receiver = inlet connect transmitter
+    @DisplayName("When connecting to an Output")
+    @Nested
+    inner class ConnectCases {
 
-        // Then
-        assertNotNull(receiver)
+        private var receiver: Rx<Int>? = null
+        private val output = mockOutput<Int>()
+
+        @BeforeEach
+        fun beforeCase() {
+            receiver = inlet connect output
+        }
+
+        @Test
+        @DisplayName("Then Output should have the returned Rx instance as a receiver")
+        fun case1() {
+            assertNotNull(receiver)
+            verify { output.addReceiver(receiver!!) }
+        }
     }
 }

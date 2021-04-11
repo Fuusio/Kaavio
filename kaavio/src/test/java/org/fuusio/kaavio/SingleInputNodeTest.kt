@@ -1,38 +1,42 @@
 package org.fuusio.kaavio
 
-import org.fuusio.kaavio.node.stream.IntInjector
-import org.fuusio.kaavio.node.stream.IntSink
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 
-class SingleInputNodeTest : KaavioTest() {
+@DisplayName("Given SingleInputNode")
+internal class SingleInputNodeTest : KaavioTest() {
 
-    class FooNode : SingleInputNode<Int>() {
-        var output = outputOf<Int>()
-        var isFired = false
+    // Test subject
+    private val node = object : SingleInputNode<Int>() {
+        var isOnFiredInvoked = false
 
         override fun onFired() {
-            isFired = true
-            output.transmit(input.value)
+            isOnFiredInvoked = true
         }
     }
 
-    @Test
-    fun `Test FooNode with a received value`() {
-        // Given
-        val foo = FooNode()
-        val injector = IntInjector()
-        val sink = IntSink()
+    @DisplayName("When receiving Int value 42 via input")
+    @Nested
+    inner class OnReceiveCases {
 
-        injector.output connect foo.input
-        foo.output connect sink.input
+        @BeforeEach
+        fun beforeCase() {
+            node.input.onReceive(42)
+        }
 
-        // When
-        injector.inject(42)
+        @Test
+        @DisplayName("Then the input of the SingleInputNode should have a value")
+        fun case1() {
+            assertTrue(node.input.hasValue())
+        }
 
-        // Then
-        Assert.assertTrue(foo.isFired)
-        Assert.assertTrue(sink.hasValue())
-        Assert.assertEquals(42, sink.value)
+        @Test
+        @DisplayName("Then the method onFired should have been invoked")
+        fun case2() {
+            assertTrue(node.isOnFiredInvoked)
+        }
     }
 }

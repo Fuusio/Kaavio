@@ -17,88 +17,79 @@
  */
 package org.fuusio.kaavio
 
-import org.junit.Assert.*
-import org.junit.Test
+import io.mockk.verify
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 
+@DisplayName("Given Input")
 internal class InputTest : KaavioTest() {
 
-    @Test
-    fun `Test onValue function`() {
-        // Given
-        val input = Input<Int>(mock())
+    private val node = mockNode()
 
-        // When
-        input.onReceive(42)
+    // Test subject
+    val input = Input<Int>(node)
 
-        // Then
-        assertEquals(42, input.value)
+    @DisplayName("When receiving Int value 42")
+    @Nested
+    inner class OnReceiveCases {
+
+        @BeforeEach
+        fun beforeCase() {
+            input.onReceive(42)
+        }
+
+        @Test
+        @DisplayName("Then should have a value")
+        fun case1() {
+            assertTrue(input.hasValue())
+        }
+
+        @Test
+        @DisplayName("Then INput should have cached Int value 42")
+        fun case2() {
+            assertEquals(42, input.value)
+        }
+
+        @Test
+        @DisplayName("Then should have invoked Node.onInputReceived")
+        fun case3() {
+            verify { node.onInputValueReceived(input) }
+        }
     }
 
-    @Test
-    fun `Test onInputReceived function gets invoked`() {
-        // Given
-        val node = MockNode()
-        val input = Input<Int>(node)
+    @DisplayName("When resetting a cached value")
+    @Nested
+    inner class ResetCases {
 
-        // When
-        input.onReceive(42)
+        @BeforeEach
+        fun beforeCase() {
+            input.onReceive(42)
+            input.reset()
+        }
 
-        // Then
-        assertTrue(node.onInputReceived)
+        @Test
+        @DisplayName("Then Input should not have a value")
+        fun case1() {
+            assertTrue(!input.hasValue())
+        }
     }
 
-    @Test
-    fun `Test that the received value is stored`() {
-        // Given
-        val input = Input<Int>(mock())
+    @DisplayName("When connecting to an Output")
+    @Nested
+    inner class ConnectCases {
 
-        // When
-        input.onReceive(42)
+        private val output = mockOutput<Int>()
 
-        // Then
-        assertEquals(42, input.value)
-    }
+        @BeforeEach
+        fun beforeCase() {
+            input connect output
+        }
 
-    @Test
-    fun `Test resetting the stored value`() {
-        // Given
-        val input = Input<Int>(mock())
-        input.onReceive(42)
-        assertTrue(input.hasValue())
-
-        // When
-        input.reset()
-
-        // Then
-        assertFalse(input.hasValue())
-    }
-
-    @Test
-    fun `Test attaching an output`() {
-        // Given
-        val input = Input<Int>(mock())
-        val output = Output<Int>()
-        output connect input
-        assertFalse(input.hasValue())
-
-        // When
-        output.transmit(42)
-
-        // Then
-        assertTrue(input.hasValue())
-        assertEquals(42, input.value)
-    }
-
-    @Test
-    fun `Test hasValue function`() {
-        // Given
-        val input = Input<Int>(mock())
-        assertFalse(input.hasValue())
-
-        // When
-        input.onReceive(42)
-
-        // Then
-        assertTrue(input.hasValue())
+        @Test
+        @DisplayName("Then Output should have the Input as a receiver")
+        fun case1() {
+            verify { output.addReceiver(input) }
+        }
     }
 }

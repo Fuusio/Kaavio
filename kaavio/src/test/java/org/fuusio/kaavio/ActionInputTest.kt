@@ -17,21 +17,49 @@
  */
 package org.fuusio.kaavio
 
-import org.junit.Assert.*
-import org.junit.Test
+import io.mockk.verify
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertTrue
 
+@DisplayName("Given ActionInput")
 internal class ActionInputTest : KaavioTest() {
 
-    @Test
-    fun `Test triggering action`() {
-        // Given
-        var boolean = false
-        val actionInput = ActionInput<Int>(mock()) { int -> boolean = int > 10 }
+    private var flag = false
 
-        // When
-        actionInput.onReceive(42)
+    // Test subject
+    private val actionInput = ActionInput<Int>(mockNode()) { int -> flag = int > 10 }
 
-        // Then
-        assertTrue(boolean)
+    @DisplayName("When receiving Int value 42")
+    @Nested
+    inner class OnReceiveCases {
+
+        @BeforeEach
+        fun beforeCase() {
+            actionInput.onReceive(42)
+        }
+
+        @Test
+        @DisplayName("Then the action should have set the flag to true")
+        fun case1() {
+            assertTrue(flag)
+        }
+    }
+
+    @DisplayName("When connecting to an Output")
+    @Nested
+    inner class ConnectCases {
+
+        private val output = mockOutput<Int>()
+
+        @BeforeEach
+        fun beforeCase() {
+            actionInput connect output
+        }
+
+        @Test
+        @DisplayName("Then Output should have the ActionInput as a receiver")
+        fun case1() {
+            verify { output.addReceiver(actionInput) }
+        }
     }
 }

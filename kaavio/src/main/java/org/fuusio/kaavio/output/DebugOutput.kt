@@ -19,6 +19,7 @@ package org.fuusio.kaavio.output
 
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
+import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.debug.GraphDebugger
 
 /**
@@ -32,5 +33,14 @@ class DebugOutput<O: Any>(val node: Node, val name: String? = null) : Output<O>(
             GraphDebugger.onValueTransmitted(this, it, receiver)
             receiver.onReceive(it) }
         }
+    }
+
+    /**
+     * Reconnects this [Output] to given [receiver]. Reconnecting can be used for debugging purposes
+     * to replace actual [Node]s from a [org.fuusio.kaavio.graph.Graph] e.g. with mock nodes.
+     */
+    fun reconnect(receiver: Rx<O>) {
+        receivers.clear()
+        receivers.add(receiver)
     }
 }

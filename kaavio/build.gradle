@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = "1.4.31"
+    ext.kotlin_version = "1.4.32"
     ext.fuel_version = "2.3.1"
     ext.lifecycle_version = "2.3.1"
 }
@@ -55,7 +55,11 @@ dependencies {
     implementation "com.github.kittinunf.fuel:fuel-coroutines:$fuel_version"
     implementation "com.github.kittinunf.fuel:fuel-kotlinx-serialization:$fuel_version"
 
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.junit.platform:junit-platform-runner:1.7.1"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.1"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.1"
+
+    //testImplementation 'junit:junit:4.13.2'
     testImplementation 'io.mockk:mockk:1.11.0'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
 

@@ -17,26 +17,80 @@
  */
 package org.fuusio.kaavio
 
-import org.fuusio.kaavio.node.stream.IntSink
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import io.mockk.verify
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.*
 
-class OutputTest : KaavioTest() {
+@DisplayName("Given Output")
+internal class OutputTest : KaavioTest() {
 
-    @Test
-    fun `Test transmitting a value`() {
-        // Given
-        val output = Output<Int>()
-        val sink = IntSink()
+    private val node = mockNode()
 
-        output connect sink.input
+    // Test subject
+    private val output = Output<Int>()
 
-        // When
-        output.transmit(42)
+    @DisplayName("When transmitting Int value 42")
+    @Nested
+    inner class TransmitCases {
 
-        // Then
-        assertTrue(sink.hasValue())
-        assertEquals(42, sink.value)
+        private val input = mockInput<Int>()
+
+        @BeforeEach
+        fun beforeCase() {
+            output connect input
+            output.transmit(42)
+        }
+
+        @Test
+        @DisplayName("Then connected Input should have a value")
+        fun case1() {
+            assertTrue(input.hasValue())
+        }
+
+        @Test
+        @DisplayName("Then should have cached Int value 42")
+        fun case2() {
+            assertEquals(42, input.value)
+        }
+    }
+
+    @DisplayName("When connecting to an Input")
+    @Nested
+    inner class ConnectCases {
+
+        private val input = mockInput<Int>()
+
+        @BeforeEach
+        fun beforeCase() {
+            output connect input
+        }
+
+        @Test
+        @DisplayName("Then Input.connect should have been invoked")
+        fun case1() {
+            verify { input.connect(output) }
+        }
+
+        @Test
+        @DisplayName("Then Output should have the Input as a receiver")
+        fun case2() {
+            assertTrue(output.hasReceiver(input))
+        }
+    }
+
+    @DisplayName("When checking if transmitted values are to be cached")
+    @Nested
+    inner class IsValueCachedCases {
+
+        @BeforeEach
+        fun beforeCase() {
+            // Do nothing
+        }
+
+        @Test
+        @DisplayName("Then by default false should be returned")
+        fun case1() {
+            assertFalse(output.isValueCached())
+        }
     }
 }

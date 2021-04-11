@@ -1,38 +1,32 @@
 package org.fuusio.kaavio
 
-import org.fuusio.kaavio.node.stream.IntInjector
-import org.fuusio.kaavio.node.stream.IntSink
-import org.junit.Assert
-import org.junit.Test
+import io.mockk.verify
+import org.junit.jupiter.api.*
 
-class SingleOutputNodeTest : KaavioTest() {
+@DisplayName("Given SingleOutputNode")
+internal class SingleOutputNodeTest : KaavioTest() {
 
-    class FooNode : SingleOutputNode<Int>() {
-        var input = inputOf<Int>()
-        var isFired = false
-
-        override fun onFired() {
-            isFired = true
-            output.transmit(input.value)
-        }
+    // Test subject
+    private val node =  object : SingleOutputNode<Int>() {
+        override fun onFired() {}
     }
 
-    @Test
-    fun `Test FooNode with a received value`() {
-        // Given
-        val foo = FooNode()
-        val injector = IntInjector()
-        val sink = IntSink()
+    @DisplayName("When transmitting Int value 42 to connected Input")
+    @Nested
+    inner class TransmitCases {
 
-        injector.output connect foo.input
-        foo.output connect sink.input
+        private val input = mockInput<Int>()
 
-        // When
-        injector.inject(42)
+        @BeforeEach
+        fun beforeCase() {
+            node.output connect input
+            node.output.transmit(42)
+        }
 
-        // Then
-        Assert.assertTrue(foo.isFired)
-        Assert.assertTrue(sink.hasValue())
-        Assert.assertEquals(42, sink.value)
+        @Test
+        @DisplayName("Then connected Input should have the value")
+        fun case1() {
+           verify { input.onReceive(42) }
+        }
     }
 }

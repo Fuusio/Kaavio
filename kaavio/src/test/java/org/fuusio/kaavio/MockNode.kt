@@ -23,10 +23,10 @@ class MockNode(name: String? = null) : AbstractNode() {
         name?.let { this.name = name }
     }
 
-    var onInputReceived = false
+    var onInputValueReceivedInvoked = false
 
     override fun onInputValueReceived(input: Input<*>) {
-        onInputReceived = true
+        onInputValueReceivedInvoked = true
         super.onInputValueReceived(input)
     }
 
