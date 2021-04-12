@@ -46,6 +46,14 @@ interface Graph {
     val coroutineScope: CoroutineScope
 
     /**
+     * Returns the [List] of [Node]s contained by this [Graph]. The default implementations in
+     * [AbstractGraph] and [GraphViewModel] use reflection to obtain the nodes. For improved
+     * performance, if necessary, this method can be implemented to provide the nodes list
+     * explicitly.
+     */
+    fun getNodes(): List<Node>
+
+    /**
      * An instance of [Graph] needs to be activated using this function before it can be used.
      */
     fun activate()
@@ -62,7 +70,15 @@ interface Graph {
     fun onActivate() {}
 
     /**
-     * An implementation of this abstract function should connect all the nodes.
+     * Attach the given [nodes] to this [Graph]. An implementation of this method should invoke
+     * [Node.onInit] is for each [Node] in the given list. The default implementations in
+     * [AbstractGraph] and [GraphViewModel] takes care of proper invoking [Node.onInit] method.
+     */
+    fun attachNodes(nodes: List<Node>)
+
+    /**
+     * An implementation of this abstract function should establish all then needed connections
+     * between nodes.
      */
     fun onConnectNodes()
 
@@ -82,16 +98,10 @@ interface Graph {
 
     companion object {
         /**
-         * Attach [Graph] to the [Node] it contains.
+         * Returns a [List] of the [Node]s consisting this [Graph]. This method uses Reflection API
+         * to collect the nodes.
          */
-        fun attachNodesToGraph(graph: Graph) {
-            getNodes(graph).forEach { node -> node.onInit(graph.context) }
-        }
-
-        /**
-         * Returns a [List] of the [Node]s consisting this [Graph].
-         */
-        private fun getNodes(graph: Graph): List<Node> {
+        fun getNodes(graph: Graph): List<Node> {
             val nodes = mutableListOf<Node>()
 
             graph::class.memberProperties.forEach { property ->
@@ -99,7 +109,7 @@ interface Graph {
 
                 if (field != null) {
                     field.isAccessible = true
-                    val value = field[this]
+                    val value = field.get(graph)
 
                     if (value is Node) {
                         if (value.name == value::class.simpleName!!) {
@@ -113,9 +123,8 @@ interface Graph {
         }
 
         /**
-         * Gets the name of the given [node]. If no name is given explicitly, the name is obtained  by
-         * using reflection from the property field that has the [Node] as assigned value using
-         * reflection.
+         * Gets the name of the given [node]. If no name is given explicitly, the name is obtained
+         * by using reflection from the property field that has the [Node] as assigned value .
          */
         fun getNodeName(node: Node): String {
             if (node.name.isNotBlank())

@@ -20,6 +20,9 @@ package org.fuusio.kaavio
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.debug.node.Probes
+import org.junit.jupiter.api.fail
 
 abstract class KaavioTest {
 
@@ -46,6 +49,24 @@ abstract class KaavioTest {
         val output = mockk<Output<O>>()
         every { output.addReceiver(any()) } returns Unit
         return output
+    }
+
+    /**
+     * Asserts that this [Probe] has received the specified [value].
+     */
+    fun Probe<*>.assertHasValue(value: Any) {
+        if (!hasValue(value)) {
+            fail("Probe '$name' has not received value: '$value'")
+        }
+    }
+
+    /**
+     * Asserts that this [Probe] has not transmitted any value to its connected [Probe].
+     */
+    fun Probe<*>.assertHasNoValue() {
+        if (hasValue()) {
+            fail("Node '$name' has received value: '$latestValue'")
+        }
     }
 
     companion object {

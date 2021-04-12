@@ -17,10 +17,12 @@
  */
 package org.fuusio.kaavio.graph
 
+import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import org.fuusio.kaavio.Kaavio
+import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.coroutines.CoroutinesConfig
 
 /**
@@ -33,6 +35,8 @@ abstract class GraphViewModel : ViewModel(), Graph {
 
     private var _context: GraphContext? = null
 
+    var areNodesAttached: Boolean = false
+
     override val context: GraphContext
         get() = _context ?: GraphContext(this).also { _context = it }
 
@@ -42,7 +46,11 @@ abstract class GraphViewModel : ViewModel(), Graph {
     override val coroutinesConfig: CoroutinesConfig = Kaavio.coroutinesConfig
 
     final override fun activate() {
-        Graph.attachNodesToGraph(this)
+        attachNodes(getNodes())
+
+        if (!areNodesAttached) {
+            throw IllegalStateException("Nodes are not attached to Graph by invoking Graph.attachNodes(List).")
+        }
         onConnectNodes()
         onActivate()
         onInitialize()
@@ -50,6 +58,15 @@ abstract class GraphViewModel : ViewModel(), Graph {
 
     final override fun dispose() {
         onDispose()
+    }
+
+    override fun getNodes(): List<Node> =
+        Graph.getNodes(this)
+
+    @CallSuper
+    override fun attachNodes(nodes: List<Node>) {
+        nodes.forEach { node -> node.onInit(context) }
+        areNodesAttached = true
     }
 
     override fun onActivate() {}

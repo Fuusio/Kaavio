@@ -28,14 +28,14 @@ internal class InputTest : KaavioTest() {
     private val node = mockNode()
 
     // Test subject
-    val input = Input<Int>(node)
+    private val input = Input<Int>(node)
 
     @DisplayName("When receiving Int value 42")
     @Nested
     inner class OnReceiveCases {
 
         @BeforeEach
-        fun beforeCase() {
+        fun beforeEachCase() {
             input.onReceive(42)
         }
 

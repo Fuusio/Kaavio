@@ -17,22 +17,55 @@
  */
 package org.fuusio.kaavio.graph
 
+import androidx.annotation.CallSuper
+import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
-import org.junit.After
-import org.junit.Before
+import org.fuusio.kaavio.Node
+import org.fuusio.kaavio.Output
+import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.debug.node.Probes
+import org.fuusio.kaavio.output.DebugOutput
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.fail
 
 /**
  * [GraphTest] provides an abstract base class for implementing tests for [Graph]s.
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class GraphTest : KaavioTest() {
 
-    @Before
-    fun setupTesting() {
-
+    @BeforeAll
+    @CallSuper
+    open fun beforeAllCases() {
+        Kaavio.isDebugMode = true
     }
 
-    @After
-    fun finalizeTesting() {
+    @AfterAll
+    @CallSuper
+    open fun afterAllCases() {
+        Kaavio.isDebugMode = false
+    }
 
+    infix fun <O: Any> Output<O>.connect(probes: Probes): Probe<O> =
+        probes.connect(this as DebugOutput<O>)
+
+    /**
+     * Asserts that the given [Node] has transmitted the specified value to its connected [Probe].
+     */
+    fun Probes.assertOutput(node: Node, value: Any) {
+        if (!hasOutputValue(node, value)) {
+            fail("Node '${node.name}' has not outputted value: '$value'")
+        }
+    }
+
+    /**
+     * Asserts that the given [Node] has not transmitted any value to its connected [Probe].
+     */
+    fun Probes.assertNoOutput(node: Node) {
+        if (!hasNoOutputValue(node)) {
+            fail("Node '${node.name}' has an outputted value: '${getValue(node)}'")
+        }
     }
 }

@@ -18,7 +18,6 @@
 package org.fuusio.kaavio.graph
 
 import org.fuusio.kaavio.node.comparison.Equals
-import org.fuusio.kaavio.node.function.Fun2
 import org.fuusio.kaavio.node.function.Fun3
 import org.fuusio.kaavio.node.logic.And
 import org.fuusio.kaavio.node.state.StringVar
@@ -28,38 +27,41 @@ import org.fuusio.kaavio.node.validation.ValidatorFun
 
 data class SignUpGraph(
     val userName: StringVar = StringVar(),
-    val userNameValidator: ValidatorFun<String> = ValidatorFun { string -> string.length > 6 },
-    val email: StringVar = StringVar(),
-    val emailConfirm: StringVar = StringVar(),
-    val emailValidator: EmailValidator = EmailValidator(),
-    val emailsEquals: Equals<String> = Equals(),
-    val password: StringVar = StringVar(),
-    val passwordConfirm: StringVar = StringVar(),
-    val passwordsEquals: Equals<String> = Equals(),
-    val passwordValidator: ValidatorFun<String> = ValidatorFun { string -> string.length >= 8 },
-    val and: And = And(),
-    val result: BooleanSink = BooleanSink(),
+    val userNameValid: ValidatorFun<String> = ValidatorFun { string -> string.length > 2 },
+    val email1: StringVar = StringVar(),
+    val email2: StringVar = StringVar(),
+    val emailValid: EmailValidator = EmailValidator(),
+    val emailsEqual: Equals<String> = Equals(),
+    val password1: StringVar = StringVar(),
+    val password2: StringVar = StringVar(),
+    val passwordsEqual: Equals<String> = Equals(),
+    val passwordValid: ValidatorFun<String> = ValidatorFun { string -> string.length >= 8 },
+    val allInputsValid: And = And(),
     val loginInfo: Fun3<String, String, String, LoginInfo> =
         Fun3 { email, password, userName -> LoginInfo(email = email, password = password, userName = userName) },
 ) : AbstractGraph() {
 
     override fun onConnectNodes() {
-        userName.output connect userNameValidator.input
+        userName.output connect userNameValid.input
 
-        email.output connect emailValidator.input
+        email1.output connect emailValid.input
 
-        emailsEquals.input connect email.output
-        emailsEquals.input connect emailConfirm.output
+        emailsEqual.input connect email1.output
+        emailsEqual.input connect email2.output
 
-        and.input connect userNameValidator.output
-        and.input connect emailValidator.output
-        and.input connect emailsEquals.output
-        and.input connect passwordsEquals.output
-        and.input connect passwordValidator.output
-        and.output connect result.input
+        password1.output connect passwordValid.input
 
-        loginInfo.arg1 connect email.output
-        loginInfo.arg2 connect password.output
+        passwordsEqual.input connect password1.output
+        passwordsEqual.input connect password2.output
+
+        allInputsValid.input connect userNameValid.output
+        allInputsValid.input connect emailValid.output
+        allInputsValid.input connect emailsEqual.output
+        allInputsValid.input connect passwordsEqual.output
+        allInputsValid.input connect passwordValid.output
+
+        loginInfo.arg1 connect email1.output
+        loginInfo.arg2 connect password1.output
         loginInfo.arg3 connect userName.output
     }
 }

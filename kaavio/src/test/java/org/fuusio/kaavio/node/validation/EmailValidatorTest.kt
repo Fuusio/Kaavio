@@ -18,47 +18,52 @@
 package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.node.stream.Sink
+import org.fuusio.kaavio.debug.node.BooleanProbe
+import org.junit.jupiter.api.*
 
-import org.junit.Assert.*
-import org.junit.Test
-
+@DisplayName("Given EmailValidator")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class EmailValidatorTest : KaavioTest() {
 
-    @Test
-    fun `Test valid email`() {
-        // Given
-        val validator = EmailValidator()
-        val injector = Injector<String>()
-        val sink = Sink<Boolean>()
+    // Test subject
+    private val node = EmailValidator()
 
-        injector.output connect validator.input
-        validator.output connect sink.input
+    private val probe = BooleanProbe()
 
-        // When
-        injector.inject("foo.bar@baz.com")
-
-        // Then
-        assertTrue(sink.hasValue())
-        assertEquals(true, sink.value)
+    @BeforeAll
+    fun beforeAllCases() {
+        node.output connect probe
     }
 
-    @Test
-    fun `Test invalid email`() {
-        // Given
-        val validator = EmailValidator()
-        val injector = Injector<String>()
-        val sink = Sink<Boolean>()
+    @DisplayName("When receiving valid email: foo.bar@baz.com")
+    @Nested
+    inner class InputCases1 {
 
-        injector.output connect validator.input
-        validator.output connect sink.input
+        @BeforeEach
+        fun beforeEachCase() {
+            node.input.onReceive("foo.bar@baz.com")
+        }
 
-        // When
-        injector.inject("foo.bar(at))baz.com")
+        @Test
+        @DisplayName("Then EmailValidator should output true")
+        fun case1() {
+            probe.assertHasValue(true)
+        }
+    }
 
-        // Then
-        assertTrue(sink.hasValue())
-        assertEquals(false, sink.value)
+    @DisplayName("When receiving valid email: foo.bar(at))baz.com")
+    @Nested
+    inner class InputCases2 {
+
+        @BeforeEach
+        fun beforeEachCase() {
+            node.input.onReceive("foo.bar(at))baz.com")
+        }
+
+        @Test
+        @DisplayName("Then EmailValidator should output false")
+        fun case1() {
+            probe.assertHasValue(false)
+        }
     }
 }

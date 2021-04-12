@@ -18,88 +18,116 @@
 package org.fuusio.kaavio.node.comparison
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.debug.node.BooleanProbe
+import org.fuusio.kaavio.node.stream.IntInjector
+import org.fuusio.kaavio.node.stream.StringInjector
+import org.junit.jupiter.api.*
 
-import org.junit.Assert.*
-import org.junit.Test
-
+@DisplayName("Given Equals")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class EqualsTest : KaavioTest() {
 
-    @Test
-    fun `Test single input should throw exception`() {
-        // Given
-        val node = Equals<String>()
-        val outputs = Array(1) { Output<String>() }
-        val receiver = Input<Boolean>(mock())
-        outputs.forEach { output -> output connect node.input }
-        node.output connect receiver
+    @DisplayName("When Equals is connected to only single output and a value is injected")
+    @Nested
+    inner class Cases1 {
 
-        // When
-        try {
-            outputs.forEach { output -> output.transmit("foo") }
-            fail("Should have thrown exception")
-        } catch (e: Exception) {
-            // Succeeded
+        private val injectors = Array(1) { StringInjector() }
+
+        // Test subject
+        private val node = Equals<String>()
+
+        @BeforeEach
+        fun beforeEachCase() {
+            injectors.forEach { injector -> injector.output connect node.input }
         }
 
-        // Then
+        @Test
+        @DisplayName("Then Equals should thrown an exception")
+        fun case1() {
+            // When
+            try {
+                injectors.forEach { injector -> injector.inject("foo") }
+                fail("Should have thrown exception")
+            } catch (e: Exception) {
+                // Succeeded
+            }
+        }
     }
 
-    @Test
-    fun `Test all inputs equal Strings`() {
-        // Given
-        val node = Equals<String>()
-        val outputs = Array(4) { Output<String>() }
-        val receiver = Input<Boolean>(mock())
-        outputs.forEach { output -> output connect node.input }
-        node.output connect receiver
+    @DisplayName("When Equals receives multiple equal strings")
+    @Nested
+    inner class Cases2 {
 
-        // When
-        outputs.forEach { output -> output.transmit("foo") }
+        private val injectors = Array(5) { StringInjector() }
+        private val probe = BooleanProbe()
 
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(true, receiver.value)
-    }
+        // Test subject
+        private val node = Equals<String>()
 
-    @Test
-    fun `Test all inputs equal Ints`() {
-        // Given
-        val node = Equals<Int>()
-        val outputs = Array(4) { Output<Int>() }
-        val receiver = Input<Boolean>(mock())
-        outputs.forEach { output -> output connect node.input }
-        node.output connect receiver
-
-        // When
-        outputs.forEach { output -> output.transmit(42) }
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(true, receiver.value)
-    }
-
-    @Test
-    fun `Test one of inputs not equal`() {
-        // Given
-        val node = Equals<String>()
-        val outputs = Array(4) { Output<String>() }
-        val receiver = Input<Boolean>(mock())
-        outputs.forEach { output -> output connect node.input }
-        node.output connect receiver
-
-        // When
-        outputs.forEachIndexed { index, output ->
-            val value = when(index) {
-                            2 -> "bar"
-                            else -> "foo"
-                        }
-            output.transmit(value)
+        @BeforeEach
+        fun beforeEachCase() {
+            injectors.forEach { injector -> injector.output connect node.input }
+            node.output connect probe
+            injectors.forEach { injector -> injector.inject("foo") }
         }
 
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(false, receiver.value)
+        @Test
+        @DisplayName("Then Equals should output true")
+        fun case1() {
+            probe.assertHasValue(true)
+        }
+    }
+
+    @DisplayName("When Equals receives multiple equal Int values")
+    @Nested
+    inner class Cases3 {
+
+        private val injectors = Array(5) { IntInjector() }
+        private val probe = BooleanProbe()
+
+        // Test subject
+        private val node = Equals<Int>()
+
+        @BeforeEach
+        fun beforeEachCase() {
+            injectors.forEach { injector -> injector.output connect node.input }
+            node.output connect probe
+            injectors.forEach { injector -> injector.inject(42) }
+        }
+
+        @Test
+        @DisplayName("Then Equals should output true")
+        fun case1() {
+            probe.assertHasValue(true)
+        }
+    }
+
+    @DisplayName("When Equals receives strings with one string being not equal")
+    @Nested
+    inner class Cases4 {
+
+        private val injectors = Array(5) { StringInjector() }
+        private val probe = BooleanProbe()
+
+        // Test subject
+        private val node = Equals<String>()
+
+        @BeforeEach
+        fun beforeEachCase() {
+            injectors.forEach { injector -> injector.output connect node.input }
+            node.output connect probe
+            injectors.forEachIndexed { index, injector ->
+                injector.inject(when (index) {
+                    3 -> "bar"
+                    else -> "foo"
+                })
+            }
+        }
+
+        @Test
+        @DisplayName("Then Equals should output false")
+        fun case1() {
+            probe.assertHasValue(false)
+        }
     }
 }

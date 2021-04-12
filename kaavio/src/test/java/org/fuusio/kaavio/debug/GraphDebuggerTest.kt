@@ -21,51 +21,77 @@ import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.node.stream.IntInjector
 import org.fuusio.kaavio.node.stream.IntSink
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
 
-class GraphDebuggerTest : KaavioTest() {
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 
-    @Before
-    fun before() {
+@DisplayName("Given an IntInjector which is connected to an IntSink in debug mode")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+internal class GraphDebuggerTest : KaavioTest() {
+
+    // Test Subjects
+    private lateinit var injector: IntInjector
+    private lateinit var sink: IntSink
+
+    @BeforeAll
+    fun beforeAllCases() {
         Kaavio.isDebugMode = true
-        GraphDebugger.clearDebugEntries()
-    }
-
-    @After
-    fun after() {
-        Kaavio.isDebugMode = false
-        GraphDebugger.clearDebugEntries()
-    }
-
-    @Test
-    fun `Test debug entries methods`() {
-        // Given
-        val injector = IntInjector()
-        val sink = IntSink()
+        injector = IntInjector()
+        sink = IntSink()
         injector.output connect sink.input
+    }
 
-        // When
-        injector.inject(42)
+    @DisplayName("When injecting Int value 42 via IntInjector")
+    @Nested
+    inner class InjectCases {
 
-        // Then
-        assertTrue(sink.hasValue())
-        assertEquals(42, sink.value)
-        val entries = GraphDebugger.debugEntries
-        assertEquals(2, entries.size)
-        val entry = entries[0]
-        assertTrue(entry is OnValueTransmittedEntry)
-        assertTrue(entries[1] is OnValueReceivedEntry)
-        entry as OnValueTransmittedEntry
-        assertEquals(injector.output, entry.output)
+        @BeforeEach
+        fun beforeEachCase() {
+            GraphDebugger.clearDebugEntries()
+            injector.inject(42)
+        }
 
-        // When
-        GraphDebugger.clearDebugEntries()
+        @AfterEach
+        fun afterEachCase() {
+            GraphDebugger.clearDebugEntries()
+        }
 
-        // Then
-        assertTrue(GraphDebugger.debugEntries.isEmpty())
+        @Test
+        @DisplayName("Then the IntSink should have a value 42")
+        fun case1() {
+            assertTrue(sink.hasValue())
+            assertEquals(42, sink.value)
+        }
+
+        @Test
+        @DisplayName("Then GraphDebugger should have two debug entries: OnValueTransmittedEntry and OnValueReceivedEntry")
+        fun case2() {
+            val entries = GraphDebugger.debugEntries
+            assertEquals(2, entries.size)
+            val entry1 = entries[0]
+            val entry2 = entries[1]
+            assertTrue(entry1 is OnValueTransmittedEntry)
+            assertTrue(entry2 is OnValueReceivedEntry)
+            entry1 as OnValueTransmittedEntry
+            assertEquals(injector.output, entry1.output)
+        }
+    }
+
+    @DisplayName("When invoking GraphDebugger.clearDebugEntries")
+    @Nested
+    inner class ClearDebugEntriesCases {
+
+        @BeforeEach
+        fun beforeEachCase() {
+            injector.inject(42)
+            GraphDebugger.clearDebugEntries()
+        }
+
+        @Test
+        @DisplayName("Then GraphDebugger should not have any debug entries")
+        fun case1() {
+            assertTrue(GraphDebugger.debugEntries.isEmpty())
+        }
     }
 }
