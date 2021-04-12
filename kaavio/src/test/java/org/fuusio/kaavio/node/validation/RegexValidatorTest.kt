@@ -17,48 +17,22 @@
  */
 package org.fuusio.kaavio.node.validation
 
-import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.node.stream.Sink
+import org.fuusio.kaavio.Rx
+import org.fuusio.kaavio.Tx
+import org.fuusio.kaavio.test.SingleInputSingleOutputTestBase
 
-import org.junit.Assert.*
-import org.junit.Test
+internal class RegexValidatorTest : SingleInputSingleOutputTestBase<String, Boolean>() {
 
-internal class RegexValidatorTest : KaavioTest() {
+    override fun testCases() = mapOf(
+        "abbcccd" to true,
+        "abbxccd" to false,
+        "abcd" to true,
+        "fxbcd" to false,
+    )
 
-    @Test
-    fun `Test valid expression`() {
-        // Given
-        val validator = RegexValidator("a[bc]+d?")
-        val injector = Injector<String>()
-        val sink = Sink<Boolean>()
-
-        injector.output connect validator.input
-        validator.output connect sink.input
-
-        // When
-        injector.inject("abbcccd")
-
-        // Then
-        assertTrue(sink.hasValue())
-        assertEquals(true, sink.value)
-    }
-
-    @Test
-    fun `Test invalid expression`() {
-        // Given
-        val validator = RegexValidator("a[bc]+d?")
-        val injector = Injector<String>()
-        val sink = Sink<Boolean>()
-
-        injector.output connect validator.input
-        validator.output connect sink.input
-
-        // When
-        injector.inject("abbxccd")
-
-        // Then
-        assertTrue(sink.hasValue())
-        assertEquals(false, sink.value)
-    }
+    override fun createNode(injector: Tx<String>, probe: Rx<Boolean>) =
+        RegexValidator("a[bc]+d?").apply {
+            injector connect input
+            output connect probe
+        }
 }

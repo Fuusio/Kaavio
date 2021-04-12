@@ -17,53 +17,24 @@
  */
 package org.fuusio.kaavio.node.validation
 
-import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.node.BooleanProbe
-import org.junit.jupiter.api.*
+import org.fuusio.kaavio.Rx
+import org.fuusio.kaavio.Tx
+import org.fuusio.kaavio.test.SingleInputSingleOutputTestBase
 
-@DisplayName("Given EmailValidator")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class EmailValidatorTest : KaavioTest() {
+internal class EmailValidatorTest : SingleInputSingleOutputTestBase<String, Boolean>() {
 
-    // Test subject
-    private val node = EmailValidator()
+    override fun testCases() = mapOf(
+        "foo bar@baz.com." to false,
+        "foo bar@baz.com" to false,
+        "foo.bar.baz.com" to false,
+        "foo.bar(at)baz.com" to false,
+        "foo.bar@baz.com" to true,
+        "foo.the.bar@baz.com" to true,
+    )
 
-    private val probe = BooleanProbe()
-
-    @BeforeAll
-    fun beforeAllCases() {
-        node.output connect probe
-    }
-
-    @DisplayName("When receiving valid email: foo.bar@baz.com")
-    @Nested
-    inner class InputCases1 {
-
-        @BeforeEach
-        fun beforeEachCase() {
-            node.input.onReceive("foo.bar@baz.com")
+    override fun createNode(injector: Tx<String>, probe: Rx<Boolean>) =
+        EmailValidator().apply {
+            injector connect input
+            output connect probe
         }
-
-        @Test
-        @DisplayName("Then EmailValidator should output true")
-        fun case1() {
-            probe.assertHasValue(true)
-        }
-    }
-
-    @DisplayName("When receiving valid email: foo.bar(at))baz.com")
-    @Nested
-    inner class InputCases2 {
-
-        @BeforeEach
-        fun beforeEachCase() {
-            node.input.onReceive("foo.bar(at))baz.com")
-        }
-
-        @Test
-        @DisplayName("Then EmailValidator should output false")
-        fun case1() {
-            probe.assertHasValue(false)
-        }
-    }
 }
