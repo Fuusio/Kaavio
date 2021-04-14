@@ -78,7 +78,11 @@ abstract class KaavioTest {
 
     fun <T1, T2, T3, T4, T5> quintuple(first: T1, second: T2, third: T3, fourth: T4, fifth: T5): Quintuple<T1, T2, T3, T4, T5> = Quintuple(first, second, third, fourth, fifth)
 
-
+    /**
+     * Object [none] is used to represent a non existing value. E.g. a case where a [Node] does not
+     * output a value.
+     */
+    internal object none
 
     companion object {
         const val FOO = "foo"

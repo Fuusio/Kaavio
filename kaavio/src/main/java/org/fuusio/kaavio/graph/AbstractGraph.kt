@@ -29,7 +29,7 @@ import org.fuusio.kaavio.coroutines.CoroutinesConfig
 abstract class AbstractGraph : Graph {
     private var _context: GraphContext? = null
 
-    var areNodesAttached: Boolean = false
+    private var areNodesAttached: Boolean = false
 
     override val context: GraphContext
         get() = _context ?: GraphContext(this).also { _context = it }

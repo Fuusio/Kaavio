@@ -2,6 +2,9 @@ package org.fuusio.kaavio.graph
 
 import org.fuusio.kaavio.testbench.GraphTestBench
 
+/**
+ * An example of a [GraphTestBench] based test class for [SignUpGraph].
+ */
 internal class SignUpGraph2Test : GraphTestBench<SignUpGraph>() {
 
     /**
@@ -11,13 +14,13 @@ internal class SignUpGraph2Test : GraphTestBench<SignUpGraph>() {
      *  * The map value is a [List] of expected output values transmitted by the node outputs
      *  returned by [probedOutputs].
      */
-    override fun testCases() = mapOf(
+    override fun testCases() = cases(
 
-        inputValues(None, "foo@bar.com", "foo@bar.com") to
-                outputValues(None, true, true, None, None, None),
+        inputValues(none, "foo@bar.com", "foo@bar.com") to
+                outputValues(none, true, true, none, none, none),
 
         inputValues("foo") to
-                outputValues(true, None, None, None, None, None),
+                outputValues(true, none, none, none, none, none),
 
         inputValues("foo", "foo@bar.com", "foo@bar.com", "abcd1234","abcd1234") to
                 outputValues(true, true, true, true, true, true),
@@ -41,7 +44,7 @@ internal class SignUpGraph2Test : GraphTestBench<SignUpGraph>() {
         )
 
     /**
-     * Returns a [List] of [org.fuusio.kaavio.Output]s for capturing the outputs to be tested
+     * Returns a [List] of [org.fuusio.kaavio.Output]s for capturing the output values to be tested
      * against defined expected values.
      */
     override fun probedOutputs() = outputs(

@@ -49,7 +49,7 @@ abstract class GraphTestBench<G: Graph>
         assertTrue(size <= injectors.size)
         for (i in 0 until size) {
             when (val value = inputValues[i]) {
-                None -> {}
+                none -> {}
                 else -> injectors[i].inject(value)
             }
         }
@@ -68,7 +68,7 @@ abstract class GraphTestBench<G: Graph>
                     "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${probes[i].latestValue}].")
             } else {
                 assertTrue(
-                    expectedValues[i] == null || expectedValues[i] == None,
+                    expectedValues[i] == null || expectedValues[i] == none,
                     "Node ${Graph.getNodeName(output.node)} should not have outputted a value.")
             }
         }
@@ -98,6 +98,8 @@ abstract class GraphTestBench<G: Graph>
         return probes
     }
 
+    fun <K, V> cases(vararg pairs: Pair<K, V>): Map<K, V> = mapOf(*pairs)
+
     protected fun inputValues(vararg values: Any): List<Any> = values.toList()
 
     protected fun outputValues(vararg values: Any?): List<Any?> = values.toList()
@@ -105,6 +107,4 @@ abstract class GraphTestBench<G: Graph>
     protected fun inputs(vararg inputs: Input<*>): List<Input<*>> = inputs.toList()
 
     protected fun outputs(vararg outputs: Output<*>): List<Output<*>> = outputs.toList()
-
-    object None
 }
