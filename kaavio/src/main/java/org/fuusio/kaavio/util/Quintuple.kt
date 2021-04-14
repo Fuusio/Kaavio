@@ -15,24 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.validation
+package org.fuusio.kaavio.util
 
-import org.fuusio.kaavio.Rx
-import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.testbench.OneInputOneOutputTestBench
-
-internal class RegexValidatorTest : OneInputOneOutputTestBench<String, Boolean>() {
-
-    override fun testCases() = mapOf(
-        "abbcccd" to true,
-        "abcd" to true,
-        "abbxccd" to false,
-        "fxbcd" to false,
-    )
-
-    override fun node(injector: Tx<String>, probe: Rx<Boolean>) =
-        RegexValidator("a[bc]+d?").apply {
-            injector connect input
-            output connect probe
+class Quintuple<T1, T2, T3, T4, T5>(
+    val first: T1,
+    val second: T2,
+    val third: T3,
+    val fourth: T4,
+    val fifth: T5,
+) : Tuple {
+    override val size: Int = 5
+    override operator fun get(index: Int): Any? =
+        when (index) {
+            0 -> first
+            1 -> second
+            2 -> third
+            3 -> fourth
+            4 -> fifth
+            else -> throw IndexOutOfBoundsException()
         }
+
 }

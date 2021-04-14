@@ -17,4 +17,18 @@
  */
 package org.fuusio.kaavio.util
 
-data class Triple<T1, T2, T3>(val value1: T1, val value2: T2, val value3: T3)
+data class Triple<T1, T2, T3>(
+    val first: T1,
+    val second: T2,
+    val third: T3,
+) : Tuple {
+    override val size: Int = 3
+
+    override operator fun get(index: Int): Any? =
+        when (index) {
+            0 -> first
+            1 -> second
+            2 -> third
+            else -> throw IndexOutOfBoundsException()
+        }
+}

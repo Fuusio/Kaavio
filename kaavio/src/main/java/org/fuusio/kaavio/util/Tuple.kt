@@ -15,24 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.validation
+package org.fuusio.kaavio.util
 
-import org.fuusio.kaavio.Rx
-import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.testbench.OneInputOneOutputTestBench
+/**
+ * [Tuple] is a tagging interface for all tuple objects: [Monuple], [Couple], [Triple], etc. A tuple
+ * is a data class object that represents a finite ordered list (sequence) of elements.
+ */
+interface Tuple {
+    val size: Int
 
-internal class RegexValidatorTest : OneInputOneOutputTestBench<String, Boolean>() {
-
-    override fun testCases() = mapOf(
-        "abbcccd" to true,
-        "abcd" to true,
-        "abbxccd" to false,
-        "fxbcd" to false,
-    )
-
-    override fun node(injector: Tx<String>, probe: Rx<Boolean>) =
-        RegexValidator("a[bc]+d?").apply {
-            injector connect input
-            output connect probe
-        }
+    operator fun get(index: Int): Any?
 }

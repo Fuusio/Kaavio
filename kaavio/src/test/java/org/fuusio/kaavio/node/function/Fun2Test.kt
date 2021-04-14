@@ -17,53 +17,22 @@
  */
 package org.fuusio.kaavio.node.function
 
-import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.*
+import org.fuusio.kaavio.testbench.TwoInputsOneOutputTestBench
 
 import org.junit.Assert.*
 import org.junit.Test
 
-class Fun2Test : KaavioTest() {
+internal class Fun2Test : TwoInputsOneOutputTestBench<String, String, String>() {
 
-    @Test
-    fun `Test String concatenation function`() {
-        // Given
-        val node = Fun2 { string1: String, string2: String -> string1 + string2 }
-        val output1 = Output<String>()
-        val output2 = Output<String>()
-        val receiver = Input<String>(mock())
+    override fun testCases() = mapOf(
+        pair("Hello ", "World!") to "Hello World!"
+    )
 
-        output1 connect node.arg1
-        output2 connect node.arg2
-        node.output connect receiver
-
-        // When
-        output1.transmit("Hello ")
-        output2.transmit("World!")
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals("Hello World!", receiver.value)
-    }
-
-    @Test
-    fun `Test multiplication of two Ints`() {
-        // Given
-        val node = Fun2 { int1: Int, int2: Int -> int1 + int2 }
-        val output1 = Output<Int>()
-        val output2 = Output<Int>()
-        val receiver = Input<Int>(mock())
-        output1 connect node.arg1
-        output2 connect node.arg2
-        node.output connect receiver
-
-        // When
-        output1.transmit(1)
-        output2.transmit(10)
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(11, receiver.value)
-    }
+    override fun node(injector1: Tx<String>, injector2: Tx<String>, probe: Rx<String>) =
+        Fun2 { string1: String, string2: String -> string1 + string2 }.apply {
+            injector1 connect arg1
+            injector2 connect arg2
+            output connect probe
+        }
 }

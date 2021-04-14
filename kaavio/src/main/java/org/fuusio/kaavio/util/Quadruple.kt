@@ -17,4 +17,20 @@
  */
 package org.fuusio.kaavio.util
 
-class Quadruple<T1, T2, T3, T4>(val value1: T1, val value2: T2, val value3: T3, val value4: T4)
+class Quadruple<T1, T2, T3, T4>(
+    val first: T1,
+    val second: T2,
+    val third: T3,
+    val fourth: T4,
+) : Tuple {
+    override val size: Int = 4
+
+    override operator fun get(index: Int): Any? =
+        when (index) {
+            0 -> first
+            1 -> second
+            2 -> third
+            3 -> fourth
+            else -> throw IndexOutOfBoundsException()
+        }
+}

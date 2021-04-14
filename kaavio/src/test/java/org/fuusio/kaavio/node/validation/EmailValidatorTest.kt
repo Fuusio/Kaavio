@@ -19,9 +19,9 @@ package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.test.SingleInputSingleOutputTestBase
+import org.fuusio.kaavio.testbench.OneInputOneOutputTestBench
 
-internal class EmailValidatorTest : SingleInputSingleOutputTestBase<String, Boolean>() {
+internal class EmailValidatorTest : OneInputOneOutputTestBench<String, Boolean>() {
 
     override fun testCases() = mapOf(
         "foo bar@baz.com." to false,
@@ -32,7 +32,7 @@ internal class EmailValidatorTest : SingleInputSingleOutputTestBase<String, Bool
         "foo.the.bar@baz.com" to true,
     )
 
-    override fun createNode(injector: Tx<String>, probe: Rx<Boolean>) =
+    override fun node(injector: Tx<String>, probe: Rx<Boolean>) =
         EmailValidator().apply {
             injector connect input
             output connect probe
