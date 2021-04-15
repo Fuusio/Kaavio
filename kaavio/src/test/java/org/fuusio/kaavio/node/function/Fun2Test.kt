@@ -18,15 +18,13 @@
 package org.fuusio.kaavio.node.function
 
 import org.fuusio.kaavio.*
-import org.fuusio.kaavio.testbench.TwoInputsOneOutputTestBench
+import org.fuusio.kaavio.testbench.TwoInputsNodeTestBench
+import org.fuusio.kaavio.testbench.toValueOption
 
-import org.junit.Assert.*
-import org.junit.Test
-
-internal class Fun2Test : TwoInputsOneOutputTestBench<String, String, String>() {
+internal class Fun2Test : TwoInputsNodeTestBench<String, String, String>() {
 
     override fun testCases() = mapOf(
-        pair("Hello ", "World!") to "Hello World!"
+        pair("Hello ", "World!") to "Hello World!".toValueOption()
     )
 
     override fun node(injector1: Tx<String>, injector2: Tx<String>, probe: Rx<String>) =

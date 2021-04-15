@@ -17,59 +17,22 @@
  */
 package org.fuusio.kaavio.node.function
 
-import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.*
+import org.fuusio.kaavio.testbench.ThreeInputsNodeTestBench
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.fuusio.kaavio.testbench.toValueOption
 
-class Fun3Test : KaavioTest() {
+internal class Fun3Test : ThreeInputsNodeTestBench<String, String, String, String>() {
 
-    @Test
-    fun `Test String concatenation function`() {
-        // Given
-        val node = Fun3 { string1: String, string2: String, string3: String -> string1 + string2 + string3}
-        val output1 = Output<String>()
-        val output2 = Output<String>()
-        val output3 = Output<String>()
-        val receiver = Input<String>(mock())
+    override fun testCases() = mapOf(
+        triple("Kotlin ", "is ", "fun!") to "Kotlin is fun!".toValueOption()
+    )
 
-        output1 connect node.arg1
-        output2 connect node.arg2
-        output3 connect node.arg3
-        node.output connect receiver
-
-        // When
-        output1.transmit("Hello ")
-        output2.transmit("World")
-        output3.transmit("!")
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals("Hello World!", receiver.value)
-    }
-
-    @Test
-    fun `Test multiplication of three Ints`() {
-        // Given
-        val node = Fun3 { int1: Int, int2: Int, int3: Int -> int1 + int2 + int3}
-        val output1 = Output<Int>()
-        val output2 = Output<Int>()
-        val output3 = Output<Int>()
-        val receiver = Input<Int>(mock())
-        output1 connect node.arg1
-        output2 connect node.arg2
-        output3 connect node.arg3
-        node.output connect receiver
-
-        // When
-        output1.transmit(1)
-        output2.transmit(10)
-        output3.transmit(100)
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(111, receiver.value)
-    }
+    override fun node(injector1: Tx<String>, injector2: Tx<String>, injector3: Tx<String>, probe: Rx<String>) =
+        Fun3 { string1: String, string2: String, string3: String -> string1 + string2 + string3 }.apply {
+            injector1 connect arg1
+            injector2 connect arg2
+            injector3 connect arg3
+            output connect probe
+        }
 }

@@ -26,7 +26,7 @@ import org.fuusio.kaavio.debug.GraphDebugger
  * [DebugActionInput] implements an [Input] type which can be used for debugging the received values
  * by notifying [GraphDebugger] when ever a value is received by this [DebugInput].
  */
-class DebugActionInput<I: Any>(node: Node, val name: String? = null, action: (I) -> Unit)
+class DebugActionInput<I: Any>(node: Node, var name: String? = null, action: (I) -> Unit)
     : ActionInput<I>(node, action) {
 
     override fun onReceive(value: I) {

@@ -36,6 +36,8 @@ abstract class AbstractNode : Node {
 
     private val inputs: MutableList<Input<*>> = mutableListOf()
 
+    override fun hasContext(): Boolean = _context != null
+
     @CallSuper
     override fun attachInput(input: Input<*>) {
         inputs.add(input)

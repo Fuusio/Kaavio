@@ -17,77 +17,23 @@
  */
 package org.fuusio.kaavio.node.function
 
-import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.*
+import org.fuusio.kaavio.testbench.FourInputsNodeTestBench
+import org.fuusio.kaavio.testbench.toValueOption
 
-import org.junit.Assert.*
-import org.junit.Test
+internal class Fun4Test : FourInputsNodeTestBench<String, String, String, String, String>() {
 
-class Fun4Test : KaavioTest() {
+    override fun testCases() = mapOf(
+        quadruple("Kotlin ", "is ", "freaking ", "fun!")
+                to "Kotlin is freaking fun!".toValueOption()
+    )
 
-    @Test
-    fun `Test String concatenation function`() {
-        // Given
-        val node = Fun4 {
-            string1: String,
-            string2: String,
-            string3: String,
-            string4: String
-            -> string1 + string2 + string3 + string4
+    override fun node(injector1: Tx<String>, injector2: Tx<String>, injector3: Tx<String>, injector4: Tx<String>, probe: Rx<String>) =
+        Fun4 { string1: String, string2: String, string3: String, string4: String -> string1 + string2 + string3 + string4 }.apply {
+            injector1 connect arg1
+            injector2 connect arg2
+            injector3 connect arg3
+            injector4 connect arg4
+            output connect probe
         }
-        val output1 = Output<String>()
-        val output2 = Output<String>()
-        val output3 = Output<String>()
-        val output4 = Output<String>()
-        val receiver = Input<String>(mock())
-
-        output1 connect node.arg1
-        output2 connect node.arg2
-        output3 connect node.arg3
-        output4 connect node.arg4
-        node.output connect receiver
-
-        // When
-        output1.transmit("Hel")
-        output2.transmit("lo ")
-        output3.transmit("World")
-        output4.transmit("!")
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals("Hello World!", receiver.value)
-    }
-
-    @Test
-    fun `Test multiplication of three Ints`() {
-        // Given
-        val node = Fun4 {
-            int1: Int,
-            int2: Int,
-            int3: Int,
-            int4: Int
-            -> int1 + int2 + int3 + int4
-        }
-        val output1 = Output<Int>()
-        val output2 = Output<Int>()
-        val output3 = Output<Int>()
-        val output4 = Output<Int>()
-        val receiver = Input<Int>(mock())
-        output1 connect node.arg1
-        output2 connect node.arg2
-        output3 connect node.arg3
-        output4 connect node.arg4
-        node.output connect receiver
-
-        // When
-        output1.transmit(1)
-        output2.transmit(10)
-        output3.transmit(100)
-        output4.transmit(1000)
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(1111, receiver.value)
-    }
 }

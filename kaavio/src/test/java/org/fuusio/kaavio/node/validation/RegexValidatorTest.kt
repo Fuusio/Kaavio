@@ -19,15 +19,16 @@ package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.testbench.OneInputOneOutputTestBench
+import org.fuusio.kaavio.testbench.SingleInputNodeTestBench
+import org.fuusio.kaavio.testbench.toValueOption
 
-internal class RegexValidatorTest : OneInputOneOutputTestBench<String, Boolean>() {
+internal class RegexValidatorTest : SingleInputNodeTestBench<String, Boolean>() {
 
     override fun testCases() = mapOf(
-        "abbcccd" to true,
-        "abcd" to true,
-        "abbxccd" to false,
-        "fxbcd" to false,
+        "abbcccd" to true.toValueOption(),
+        "abcd" to true.toValueOption(),
+        "abbxccd" to false.toValueOption(),
+        "fxbcd" to false.toValueOption(),
     )
 
     override fun node(injector: Tx<String>, probe: Rx<Boolean>) =

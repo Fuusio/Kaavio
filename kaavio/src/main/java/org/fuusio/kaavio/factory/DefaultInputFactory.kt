@@ -32,7 +32,7 @@ class DefaultInputFactory: InputFactory {
         DebugInput<I>(node)
 
     override fun <I :Any> createActionInput(node: Node, action: (I) -> Unit) =
-        ActionInput<I>(node, action)
+        ActionInput(node, action)
 
     override fun <I :Any> createInput(node: Node) = Input<I>(node)
 }

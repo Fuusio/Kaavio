@@ -34,6 +34,12 @@ interface Node {
     var name: String
 
     /**
+     * Tests if this [Node] actually has a [GraphContext]. An implementation of [Node] that is not
+     * attached to [Graph] does not actually have a [GraphContext].
+     */
+    fun hasContext(): Boolean
+
+    /**
      * Attaches the given [Input] to this [Node].
      */
     fun attachInput(input: Input<*>)

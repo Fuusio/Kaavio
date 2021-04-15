@@ -19,17 +19,18 @@ package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.testbench.OneInputOneOutputTestBench
+import org.fuusio.kaavio.testbench.SingleInputNodeTestBench
+import org.fuusio.kaavio.testbench.toValueOption
 
-internal class EmailValidatorTest : OneInputOneOutputTestBench<String, Boolean>() {
+internal class EmailValidatorTest : SingleInputNodeTestBench<String, Boolean>() {
 
     override fun testCases() = mapOf(
-        "foo bar@baz.com." to false,
-        "foo bar@baz.com" to false,
-        "foo.bar.baz.com" to false,
-        "foo.bar(at)baz.com" to false,
-        "foo.bar@baz.com" to true,
-        "foo.the.bar@baz.com" to true,
+        "foo bar@baz.com." to false.toValueOption(),
+        "foo bar@baz.com" to false.toValueOption(),
+        "foo.bar.baz.com" to false.toValueOption(),
+        "foo.bar(at)baz.com" to false.toValueOption(),
+        "foo.bar@baz.com" to true.toValueOption(),
+        "foo.the.bar@baz.com" to true.toValueOption(),
     )
 
     override fun node(injector: Tx<String>, probe: Rx<Boolean>) =

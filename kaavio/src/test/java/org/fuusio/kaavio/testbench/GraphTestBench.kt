@@ -1,6 +1,7 @@
 package org.fuusio.kaavio.testbench
 
 import org.fuusio.kaavio.*
+import org.fuusio.kaavio.debug.GraphDebugger
 import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.graph.GraphTest
@@ -30,18 +31,44 @@ abstract class GraphTestBench<G: Graph>
 
     @Test
     open fun test() {
-        Kaavio.isDebugMode = true
+        var isDebuggerStarted = false
+
         testCases().forEach { (inputs, outputs) ->
             graph = graph()
+
+            if (!isDebuggerStarted) {
+                isDebuggerStarted = true
+                GraphDebugger.startTesting(graph)
+            }
+
             mockNodes(graph)
             val injectors = createInjectors()
             val probes = createProbes()
+
             graph.activate()
 
+            println()
+            println("Injecting inputs: ${inputValuesList(inputs)}")
+            for (i in 0 until 64) print("-")
+            println()
             injectInputs(inputs, injectors)
             assertOutputs(outputs, probes)
+
+            graph.dispose()
         }
+        GraphDebugger.endTesting()
         Kaavio.isDebugMode = false
+    }
+
+    private fun inputValuesList(inputValues: List<Any>): String {
+        val valuesList = StringBuilder()
+        inputValues.forEachIndexed { index, value ->
+            if (valuesList.isNotEmpty()) {
+                valuesList.append(", ")
+            }
+            valuesList.append("${index + 1}: ${valueToString(value)}")
+        }
+        return valuesList.toString()
     }
 
     private fun injectInputs(inputValues: List<Any>, injectors: List<Injector<Any>>) {
@@ -49,7 +76,7 @@ abstract class GraphTestBench<G: Graph>
         assertTrue(size <= injectors.size)
         for (i in 0 until size) {
             when (val value = inputValues[i]) {
-                none -> {}
+                None -> {}
                 else -> injectors[i].inject(value)
             }
         }
@@ -68,7 +95,7 @@ abstract class GraphTestBench<G: Graph>
                     "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${probes[i].latestValue}].")
             } else {
                 assertTrue(
-                    expectedValues[i] == null || expectedValues[i] == none,
+                    expectedValues[i] == null || expectedValues[i] == None,
                     "Node ${Graph.getNodeName(output.node)} should not have outputted a value.")
             }
         }
@@ -80,6 +107,7 @@ abstract class GraphTestBench<G: Graph>
         for (i in inputs.indices) {
             val injector = Injector<Any>()
             injectors.add(injector)
+            injector.onInit(graph.context)
             @Suppress("UNCHECKED_CAST")
             injector.output connect inputs[i] as Rx<Any>
         }
@@ -91,6 +119,7 @@ abstract class GraphTestBench<G: Graph>
         val outputs = probedOutputs()
         for (i in outputs.indices) {
             val probe = Probe<Any>()
+            probe.onInit(graph.context)
             probes.add(probe)
             @Suppress("UNCHECKED_CAST")
             (outputs[i] as Tx<Any>) connect probe
@@ -100,9 +129,9 @@ abstract class GraphTestBench<G: Graph>
 
     fun <K, V> cases(vararg pairs: Pair<K, V>): Map<K, V> = mapOf(*pairs)
 
-    protected fun inputValues(vararg values: Any): List<Any> = values.toList()
+    protected fun inputs(vararg values: Any): List<Any> = values.toList()
 
-    protected fun outputValues(vararg values: Any?): List<Any?> = values.toList()
+    protected fun outputs(vararg values: Any?): List<Any?> = values.toList()
 
     protected fun inputs(vararg inputs: Input<*>): List<Input<*>> = inputs.toList()
 

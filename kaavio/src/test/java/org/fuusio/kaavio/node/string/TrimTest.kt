@@ -15,23 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.controlflow
+package org.fuusio.kaavio.node.string
 
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.testbench.None
-import org.fuusio.kaavio.testbench.Trigger
 import org.fuusio.kaavio.testbench.SingleInputNodeTestBench
+import org.fuusio.kaavio.testbench.toValueOption
 
-internal class FalseTriggerTest :  SingleInputNodeTestBench<Boolean, Unit>() {
+internal class TrimTest : SingleInputNodeTestBench<String, String>() {
 
     override fun testCases() = mapOf(
-        false to Trigger,
-        true to None,
+        "foo" to "foo".toValueOption(),
+        "foobar  " to "foobar".toValueOption(),
+        "  Hello world! " to "Hello world!".toValueOption(),
     )
 
-    override fun node(injector: Tx<Boolean>, probe: Rx<Unit>) =
-        FalseTrigger().apply {
+    override fun node(injector: Tx<String>, probe: Rx<String>) =
+        Trim().apply {
             injector connect input
             output connect probe
         }

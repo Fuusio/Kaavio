@@ -22,6 +22,7 @@ import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
+import java.lang.Exception
 
 /**
  * [GraphDebugger] is a utility for graph debugging.
@@ -35,36 +36,50 @@ object GraphDebugger {
 
     val debugEntries = mutableListOf<DebugEntry>()
 
+    private fun addEntry(entry: DebugEntry) {
+        debugEntries.add(entry)
+    }
+
+    fun onException(node: Node, exception: Exception) {
+        if (isDebuggingEnabled()) {
+            addEntry(OnException(node, exception))
+        }
+    }
+
     fun onValueReceived(input: DebugInput<*>, value: Any) {
         if (isDebuggingEnabled()) {
-            debugEntries.add(OnValueReceivedEntry(input, value))
+            addEntry(OnValueReceivedEntry(input, value))
         }
     }
 
     fun onValueReceived(input: DebugActionInput<*>, value: Any) {
         if (isDebuggingEnabled()) {
-            debugEntries.add(OnActionEntry(input, value))
+            addEntry(OnActionEntry(input, value))
         }
     }
 
     fun onValueTransmitted(output: DebugOutput<*>, value: Any, receiver: Rx<*>) {
         if (isDebuggingEnabled()) {
-            debugEntries.add(OnValueTransmittedEntry(output, value, receiver))
+            val entry = OnValueTransmittedEntry(output, value, receiver)
+            addEntry(entry)
 
             val inputNode = when (receiver) {
                 is Node -> receiver
                 is Input -> receiver.node
                 else -> throw IllegalStateException()
             }
-            val inputName = DEFAULT_INPUT_NAME // TODO
+            val inputName = when (receiver) {
+                is DebugInput -> receiver.name
+                else -> "input"
+            }
             val inputNodeName = getNodeName(inputNode)
             val outputNodeName = getNodeName(output.node)
-            val outputName = DEFAULT_OUTPUT_NAME // TODO
+            val outputName = output.name
             val valueString = formatValueString(value)
-            val senderName = if (outputName == DEFAULT_OUTPUT_NAME) "[$outputNodeName]" else "[$outputNodeName.$outputName]"
-            val receiverName = if (inputName == DEFAULT_INPUT_NAME) "[$inputNodeName]" else "[$inputNodeName.$inputName]"
+            val senderName = if (outputName == null) "[$outputNodeName]" else "[$outputNodeName.$outputName]"
+            val receiverName = if (inputName == null) "[$inputNodeName]" else "[$inputNodeName.$inputName]"
 
-            println("$senderName - $valueString -> $receiverName")
+            println("${entry.timestampLabel} : $senderName - $valueString -> $receiverName")
         }
     }
 
@@ -85,5 +100,17 @@ object GraphDebugger {
 
     fun clearDebugEntries() {
         debugEntries.clear()
+    }
+
+    fun startTesting(graph: Graph) {
+        Kaavio.isDebugMode = true
+
+        println("\n\nTesting graph: ${graph::class.simpleName}")
+        for (i in 0 until 64) print("=")
+        println()
+    }
+
+    fun endTesting() {
+        Kaavio.isDebugMode = false
     }
 }

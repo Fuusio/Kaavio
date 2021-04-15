@@ -22,18 +22,56 @@ import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
+/**
+ * [DebugEntry] is a sealed class for all various types of entry object used for recording debugger
+ * events.
+ */
 sealed class DebugEntry(open val node: Node) {
-    val timestamp: Long = System.currentTimeMillis()
 
+    /**
+     * The timestamp of this [DebugEntry] as an [Instant]
+     */
+    val timestamp: Instant = Instant.now()
+
+    /**
+     * The timestamp as formatted label. The pattern for formatting is "HH:mm:ss.SSS". Returns the
+     * label as a [String].
+     */
     val timestampLabel: String
-        get() = timestamp.toString() // TODO
+        get() = TIME_FORMATTER.format(timestamp)
+
+    companion object {
+        private val TIME_FORMATTER: DateTimeFormatter =
+            DateTimeFormatter.ofPattern("HH:mm:ss.SSS", Locale.ROOT).withZone(ZoneId.systemDefault())
+    }
 }
 
+/**
+ * [OnActionEntry] is a [DebugEntry] which is received when an [DebugActionInput] has received
+ * a value.
+ */
 data class OnActionEntry(val input: DebugActionInput<*>, val value: Any) : DebugEntry(input.node)
 
+/**
+ * [OnException] is a [DebugEntry] which is received when an [Exception] has occurred.
+ */
 data class OnException(override val node: Node, val exception: Exception) : DebugEntry(node)
 
+/**
+ * [OnValueReceivedEntry] is a [DebugEntry] which is received when an [DebugInput] has received
+ * a value.
+ */
 data class OnValueReceivedEntry(val input: DebugInput<*>, val value: Any) : DebugEntry(input.node)
 
+/**
+ * [OnValueTransmittedEntry] is a [DebugEntry] which is received when an [DebugOutput] has
+ * transmitted a value.
+ */
 data class OnValueTransmittedEntry(val output: DebugOutput<*>, val value: Any, val receiver: Rx<*>) : DebugEntry(output.node)

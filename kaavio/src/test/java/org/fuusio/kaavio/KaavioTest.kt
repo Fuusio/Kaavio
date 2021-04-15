@@ -21,6 +21,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.testbench.None
+import org.fuusio.kaavio.testbench.Trigger
 import org.fuusio.kaavio.util.Quadruple
 import org.fuusio.kaavio.util.Quintuple
 import org.junit.jupiter.api.fail
@@ -72,19 +74,21 @@ abstract class KaavioTest {
 
     fun <T1, T2> pair(first: T1, second: T2): Pair<T1, T2> = Pair(first, second)
 
-    fun <T1, T2, T3> triplet(first: T1, second: T2, third: T3): Triple<T1, T2, T3> = Triple(first, second, third)
+    fun <T1, T2, T3> triple(first: T1, second: T2, third: T3): Triple<T1, T2, T3> = Triple(first, second, third)
 
     fun <T1, T2, T3, T4> quadruple(first: T1, second: T2, third: T3, fourth: T4): Quadruple<T1, T2, T3, T4> = Quadruple(first, second, third, fourth)
 
     fun <T1, T2, T3, T4, T5> quintuple(first: T1, second: T2, third: T3, fourth: T4, fifth: T5): Quintuple<T1, T2, T3, T4, T5> = Quintuple(first, second, third, fourth, fifth)
 
-    /**
-     * Object [none] is used to represent a non existing value. E.g. a case where a [Node] does not
-     * output a value.
-     */
-    internal object none
-
     companion object {
-        const val FOO = "foo"
+        internal fun valueToString(value: Any?): String =
+            when (value) {
+                null -> "null"
+                is String -> "\"$value\""
+                is None -> "none"
+                is Trigger -> "trigger"
+                is Char -> "'$value'"
+                else -> value.toString()
+            }
     }
 }

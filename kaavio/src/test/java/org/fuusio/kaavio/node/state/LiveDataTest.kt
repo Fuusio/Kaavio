@@ -64,4 +64,8 @@ class LiveDataTest : KaavioTest() {
         // Then
         // Assert.assertTrue(liveData.hasObservers())
     }
+
+    companion object {
+        const val FOO = "foo"
+    }
 }

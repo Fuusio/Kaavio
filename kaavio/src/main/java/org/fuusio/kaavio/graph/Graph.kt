@@ -18,8 +18,12 @@
 package org.fuusio.kaavio.graph
 
 import kotlinx.coroutines.CoroutineScope
+import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.coroutines.CoroutinesConfig
+import org.fuusio.kaavio.input.DebugActionInput
+import org.fuusio.kaavio.input.DebugInput
+import org.fuusio.kaavio.output.DebugOutput
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
@@ -116,10 +120,30 @@ interface Graph {
                             value.name = field.name
                         }
                         nodes.add(value)
+                        if (Kaavio.isDebugMode) {
+                            getInputAndOutputNames(value)
+                        }
                     }
                 }
             }
             return nodes
+        }
+
+
+        private fun getInputAndOutputNames(node: Node) {
+            node::class.memberProperties.forEach { property ->
+                val field = property.javaField
+
+                if (field != null) {
+                    field.isAccessible = true
+
+                    when (val port = field.get(node)) {
+                        is DebugActionInput<*> -> { port.name = property.name }
+                        is DebugInput<*> -> { port.name = property.name }
+                        is DebugOutput<*> -> { port.name = property.name }
+                    }
+                }
+            }
         }
 
         /**

@@ -17,55 +17,23 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.node.Probe
-import org.junit.jupiter.api.*
+import org.fuusio.kaavio.Rx
+import org.fuusio.kaavio.Tx
+import org.fuusio.kaavio.testbench.None
+import org.fuusio.kaavio.testbench.Trigger
+import org.fuusio.kaavio.testbench.SingleInputNodeTestBench
 
-@DisplayName("Given TrueTrigger")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class TrueTriggerTest : KaavioTest() {
+internal class TrueTriggerTest : SingleInputNodeTestBench<Boolean, Unit>() {
 
-    @DisplayName("When receiving true")
-    @Nested
-    inner class TrueCases {
+    override fun testCases() = mapOf(
+        true to Trigger,
+        false to None,
 
-        // Test subject
-        private val node = TrueTrigger()
+    )
 
-        private val probe = Probe<Unit>()
-
-        @BeforeEach
-        fun beforeEachCase() {
-            node.output connect probe
-            node.input.onReceive(true)
+    override fun node(injector: Tx<Boolean>, probe: Rx<Unit>) =
+        TrueTrigger().apply {
+            injector connect input
+            output connect probe
         }
-
-        @Test
-        @DisplayName("Then TrueTrigger should output Unit")
-        fun case1() {
-            probe.assertHasValue(Unit)
-        }
-    }
-
-    @DisplayName("When receiving false")
-    @Nested
-    inner class FalseCase {
-
-        // Test subject
-        private val node = TrueTrigger()
-
-        private val probe = Probe<Unit>()
-
-        @BeforeEach
-        fun beforeEachCase() {
-            node.output connect probe
-            node.input.onReceive(false)
-        }
-
-        @Test
-        @DisplayName("Then TrueTrigger should not output Unit")
-        fun case1() {
-            probe.assertHasNoValue()
-        }
-    }
 }
