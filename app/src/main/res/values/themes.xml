@@ -22,4 +22,14 @@
     <style name="Theme.Kaavio.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Kaavio.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Widget.App.CircularProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CircularProgressIndicator</item>
+        <item name="trackThickness">6dp</item>
+    </style>
+
+    <style name="ThemeOverlay.App.CircularProgressIndicator" parent="">
+        <item name="colorPrimary">@color/design_default_color_secondary_variant</item>
+    </style>
+
 </resources>

@@ -7,17 +7,13 @@ import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
 import org.fuusio.kaavio.util.Quadruple
 import org.fuusio.kaavio.util.Quintuple
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 
 /**
  * [FiveInputsNodeTestBench] provides an abstract base class for implementing a test class
  * for a [Node] that have two inputs of types [I1], [I2], [I3], [I4], [I5] and a single output of
  * type [O].
  */
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: Any, I5: Any, O: Any>
     : NodeTestBench<O>() {
 
@@ -34,16 +30,6 @@ internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
      * by the node.
      */
     protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, injector3: Tx<I3>, injector4: Tx<I4>, injector5: Tx<I5>,probe: Rx<O>): Node
-
-    @BeforeAll
-    fun beforeAll() {
-        Kaavio.isDebugMode = true
-    }
-
-    @AfterAll
-    fun afterAll() {
-        Kaavio.isDebugMode = false
-    }
 
     @Test
     fun executeTestCases() {

@@ -38,6 +38,19 @@ android {
     }
 }
 
+task jarTests(type: Jar, dependsOn: "assembleDebugUnitTest") {
+    getArchiveClassifier().set('tests')
+    from "$buildDir/tmp/kotlin-classes/debugUnitTest"
+}
+
+configurations {
+    unitTestArtifact
+}
+
+artifacts {
+    unitTestArtifact jarTests
+}
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -59,7 +72,6 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.1"
 
-    //testImplementation 'junit:junit:4.13.2'
     testImplementation 'io.mockk:mockk:1.11.0'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
 

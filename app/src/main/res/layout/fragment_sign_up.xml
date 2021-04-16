@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".feature.signup.ui.SignUpFragment">
 
 
     <EditText
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -87,4 +87,18 @@
         android:text="@string/action_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_confirm_password" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_indicator"
+        style="@style/Widget.App.CircularProgressIndicator"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:trackCornerRadius="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

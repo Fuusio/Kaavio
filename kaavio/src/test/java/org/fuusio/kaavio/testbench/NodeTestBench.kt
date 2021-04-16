@@ -1,5 +1,6 @@
 package org.fuusio.kaavio.testbench
 
+import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.debug.node.Probe
@@ -7,7 +8,10 @@ import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.TestInstance
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
@@ -17,7 +21,18 @@ import kotlin.reflect.jvm.javaField
  *
  * * [O] the type parameter for output value type
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class NodeTestBench<O: Any> : KaavioTest() {
+
+    @BeforeAll
+    fun beforeAll() {
+        Kaavio.isDebugMode = true
+    }
+
+    @AfterAll
+    fun afterAll() {
+        Kaavio.isDebugMode = false
+    }
 
     protected fun assertTestCase(node: Node, probe: Probe<O>, inputValues: List<Any>, valueOption: ValueOption<O>) {
         when (valueOption) {

@@ -18,6 +18,7 @@
 package org.fuusio.kaavio.node.logic
 
 import org.fuusio.kaavio.*
+import org.fuusio.kaavio.KaavioTest
 
 import org.junit.Assert.*
 import org.junit.Test
@@ -37,7 +38,7 @@ internal class AndTest : KaavioTest() {
         val receiver = Input<Boolean>(mock())
 
         //node.input .rx (output1, output2, output3, output4)
-        node.input connect txs(output1, output2, output3, output4)
+        node.input connect outputs(output1, output2, output3, output4)
         node.output connect receiver
 
         // When

@@ -18,8 +18,6 @@
 package org.fuusio.kaavio.node.stream
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.node.stream.Sink
 
 import org.junit.Assert.*
 import org.junit.Test

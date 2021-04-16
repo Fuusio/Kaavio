@@ -1,6 +1,5 @@
 package org.fuusio.kaavio.testbench
 
-import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
@@ -8,8 +7,6 @@ import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -32,16 +29,6 @@ internal abstract class TwoInputsNodeTestBench<I1: Any, I2: Any, O: Any> : NodeT
      * the [probe] is used to receive the output produced by the node.
      */
     protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, probe: Rx<O>): Node
-
-    @BeforeAll
-    fun beforeAll() {
-        Kaavio.isDebugMode = true
-    }
-
-    @AfterAll
-    fun afterAll() {
-        Kaavio.isDebugMode = false
-    }
 
     @Test
     fun test() {

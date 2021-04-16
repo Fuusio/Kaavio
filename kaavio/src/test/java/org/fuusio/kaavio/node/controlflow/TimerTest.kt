@@ -21,10 +21,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.fuusio.kaavio.ActionInput
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Buffer
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.node.stream.IntSink
-import org.fuusio.kaavio.node.stream.Sink
 import org.junit.Assert
 import org.junit.Assert.fail
 import org.junit.Test

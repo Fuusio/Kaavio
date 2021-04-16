@@ -106,8 +106,9 @@ abstract class GraphTestBench<G: Graph>
         val inputs = injectionInputs()
         for (i in inputs.indices) {
             val injector = Injector<Any>()
-            injectors.add(injector)
+            injector.name = "Injector${i + 1}"
             injector.onInit(graph.context)
+            injectors.add(injector)
             @Suppress("UNCHECKED_CAST")
             injector.output connect inputs[i] as Rx<Any>
         }
@@ -119,6 +120,7 @@ abstract class GraphTestBench<G: Graph>
         val outputs = probedOutputs()
         for (i in outputs.indices) {
             val probe = Probe<Any>()
+            probe.name = "Probe${i + 1}"
             probe.onInit(graph.context)
             probes.add(probe)
             @Suppress("UNCHECKED_CAST")

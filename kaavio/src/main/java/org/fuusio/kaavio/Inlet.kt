@@ -49,4 +49,4 @@ class Inlet<I :Any>(private val node: Node) : Rx<I> {
 /**
  * Returns a [List] of [Tx] instances created from the given [transmitters].
  */
-fun <T : Any> txs(vararg transmitters: Tx<T>): List<Tx<T>> = mutableListOf(*transmitters)
+fun <T : Any> outputs(vararg transmitters: Tx<T>): List<Tx<T>> = mutableListOf(*transmitters)

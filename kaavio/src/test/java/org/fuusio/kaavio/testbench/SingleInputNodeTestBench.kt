@@ -5,8 +5,6 @@ import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -29,16 +27,6 @@ internal abstract class SingleInputNodeTestBench<I: Any, O: Any> : NodeTestBench
      * receive the output produced by the node.
      */
     protected abstract fun node(injector: Tx<I>, probe: Rx<O>): Node
-
-    @BeforeAll
-    fun beforeAll() {
-        Kaavio.isDebugMode = true
-    }
-
-    @AfterAll
-    fun afterAll() {
-        Kaavio.isDebugMode = false
-    }
 
     @Test
     fun executeTestCases() {

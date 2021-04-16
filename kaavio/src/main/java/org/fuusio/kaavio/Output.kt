@@ -50,6 +50,15 @@ open class Output<O :Any> : Tx<O> {
     }
 
     /**
+     * Connects the [Rx] objects in [receivers] to receive values from this [Output].
+     */
+    infix fun connect(receivers: List<Rx<O>>) {
+        receivers.forEach { receiver ->
+            this.receivers.add(receiver connect this)
+        }
+    }
+
+    /**
      * Adds the [receiver] given as a [Rx] object to receive values from this [Output].
      */
     internal fun addReceiver(receiver: Rx<O>) {
@@ -66,3 +75,8 @@ open class Output<O :Any> : Tx<O> {
      */
     fun hasReceiver(receiver: Rx<Int>): Boolean = receivers.contains(receiver)
 }
+
+/**
+ * Returns a [List] of [Rx] instances created from the given [receivers].
+ */
+fun <T : Any> inputs(vararg receivers: Rx<T>): List<Rx<T>> = mutableListOf(*receivers)

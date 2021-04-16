@@ -17,13 +17,13 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.SingleOutputNode
+import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
  * [Trigger] is a [org.fuusio.kaavio.Node] that can be programmatically triggered to transmit
  * a [Unit] to a connected receiving [org.fuusio.kaavio.Node].
  */
-class Trigger : SingleOutputNode<Unit>() {
+class Trigger : SingleInputSingleOutputNode<Unit, Unit>() {
 
     fun fire() {
         onFired()

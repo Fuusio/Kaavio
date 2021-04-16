@@ -18,7 +18,6 @@
 package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Buffer
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.node.stream.Sink
 import org.junit.Assert
