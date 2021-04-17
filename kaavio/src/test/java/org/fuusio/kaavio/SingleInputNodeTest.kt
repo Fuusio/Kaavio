@@ -1,6 +1,5 @@
 package org.fuusio.kaavio
 
-import org.fuusio.kaavio.KaavioTest
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName

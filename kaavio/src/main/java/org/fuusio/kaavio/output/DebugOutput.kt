@@ -49,7 +49,7 @@ class DebugOutput<O: Any>(val node: Node, var name: String? = null) : Output<O>(
     }
 
     /**
-     * Reconnects this [Output] to given [receiver]. Reconnecting can be used for debugging purposes
+     * Reconnects this [DebugOutput] to given [receiver]. Reconnecting can be used for debugging purposes
      * to replace actual [Node]s from a [org.fuusio.kaavio.graph.Graph] e.g. with mock nodes.
      */
     fun reconnect(receiver: Rx<O>) {

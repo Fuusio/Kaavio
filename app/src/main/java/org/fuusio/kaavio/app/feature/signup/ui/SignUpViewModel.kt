@@ -12,6 +12,7 @@ import org.fuusio.kaavio.node.validation.ValidatorFun
 import org.fuusio.kaavio.node.state.LiveData
 import org.fuusio.kaavio.node.stream.Map
 import org.fuusio.kaavio.inputs
+import org.fuusio.kaavio.node.function.Fun2
 import org.fuusio.kaavio.outputs
 
 data class SignUpViewModel(
@@ -36,14 +37,17 @@ data class SignUpViewModel(
     internal val isSignUpInfoValid: And = And(),
     internal val mapSignUpInfo: Fun3<String, String, String, SignUpInfo> =
         Fun3 { user, email, password -> SignUpInfo(email = email, password = password, user = user) },
-    internal val onSignUpInfoReady: Map<SignUpInfo, SignUpState> = Map { info -> SignUpInfoReady(info) },
+    internal val onSignUpInfoReady: Fun2<Boolean, SignUpInfo, SignUpState> =
+        Fun2 { isInfoValid, info ->
+            if (isInfoValid) SignUpInfoReady(info) else SignUpInfoInput},
 ) : GraphViewModel() {
 
     override fun onConnectNodes() {
         userName.output connect inputs(isUserNameValid.input, mapSignUpInfo.arg1)
         email1.output connect inputs(isEmailValid.input, mapSignUpInfo.arg2)
         password1.output connect inputs(isPasswordValid.input, mapSignUpInfo.arg3)
-        mapSignUpInfo.output connect onSignUpInfoReady.input
+        isSignUpInfoValid.output connect onSignUpInfoReady.arg1
+        mapSignUpInfo.output connect onSignUpInfoReady.arg2
 
         areEmailsEqual.input connect outputs(email1.output, email2.output)
         arePasswordsEqual.input connect outputs(password1.output, password2.output)

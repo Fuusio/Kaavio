@@ -29,6 +29,8 @@ import java.lang.Exception
  */
 object GraphDebugger {
 
+    var tag: String? = null
+
     private const val DEFAULT_INPUT_NAME = "input"
     private const val DEFAULT_OUTPUT_NAME = "output"
 
@@ -78,8 +80,8 @@ object GraphDebugger {
             val valueString = formatValueString(value)
             val senderName = if (outputName == null) "[$outputNodeName]" else "[$outputNodeName.$outputName]"
             val receiverName = if (inputName == null) "[$inputNodeName]" else "[$inputNodeName.$inputName]"
-
-            println("${entry.timestampLabel} : $senderName - $valueString -> $receiverName")
+            val entryTag = if (tag != null) "$tag: " else ""
+            println("$entryTag${entry.timestampLabel} : $senderName - $valueString -> $receiverName")
         }
     }
 

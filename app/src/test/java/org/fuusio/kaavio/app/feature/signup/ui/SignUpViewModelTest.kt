@@ -1,5 +1,6 @@
 package org.fuusio.kaavio.app.feature.signup.ui
 
+import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.testbench.GraphTestBench
 import org.fuusio.kaavio.testbench.None
 
@@ -29,6 +30,15 @@ internal class SignUpViewModelTest : GraphTestBench<SignUpViewModel>() {
     )
 
     /**
+     * A [Probe] node needed for mocking [SignUpViewModel.signUpState] node.
+     */
+    private val signUpStateProbe = Probe<SignUpState>()
+
+    init {
+        signUpStateProbe.name = "SignUpStateProbe"
+    }
+
+    /**
      * Returns a [List] of [org.fuusio.kaavio.Input]s for injecting test case input values.
      */
     override fun injectionInputs() = inputs(
@@ -54,11 +64,16 @@ internal class SignUpViewModelTest : GraphTestBench<SignUpViewModel>() {
 
     /**
      * This method can be used to replace actual nodes in the given [graph] with mocked ones.
-     * Examples of such nodes to be replaced are, e.g., nodes accessing data stores or performing
-     * networking.
+     * Examples of such nodes to be replaced are:
+     * * nodes accessing data stores
+     * * node performing networking
+     * * [org.fuusio.kaavio.node.state.LiveData] nodes
      */
     override fun mockNodes(graph: SignUpViewModel) {
-        graph.
+        graph.apply {
+            doSignUp.output.reconnect(signUpStateProbe)
+            onSignUpInfoReady.output.reconnect(signUpStateProbe)
+        }
     }
 
     /**

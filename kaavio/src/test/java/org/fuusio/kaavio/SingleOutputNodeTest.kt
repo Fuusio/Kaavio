@@ -1,7 +1,6 @@
 package org.fuusio.kaavio
 
 import io.mockk.verify
-import org.fuusio.kaavio.KaavioTest
 import org.junit.jupiter.api.*
 
 @DisplayName("Given SingleOutputNode")

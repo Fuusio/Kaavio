@@ -9,7 +9,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import org.fuusio.kaavio.app.databinding.FragmentSignUpBinding
+import org.fuusio.kaavio.app.databinding.SignUpFragmentBinding
 import org.fuusio.kaavio.extensions.connect
 
 class SignUpFragment : Fragment() {
@@ -30,8 +30,7 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
-
-        val binding = FragmentSignUpBinding.inflate(inflater)
+        val binding = SignUpFragmentBinding.inflate(inflater)
 
         userNameEditText = binding.editTextUserName
         emailEditText = binding.editTextEmail
@@ -72,6 +71,16 @@ class SignUpFragment : Fragment() {
                 hideProgressIndicator()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.activate()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.dispose()
     }
 
     private fun showProgressIndicator() {

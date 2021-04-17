@@ -19,14 +19,38 @@ abstract class GraphTestBench<G: Graph>
 
     protected lateinit var graph: G
 
+    /**
+     * Returns the test cases as a [Map] where:
+     *  * The map key is a [List] of input values that are injected to node inputs returned by
+     *  [injectionInputs], and
+     *  * The map value is a [List] of expected output values transmitted by the node outputs
+     *  returned by [probedOutputs].
+     */
     protected abstract fun testCases(): Map<List<Any>, List<Any?>>
 
-    protected abstract fun graph(): G
-
+    /**
+     * Returns a [List] of [org.fuusio.kaavio.Input]s for injecting test case input values.
+     */
     protected abstract fun injectionInputs(): List<Input<*>>
 
+    /**
+     * Returns a [List] of [org.fuusio.kaavio.Output]s for capturing the **actual** output values to
+     * be asserted against defined **expected** values.
+     */
     protected abstract fun probedOutputs(): List<Output<*>>
 
+    /**
+     * Returns the [org.fuusio.kaavio.graph.Graph] implementation to be tested.
+     */
+    protected abstract fun graph(): G
+
+    /**
+     * This method can be used to replace actual nodes in the given [graph] with mocked ones.
+     * Examples of such nodes to be replaced are:
+     * * nodes accessing data stores
+     * * node performing networking
+     * * [org.fuusio.kaavio.node.state.LiveData] nodes
+     */
     protected open fun mockNodes(graph: G) {}
 
     @Test
@@ -41,11 +65,11 @@ abstract class GraphTestBench<G: Graph>
                 GraphDebugger.startTesting(graph)
             }
 
-            mockNodes(graph)
             val injectors = createInjectors()
             val probes = createProbes()
 
             graph.activate()
+            mockNodes(graph)
 
             println()
             println("Injecting inputs: ${inputValuesList(inputs)}")
@@ -129,13 +153,35 @@ abstract class GraphTestBench<G: Graph>
         return probes
     }
 
+
+    /**
+     * Reconnects this [DebugOutput] to given [receiver]. Reconnecting can be used for debugging purposes
+     * to replace actual [Node]s from a [org.fuusio.kaavio.graph.Graph] e.g. with mock nodes.
+     */
+    fun <O : Any> Output<O>.reconnect(receiver: Rx<O>) {
+        this as DebugOutput<O>
+        reconnect(receiver)
+    }
+
     fun <K, V> cases(vararg pairs: Pair<K, V>): Map<K, V> = mapOf(*pairs)
 
+    /**
+     * Returns a [List] of input values.
+     */
     protected fun inputs(vararg values: Any): List<Any> = values.toList()
 
+    /**
+     * Returns a [List] of output values.
+     */
     protected fun outputs(vararg values: Any?): List<Any?> = values.toList()
 
+    /**
+     * Returns a [List] of [Input]s.
+     */
     protected fun inputs(vararg inputs: Input<*>): List<Input<*>> = inputs.toList()
 
+    /**
+     * Returns a [List] of [Outputs]s.
+     */
     protected fun outputs(vararg outputs: Output<*>): List<Output<*>> = outputs.toList()
 }
