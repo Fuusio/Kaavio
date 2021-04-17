@@ -30,7 +30,7 @@ internal class OrTest : KaavioTest() {
     fun `Test all inputs true`() {
         // Given
         val node = Or()
-        val outputs = Array(4) { Output<Boolean>() }
+        val outputs = Array(4) { Output<Boolean>(mock()) }
         val receiver = Input<Boolean>(mock())
         outputs.forEach { output -> output connect node.input }
         node.output connect receiver
@@ -47,7 +47,7 @@ internal class OrTest : KaavioTest() {
     fun `Test all inputs false`() {
         // Given
         val node = Or()
-        val outputs = Array(4) { Output<Boolean>() }
+        val outputs = Array(4) { Output<Boolean>(mock()) }
         val receiver = Input<Boolean>(mock())
         outputs.forEach { output -> output connect node.input }
         receiver connect node.output
@@ -64,7 +64,7 @@ internal class OrTest : KaavioTest() {
     fun `Test one of inputs true`() {
         // Given
         val node = Or()
-        val outputs = Array(4) { Output<Boolean>() }
+        val outputs = Array(4) { Output<Boolean>(mock()) }
         val receiver = Input<Boolean>(mock())
         outputs.forEach { output -> output connect node.input }
         node.output connect receiver

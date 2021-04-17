@@ -29,10 +29,10 @@ internal class AndTest : KaavioTest() {
     fun `Test 4 inputs true`() {
         // Given
         val node = And()
-        val output1 = Output<Boolean>()
-        val output2 = Output<Boolean>()
-        val output3 = Output<Boolean>()
-        val output4 = Output<Boolean>()
+        val output1 = Output<Boolean>(mock())
+        val output2 = Output<Boolean>(mock())
+        val output3 = Output<Boolean>(mock())
+        val output4 = Output<Boolean>(mock())
         val outputs = arrayOf(output1, output2, output3, output4)
 
         val receiver = Input<Boolean>(mock())
@@ -53,7 +53,7 @@ internal class AndTest : KaavioTest() {
     fun `Test all inputs true`() {
         // Given
         val node = And()
-        val outputs = Array(4) { Output<Boolean>() }
+        val outputs = Array(4) { Output<Boolean>(mock()) }
         val receiver = Input<Boolean>(mock())
         outputs.forEach { output -> output connect node.input }
         node.output connect receiver
@@ -70,7 +70,7 @@ internal class AndTest : KaavioTest() {
     fun `Test all inputs false`() {
         // Given
         val node = And()
-        val outputs = Array(4) { Output<Boolean>() }
+        val outputs = Array(4) { Output<Boolean>(mock()) }
         val receiver = Input<Boolean>(mock())
         outputs.forEach { output -> output connect node.input }
         receiver connect node.output
@@ -87,7 +87,7 @@ internal class AndTest : KaavioTest() {
     fun `Test one of inputs false`() {
         // Given
         val node = And()
-        val outputs = Array(4) { Output<Boolean>() }
+        val outputs = Array(4) { Output<Boolean>(mock()) }
         val receiver = Input<Boolean>(mock())
         outputs.forEach { output -> output connect node.input }
         node.output connect receiver

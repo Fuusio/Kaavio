@@ -21,7 +21,7 @@ package org.fuusio.kaavio
  * [Output] acts as a port to dispatch or transmit the given value to connected receiving [Node]s.
  * An output is typed.
  */
-open class Output<O :Any> : Tx<O> {
+open class Output<O :Any>(val node: Node) : Tx<O> {
     protected var value: O? = null
     protected var receivers: MutableSet<Rx<O>> = mutableSetOf()
 
@@ -73,7 +73,7 @@ open class Output<O :Any> : Tx<O> {
     /**
      * Tests if this [Output] has the given [receiver] as connected receiver.
      */
-    fun hasReceiver(receiver: Rx<Int>): Boolean = receivers.contains(receiver)
+    fun hasReceiver(receiver: Rx<O>): Boolean = receivers.contains(receiver)
 }
 
 /**

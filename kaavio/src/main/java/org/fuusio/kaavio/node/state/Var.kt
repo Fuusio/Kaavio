@@ -21,7 +21,7 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
 /**
- * [Var] TODO
+ * [Var] is a node that can store a value of specified type.
  */
 open class Var<I :Any> : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
     private var _value: I? = null

@@ -51,6 +51,7 @@ abstract class KaavioTest {
     protected fun <O: Any> mockOutput(): Output<O> {
         val output = mockk<Output<O>>()
         every { output.addReceiver(any()) } returns Unit
+        every { output.node } returns mockNode()
         return output
     }
 

@@ -17,46 +17,20 @@
  */
 package org.fuusio.kaavio.node.logic
 
-import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.*
+import org.fuusio.kaavio.testbench.SingleInputNodeTestBench
+import org.fuusio.kaavio.testbench.toValueOption
 
-import org.junit.Assert.*
-import org.junit.Test
+internal class NotTest : SingleInputNodeTestBench<Boolean, Boolean>() {
 
-internal class NotTest : KaavioTest() {
+    override fun testCases() = mapOf(
+        true to false.toValueOption(),
+        false to true.toValueOption(),
+    )
 
-    @Test
-    fun `Test input is true`() {
-        // Given
-        val node = Not()
-        val output = Output<Boolean>()
-        val receiver = Input<Boolean>(mock())
-        output connect node.input
-        node.output connect receiver
-
-        // When
-        output.transmit(true)
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(false, receiver.value)
-    }
-
-    @Test
-    fun `Test input is false`() {
-        // Given
-        val node = Not()
-        val output = Output<Boolean>()
-        val receiver = Input<Boolean>(mock())
-        output connect node.input
-        node.output connect receiver
-
-        // When
-        output.transmit(false)
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(true, receiver.value)
-    }
+    override fun node(injector: Tx<Boolean>, probe: Rx<Boolean>) =
+        Not().apply {
+            injector connect input
+            output connect probe
+        }
 }

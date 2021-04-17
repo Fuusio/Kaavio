@@ -26,6 +26,7 @@ import androidx.annotation.CallSuper
 @Suppress("LeakingThis")
 open class Input<I :Any>(val node: Node) : Rx<I> {
     private var _value: I? = null
+    private var statefulNode: StatefulNode<I>? = null
 
     /**
      * The received value (if any). See [hasValue].
@@ -65,6 +66,11 @@ open class Input<I :Any>(val node: Node) : Rx<I> {
         when (transmitter) {
             is Output -> {
                 transmitter.addReceiver(this)
+                val outputNode = transmitter.node
+                if (outputNode is StatefulNode<*>) {
+                    @Suppress("UNCHECKED_CAST")
+                    statefulNode = outputNode as StatefulNode<I>
+                }
                 this
             }
             else -> this
@@ -87,5 +93,16 @@ open class Input<I :Any>(val node: Node) : Rx<I> {
     /**
      * Tests if this [Input] has received a value.
      */
-    open fun hasValue(): Boolean = _value != null
+    open fun hasValue(): Boolean =
+        if (_value != null) {
+            true
+        } else {
+            val node = statefulNode
+            if (node != null) {
+                _value = node.state
+                _value != null
+            } else {
+                false
+            }
+        }
 }

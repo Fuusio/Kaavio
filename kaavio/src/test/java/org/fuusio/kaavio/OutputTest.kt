@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio
 
+import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
@@ -24,10 +25,8 @@ import org.junit.jupiter.api.Assertions.*
 @DisplayName("Given Output")
 internal class OutputTest : KaavioTest() {
 
-    private val node = mockNode()
-
     // Test subject
-    private val output = Output<Int>()
+    private val output = Output<Int>(mockk())
 
     @DisplayName("When transmitting Int value 42")
     @Nested

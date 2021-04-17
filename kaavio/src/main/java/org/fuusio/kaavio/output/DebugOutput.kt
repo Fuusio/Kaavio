@@ -28,7 +28,7 @@ import org.fuusio.kaavio.debug.node.Probes
  * [DebugOutput] implements an [Output] type which can be used for debugging the transmitted values
  * by notifying [GraphDebugger] when ever a value is transmitted via this [DebugOutput].
  */
-class DebugOutput<O: Any>(val node: Node, var name: String? = null) : Output<O>() {
+class DebugOutput<O: Any>(node: Node, var name: String? = null) : Output<O>(node) {
 
     override fun transmit() {
         value?.let { receivers.forEach { receiver ->

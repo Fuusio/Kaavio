@@ -25,5 +25,5 @@ class DefaultOutputFactory : OutputFactory {
 
     override fun <O :Any> createDebugOutput(node: Node) = DebugOutput<O>(node)
 
-    override fun <O :Any> createOutput(node: Node) = Output<O>()
+    override fun <O :Any> createOutput(node: Node) = Output<O>(node)
 }

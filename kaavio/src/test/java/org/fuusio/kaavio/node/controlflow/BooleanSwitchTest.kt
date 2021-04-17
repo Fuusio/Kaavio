@@ -18,8 +18,8 @@
 package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.node.stream.Sink
+import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.node.stream.BooleanInjector
 import org.junit.Assert
 import org.junit.Test
 
@@ -29,39 +29,39 @@ class BooleanSwitchTest : KaavioTest() {
     fun `Test inject true to BooleanSwitch`() {
         // Given
         val switch = BooleanSwitch()
-        val injector = Injector<Boolean>()
-        val trueSink = Sink<Unit>()
-        val falseSink = Sink<Unit>()
+        val injector = BooleanInjector()
+        val trueProbe = Probe<Unit>()
+        val falseProbe = Probe<Unit>()
 
         injector.output connect switch.input
-        switch.onTrue connect trueSink.input
-        switch.onFalse connect falseSink.input
+        switch.onTrue connect trueProbe
+        switch.onFalse connect falseProbe
 
         // When
         injector.inject(true)
 
         // Then
-        Assert.assertFalse(falseSink.hasValue())
-        Assert.assertTrue(trueSink.hasValue())
+        Assert.assertTrue(trueProbe.hasValue())
+        Assert.assertFalse(falseProbe.hasValue())
     }
 
     @Test
     fun `Test inject false to BooleanSwitch`() {
         // Given
         val switch = BooleanSwitch()
-        val injector = Injector<Boolean>()
-        val trueSink = Sink<Unit>()
-        val falseSink = Sink<Unit>()
+        val injector = BooleanInjector()
+        val trueProbe = Probe<Unit>()
+        val falseProbe = Probe<Unit>()
 
         injector.output connect switch.input
-        switch.onTrue connect trueSink.input
-        switch.onFalse connect falseSink.input
+        switch.onTrue connect trueProbe
+        switch.onFalse connect falseProbe
 
         // When
         injector.inject(false)
 
         // Then
-        Assert.assertTrue(falseSink.hasValue())
-        Assert.assertFalse(trueSink.hasValue())
+        Assert.assertFalse(trueProbe.hasValue())
+        Assert.assertTrue(falseProbe.hasValue())
     }
 }
