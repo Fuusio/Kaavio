@@ -23,6 +23,7 @@ import org.fuusio.kaavio.factory.InputFactory
 import org.fuusio.kaavio.factory.OutputFactory
 import org.fuusio.kaavio.coroutines.CoroutinesConfig
 import org.fuusio.kaavio.coroutines.DefaultCoroutinesConfig
+import java.io.PrintStream
 
 /**
  * [Kaavio] is a singleton configuration object for all kaavio [org.fuusio.kaavio.graph.Graph]
@@ -46,6 +47,11 @@ object Kaavio {
      */
     var inputFactory: InputFactory = DefaultInputFactory()
 
+    /**
+     * The out [PrintStream] which is used, for instance, by [org.fuusio.kaavio.debug.node.Print]
+     * node.
+     */
+    var out: PrintStream = System.out
     /**
      * The [OutputFactory] used for creating [Output] instances when function [output] is invoked.
      */

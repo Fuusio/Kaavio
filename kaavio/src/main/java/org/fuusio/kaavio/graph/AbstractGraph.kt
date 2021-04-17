@@ -28,8 +28,8 @@ import org.fuusio.kaavio.coroutines.CoroutinesConfig
  */
 abstract class AbstractGraph : Graph {
     private var _context: GraphContext? = null
-
     private var areNodesAttached: Boolean = false
+    private var isActivated: Boolean = false
 
     override val context: GraphContext
         get() = _context ?: GraphContext(this).also { _context = it }
@@ -40,18 +40,20 @@ abstract class AbstractGraph : Graph {
     override val coroutinesConfig: CoroutinesConfig = Kaavio.coroutinesConfig
 
     final override fun activate() {
-        attachNodes(getNodes())
+        if (!isActivated) {
+            isActivated = true
+            attachNodes(getNodes())
 
-        if (!areNodesAttached) {
-            throw IllegalStateException("Nodes are not attached to Graph by invoking Graph.attachNodes(List).")
+            if (!areNodesAttached) {
+                throw IllegalStateException("Nodes are not attached to Graph by invoking Graph.attachNodes(List).")
+            }
+            onConnectNodes()
+            onActivate()
+            onInitialize()
         }
-        onConnectNodes()
-        onActivate()
-        onInitialize()
     }
 
     final override fun dispose() {
-        // TBD
         onDispose()
     }
 

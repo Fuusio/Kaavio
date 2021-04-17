@@ -28,7 +28,6 @@ internal class TrueTriggerTest : SingleInputNodeTestBench<Boolean, Unit>() {
     override fun testCases() = mapOf(
         true to Trigger,
         false to None,
-
     )
 
     override fun node(injector: Tx<Boolean>, probe: Rx<Unit>) =

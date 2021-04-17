@@ -17,20 +17,22 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.SingleInputNode
+import org.fuusio.kaavio.Rx
+import org.fuusio.kaavio.Tx
+import org.fuusio.kaavio.testbench.None
+import org.fuusio.kaavio.testbench.Trigger
+import org.fuusio.kaavio.testbench.SingleInputNodeTestBench
 
-/**
- * [IfElse] is a node that uses the given [function] and received input value to select either the
- * [onTrue] or [onFalse] output transmission.
- */
-class IfElse<I : Any>(val function: (I) -> Boolean) : SingleInputNode<I>() {
-    val onTrue = outputOf<Unit>()
-    val onFalse = outputOf<Unit>()
+internal class IfTest : SingleInputNodeTestBench<Int, Unit>() {
 
-    override fun onFired() {
-        when (function(input.value)) {
-            true -> onTrue.transmit(Unit)
-            false -> onFalse.transmit(Unit)
+    override fun testCases() = mapOf(
+        64 to Trigger,
+        10 to None,
+    )
+
+    override fun node(injector: Tx<Int>, probe: Rx<Unit>) =
+        If { int: Int -> int > 42 }.apply {
+            injector connect input
+            output connect probe
         }
-    }
 }

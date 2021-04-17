@@ -17,20 +17,17 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.SingleInputNode
+import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
- * [IfElse] is a node that uses the given [function] and received input value to select either the
- * [onTrue] or [onFalse] output transmission.
+ * [If] is a node that uses the given [function] and received input value to select if value [Unit]
+ * is transmitted to [output].
  */
-class IfElse<I : Any>(val function: (I) -> Boolean) : SingleInputNode<I>() {
-    val onTrue = outputOf<Unit>()
-    val onFalse = outputOf<Unit>()
+class If<I : Any>(val function: (I) -> Boolean) : SingleInputSingleOutputNode<I, Unit>() {
 
     override fun onFired() {
-        when (function(input.value)) {
-            true -> onTrue.transmit(Unit)
-            false -> onFalse.transmit(Unit)
+        if (function(input.value)) {
+            output.transmit(Unit)
         }
     }
 }
