@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.state
 
+import androidx.annotation.MainThread
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -37,36 +38,69 @@ class LiveDataNode<I : Any> : SingleInputSingleOutputNode<I, I>(), StatefulNode<
 
     override fun hasValue(): Boolean = liveData.value != null
 
+    /**
+     * See [MutableLiveData.observe].
+     */
+    @MainThread
     fun observe(owner: LifecycleOwner, observer: Observer<I>) {
         liveData.observe(owner, observer)
     }
 
-    fun observer(owner: () -> Lifecycle, observer: (I) -> Unit) {
+    /**
+     * See [MutableLiveData.observe].
+     */
+    @MainThread
+    fun observe(owner: () -> Lifecycle, observer: (I) -> Unit) {
         liveData.observe(owner, observer)
     }
 
+    /**
+     * See [MutableLiveData.observeForever].
+     */
+    @MainThread
     fun observeForever(observer: Observer<I>) {
         liveData.observeForever(observer)
     }
 
+    /**
+     * See [MutableLiveData.removeObserver].
+     */
+    @MainThread
     fun removeObserver(observer: Observer<I>) {
         liveData.removeObserver(observer)
     }
 
+    /**
+     * See [MutableLiveData.removeObserver].
+     */
+    @MainThread
     fun removeObserver(owner: LifecycleOwner) {
         liveData.removeObservers(owner)
     }
 
+    /**
+     * See [MutableLiveData.postValue].
+     */
     fun postValue(value: I) {
         liveData.postValue(value)
     }
 
+    /**
+     * See [MutableLiveData.setValue].
+     */
+    @MainThread
     fun setValue(value: I) {
         liveData.value = value
     }
 
+    /**
+     * See [MutableLiveData.hasActiveObservers]
+     */
     fun hasActiveObservers(): Boolean = liveData.hasActiveObservers()
 
+    /**
+     * See [MutableLiveData.hasObservers]
+     */
     fun hasObservers(): Boolean = liveData.hasObservers()
 
     override fun onFired() {
