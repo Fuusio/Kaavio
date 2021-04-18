@@ -24,8 +24,8 @@ import org.fuusio.kaavio.testbench.toValueOption
 
 internal class Fun3Test : ThreeInputsNodeTestBench<String, String, String, String>() {
 
-    override fun testCases() = mapOf(
-        triple("Kotlin ", "is ", "fun!") to "Kotlin is fun!".toValueOption()
+    override fun testCases() = cases(
+        inputValues("Kotlin ", "is ", "fun!") to "Kotlin is fun!".toValueOption()
     )
 
     override fun node(injector1: Tx<String>, injector2: Tx<String>, injector3: Tx<String>, probe: Rx<String>) =

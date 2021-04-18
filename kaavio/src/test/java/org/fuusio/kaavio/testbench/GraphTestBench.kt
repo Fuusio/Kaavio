@@ -6,18 +6,31 @@ import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
 /**
  * [GraphTestBench] provides an abstract base class for implementing test cases for a concrete
  * implementation of [Graph].
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class GraphTestBench<G: Graph>
     : TestBench() {
 
     protected lateinit var graph: G
 
+    @BeforeAll
+    fun beforeAll() {
+        Kaavio.isDebugMode = true
+    }
+
+    @AfterAll
+    fun afterAll() {
+        Kaavio.isDebugMode = false
+    }
     /**
      * Returns the test cases as a [Map] where:
      *  * The map key is a [List] of input values that are injected to node inputs returned by

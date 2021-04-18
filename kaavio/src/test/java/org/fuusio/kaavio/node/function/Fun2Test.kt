@@ -23,8 +23,8 @@ import org.fuusio.kaavio.testbench.toValueOption
 
 internal class Fun2Test : TwoInputsNodeTestBench<String, String, String>() {
 
-    override fun testCases() = mapOf(
-        pair("Hello ", "World!") to "Hello World!".toValueOption()
+    override fun testCases() = cases(
+        inputValues("Hello ", "World!") to "Hello World!".toValueOption()
     )
 
     override fun node(injector1: Tx<String>, injector2: Tx<String>, probe: Rx<String>) =

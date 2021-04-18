@@ -67,12 +67,4 @@ abstract class SingleOutputNodeTestBench<O: Any> : NodeTestBench() {
         if (!isSingleInput) valuesList.append(")")
         return "Test case for node '$nodeName' failed: For input ${if (isSingleInput) "value" else "values"}: $valuesList, expected output value: ${valueToString(expectedValue)}. Actual output value: ${valueToString(actualValue)}"
     }
-
-    fun <T1, T2> pair(first: T1, second: T2): Pair<T1, T2> = Pair(first, second)
-
-    fun <T1, T2, T3> triple(first: T1, second: T2, third: T3): Triple<T1, T2, T3> = Triple(first, second, third)
-
-    fun <T1, T2, T3, T4> quadruple(first: T1, second: T2, third: T3, fourth: T4): Quadruple<T1, T2, T3, T4> = Quadruple(first, second, third, fourth)
-
-    fun <T1, T2, T3, T4, T5> quintuple(first: T1, second: T2, third: T3, fourth: T4, fifth: T5): Quintuple<T1, T2, T3, T4, T5> = Quintuple(first, second, third, fourth, fifth)
 }

@@ -4,7 +4,7 @@ import org.fuusio.kaavio.testbench.NestedGraphNodeTestBench
 
 class CalculatorTest : NestedGraphNodeTestBench<Calculator>() {
 
-    override fun testCases()= cases(
+    override fun testCases() = cases(
         inputValues(2f, 3f) to outputValues(5f, 6f),
     )
 

@@ -23,8 +23,8 @@ import org.fuusio.kaavio.testbench.toValueOption
 
 internal class Fun5Test : FiveInputsNodeTestBench<Int, Int, Int, Int, Int, Int>() {
 
-    override fun testCases() = mapOf(
-        quintuple(1, 20, 300, 4000, 50000)
+    override fun testCases() = cases(
+        inputValues(1, 20, 300, 4000, 50000)
                 to 54321.toValueOption()
     )
 

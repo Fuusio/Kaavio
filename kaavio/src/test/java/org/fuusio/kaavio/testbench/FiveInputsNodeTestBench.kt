@@ -5,8 +5,6 @@ import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
-import org.fuusio.kaavio.util.Quadruple
-import org.fuusio.kaavio.util.Quintuple
 import org.junit.jupiter.api.Test
 
 /**
@@ -18,10 +16,10 @@ internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
     : SingleOutputNodeTestBench<O>() {
 
     /**
-     * Returns a [Map] of test case entries where the key is a [Quadruple] containing the input values
+     * Returns a [Map] of test case entries where the key is a [List] containing the input values
      * (of types [I1], [I2], [I3], [I4], [I5]) and the value is the expected output (of type [O]).
      */
-    protected abstract fun testCases(): Map<Quintuple<I1, I2, I3, I4, I5>, ValueOption<O>>
+    protected abstract fun testCases(): Map<List<Any>, ValueOption<O>>
 
     /**
      * Creates the instance of [Node] for testing and connects it to given [injector1], [injector2],
@@ -31,6 +29,7 @@ internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
      */
     protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, injector3: Tx<I3>, injector4: Tx<I4>, injector5: Tx<I5>,probe: Rx<O>): Node
 
+    @Suppress("UNCHECKED_CAST")
     @Test
     fun executeTestCases() {
         val injector1 = Injector<I1>()
@@ -53,12 +52,12 @@ internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
             probe.input as DebugInput<O>)
         getInputAndOutputNames(node)
         testCases().forEach { (inputs, valueOption) ->
-            injector1.inject(inputs.first)
-            injector2.inject(inputs.second)
-            injector3.inject(inputs.third)
-            injector4.inject(inputs.fourth)
-            injector5.inject(inputs.fifth)
-            assertTestCase(node, probe, listOf(inputs.first, inputs.second, inputs.third, inputs.fourth, inputs.fifth), valueOption)
+            injector1.inject(inputs[0] as I1)
+            injector2.inject(inputs[1] as I2)
+            injector3.inject(inputs[2] as I3)
+            injector4.inject(inputs[3] as I4)
+            injector5.inject(inputs[4] as I5)
+            assertTestCase(node, probe, listOf(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]), valueOption)
         }
     }
 }

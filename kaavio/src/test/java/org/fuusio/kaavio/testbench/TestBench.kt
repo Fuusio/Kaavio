@@ -1,15 +1,9 @@
 package org.fuusio.kaavio.testbench
 
-import org.fuusio.kaavio.Input
-import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.Rx
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.*
 import org.fuusio.kaavio.output.DebugOutput
-import org.fuusio.kaavio.util.Quadruple
-import org.fuusio.kaavio.util.Quintuple
 
-abstract class TestBench {
+abstract class TestBench : KaavioTest() {
 
     protected fun assertEquals(expected: Any?, actual: Any?, message: String) {
         if (expected != actual) throw Error(message)
@@ -34,24 +28,6 @@ abstract class TestBench {
     fun <O : Any> Output<O>.reconnect(receiver: Rx<O>) {
         this as DebugOutput<O>
         reconnect(receiver)
-    }
-
-    /**
-     * Asserts that this [Probe] has received the specified [value].
-     */
-    fun Probe<*>.assertHasValue(value: Any) {
-        if (!hasValue(value)) {
-            org.junit.jupiter.api.fail("Probe '$name' has not received value: '$value'")
-        }
-    }
-
-    /**
-     * Asserts that this [Probe] has not transmitted any value to its connected [Probe].
-     */
-    fun Probe<*>.assertHasNoValue() {
-        if (hasValue()) {
-            org.junit.jupiter.api.fail("Node '$name' has received value: '$latestValue'")
-        }
     }
 
     fun <K, V> cases(vararg pairs: Pair<K, V>): Map<K, V> = mapOf(*pairs)

@@ -7,7 +7,6 @@ import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
-import org.fuusio.kaavio.util.Quadruple
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -20,10 +19,10 @@ internal abstract class FourInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
     : SingleOutputNodeTestBench<O>() {
 
     /**
-     * Returns a [Map] of test case entries where the key is a [Quadruple] containing the input values
+     * Returns a [Map] of test case entries where the key is a [List] containing the input values
      * (of types [I1], [I2], [I3], [I4]) and the value is the expected output (of type [O]).
      */
-    protected abstract fun testCases(): Map<Quadruple<I1, I2, I3, I4>, ValueOption<O>>
+    protected abstract fun testCases(): Map<List<Any>, ValueOption<O>>
 
     /**
      * Creates the instance of [Node] for testing and connects it to given [injector1], [injector2],
@@ -51,11 +50,11 @@ internal abstract class FourInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
             probe.input as DebugInput<O>)
         getInputAndOutputNames(node)
         testCases().forEach { (inputs, valueOption) ->
-            injector1.inject(inputs.first)
-            injector2.inject(inputs.second)
-            injector3.inject(inputs.third)
-            injector4.inject(inputs.fourth)
-            assertTestCase(node, probe, listOf(inputs.first, inputs.second, inputs.third, inputs.fourth), valueOption)
+            injector1.inject(inputs[0] as I1)
+            injector2.inject(inputs[1] as I2)
+            injector3.inject(inputs[2] as I3)
+            injector4.inject(inputs[3] as I4)
+            assertTestCase(node, probe, listOf(inputs[0], inputs[1], inputs[2], inputs[3]), valueOption)
         }
     }
 }

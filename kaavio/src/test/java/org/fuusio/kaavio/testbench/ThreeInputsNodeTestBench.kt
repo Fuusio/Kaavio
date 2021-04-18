@@ -19,10 +19,10 @@ internal abstract class ThreeInputsNodeTestBench<I1: Any, I2: Any, I3: Any, O: A
     : SingleOutputNodeTestBench<O>() {
 
     /**
-     * Returns a [Map] of test case entries where the key is a [Triple] containing the input values
+     * Returns a [Map] of test case entries where the key is a [List] containing the input values
      * (of types [I1], [I2], [I3]) and the value is the expected output (of type [O]).
      */
-    protected abstract fun testCases(): Map<Triple<I1, I2, I3>, ValueOption<O>>
+    protected abstract fun testCases(): Map<List<Any>, ValueOption<O>>
 
     /**
      * Creates the instance of [Node] for testing and connects it to given [injector1], [injector2],
@@ -31,6 +31,7 @@ internal abstract class ThreeInputsNodeTestBench<I1: Any, I2: Any, I3: Any, O: A
      */
     protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, injector3: Tx<I3>, probe: Rx<O>): Node
 
+    @Suppress("UNCHECKED_CAST")
     @Test
     fun executeTestCases() {
         val injector1 = Injector<I1>()
@@ -47,10 +48,10 @@ internal abstract class ThreeInputsNodeTestBench<I1: Any, I2: Any, I3: Any, O: A
             probe.input as DebugInput<O>)
         getInputAndOutputNames(node)
         testCases().forEach { (inputs, valueOption) ->
-            injector1.inject(inputs.first)
-            injector2.inject(inputs.second)
-            injector3.inject(inputs.third)
-            assertTestCase(node, probe, listOf(inputs.first, inputs.second, inputs.third), valueOption)
+            injector1.inject(inputs[0] as I1)
+            injector2.inject(inputs[1] as I2)
+            injector3.inject(inputs[2] as I3)
+            assertTestCase(node, probe, listOf(inputs[0], inputs[1], inputs[2]), valueOption)
         }
     }
 }

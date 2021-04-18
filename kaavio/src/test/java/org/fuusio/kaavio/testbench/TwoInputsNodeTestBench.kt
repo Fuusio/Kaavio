@@ -18,10 +18,10 @@ import org.junit.jupiter.api.TestInstance
 internal abstract class TwoInputsNodeTestBench<I1: Any, I2: Any, O: Any> : SingleOutputNodeTestBench<O>() {
 
     /**
-     * Returns a [Map] of test case entries where the key is a [Pair] containing the input values
+     * Returns a [Map] of test case entries where the key is a [List] containing the input values
      * (of types [I1], [I2]) and the value is the expected output (of type [O]).
      */
-    protected abstract fun testCases(): Map<Pair<I1, I2>, ValueOption<O>>
+    protected abstract fun testCases(): Map<List<Any>, ValueOption<O>>
 
     /**
      * Creates the instance of [Node] for testing and connects it to given [injector1], [injector2],
@@ -30,8 +30,9 @@ internal abstract class TwoInputsNodeTestBench<I1: Any, I2: Any, O: Any> : Singl
      */
     protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, probe: Rx<O>): Node
 
+    @Suppress("UNCHECKED_CAST")
     @Test
-    fun test() {
+    fun executeTestCases() {
         val injector1 = Injector<I1>()
         val injector2 = Injector<I2>()
         injector1.name = "Injector1"
@@ -43,9 +44,9 @@ internal abstract class TwoInputsNodeTestBench<I1: Any, I2: Any, O: Any> : Singl
             probe.input as DebugInput<O>)
         getInputAndOutputNames(node)
         testCases().forEach { (inputs, valueOption) ->
-            injector1.inject(inputs.first)
-            injector2.inject(inputs.second)
-            assertTestCase(node, probe, listOf(inputs.first, inputs.second), valueOption)
+            injector1.inject(inputs[0] as I1)
+            injector2.inject(inputs[1] as I2)
+            assertTestCase(node, probe, listOf(inputs[0], inputs[1]), valueOption)
         }
     }
 }

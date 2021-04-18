@@ -23,8 +23,8 @@ import org.fuusio.kaavio.testbench.toValueOption
 
 internal class Fun4Test : FourInputsNodeTestBench<String, String, String, String, String>() {
 
-    override fun testCases() = mapOf(
-        quadruple("Kotlin ", "is ", "freaking ", "fun!")
+    override fun testCases() = cases(
+        inputValues("Kotlin ", "is ", "freaking ", "fun!")
                 to "Kotlin is freaking fun!".toValueOption()
     )
 
