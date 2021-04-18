@@ -23,6 +23,8 @@ import org.fuusio.kaavio.factory.InputFactory
 import org.fuusio.kaavio.factory.OutputFactory
 import org.fuusio.kaavio.coroutines.CoroutinesConfig
 import org.fuusio.kaavio.coroutines.DefaultCoroutinesConfig
+import org.fuusio.kaavio.input.DelegateInput
+import org.fuusio.kaavio.output.DelegateOutput
 import java.io.PrintStream
 
 /**
@@ -63,6 +65,18 @@ object Kaavio {
     fun <I: Any> actionInput(node: Node, action: (I) -> Unit) =
         if (isDebugMode) inputFactory.createDebugActionInput(node, action)
         else inputFactory.createActionInput(node, action)
+
+    /**
+     * Creates a new instance of an [DelegateInput] for the given actual [input] and [Node].
+     */
+    fun <I: Any> delegateInput(input: Input<I>, node: Node): DelegateInput<I> =
+        inputFactory.createDelegateInput(input, node)
+
+    /**
+     * Creates a new instance of an [DelegateOutput] for the given actual [output] and [Node].
+     */
+    fun <O: Any> delegateOutput(output: Output<O> ,node: Node): DelegateOutput<O> =
+        outputFactory.createDelegateOutput(output, node)
 
     /**
      * Creates a new instance of an [Input] for the given [Node].

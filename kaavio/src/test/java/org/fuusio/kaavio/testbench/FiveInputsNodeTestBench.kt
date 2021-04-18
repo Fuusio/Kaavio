@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
  * type [O].
  */
 internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: Any, I5: Any, O: Any>
-    : NodeTestBench<O>() {
+    : SingleOutputNodeTestBench<O>() {
 
     /**
      * Returns a [Map] of test case entries where the key is a [Quadruple] containing the input values

@@ -1,22 +1,25 @@
 package org.fuusio.kaavio.testbench
 
+import io.mockk.mockk
 import org.fuusio.kaavio.*
 import org.fuusio.kaavio.debug.GraphDebugger
 import org.fuusio.kaavio.debug.node.Probe
 import org.fuusio.kaavio.graph.Graph
+import org.fuusio.kaavio.graph.GraphContext
+import org.fuusio.kaavio.node.graph.NestedGraphNode
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
-import org.junit.jupiter.api.Assertions.*
+import org.fuusio.kaavio.output.DelegateOutput
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 /**
- * [GraphTestBench] provides an abstract base class for implementing test cases for a concrete
- * implementation of [Graph].
+ * [NestedGraphNodeTestBench] provides an abstract base class for implementing [NodeTestBench] for
+ * a concrete implementation of [NestedGraphNode].
  */
-abstract class GraphTestBench<G: Graph>
-    : TestBench() {
+abstract class NestedGraphNodeTestBench<N : NestedGraphNode<*>> : NodeTestBench() {
 
-    protected lateinit var graph: G
+    protected lateinit var node: N
 
     /**
      * Returns the test cases as a [Map] where:
@@ -28,47 +31,49 @@ abstract class GraphTestBench<G: Graph>
     protected abstract fun testCases(): Map<List<Any>, List<Any?>>
 
     /**
-     * Returns a [List] of [org.fuusio.kaavio.Input]s for injecting test case input values.
+     * Returns a [List] of [org.fuusio.kaavio.Input]s of the tested [NestedGraphNode] node for
+     * injecting test case input values.
      */
     protected abstract fun injectionInputs(): List<Input<*>>
 
     /**
-     * Returns a [List] of [org.fuusio.kaavio.Output]s for capturing the **actual** output values to
-     * be asserted against defined **expected** values.
+     * Returns a [List] of [org.fuusio.kaavio.Output]s of the tested [NestedGraphNode] node for
+     * capturing the **actual** output values to be asserted against defined **expected** values.
      */
     protected abstract fun probedOutputs(): List<Output<*>>
 
     /**
-     * Returns the [org.fuusio.kaavio.graph.Graph] implementation to be tested.
+     * Creates and returns an instance of [NestedGraphNode] of type [N]
      */
-    protected abstract fun graph(): G
+    abstract fun node(): N
 
     /**
-     * This method can be used to replace actual nodes in the given [graph] with mocked ones.
+     * This method can be used to replace actual nodes of the encapsulated [Graph] with mocked ones.
      * Examples of such nodes to be replaced are:
      * * nodes accessing data stores
      * * node performing networking
      * * [org.fuusio.kaavio.node.state.LiveData] nodes
      */
-    protected open fun mockNodes(graph: G) {}
+    protected open fun mockNodes() {}
 
     @Test
     open fun test() {
         var isDebuggerStarted = false
 
         testCases().forEach { (inputs, outputs) ->
-            graph = graph()
 
+            node = node()
+
+            val context = mockk<GraphContext>()
             if (!isDebuggerStarted) {
                 isDebuggerStarted = true
-                GraphDebugger.startTesting(graph)
             }
 
-            val injectors = createInjectors()
-            val probes = createProbes()
+            val injectors = createInjectors(context)
+            val probes = createProbes(context)
 
-            graph.activate()
-            mockNodes(graph)
+            node.onInit(context)
+            mockNodes()
 
             println()
             println("Injecting inputs: ${inputValuesList(inputs)}")
@@ -77,7 +82,7 @@ abstract class GraphTestBench<G: Graph>
             injectInputs(inputs, injectors)
             assertOutputs(outputs, probes)
 
-            graph.dispose()
+            node.onDispose()
         }
         GraphDebugger.endTesting()
         Kaavio.isDebugMode = false
@@ -96,7 +101,7 @@ abstract class GraphTestBench<G: Graph>
 
     private fun injectInputs(inputValues: List<Any>, injectors: List<Injector<Any>>) {
         val size = inputValues.size
-        assertTrue(size <= injectors.size)
+        Assertions.assertTrue(size <= injectors.size)
         for (i in 0 until size) {
             when (val value = inputValues[i]) {
                 None -> {}
@@ -107,30 +112,32 @@ abstract class GraphTestBench<G: Graph>
 
     private fun assertOutputs(expectedValues: List<Any?>, probes: List<Probe<Any>>) {
         val size = expectedValues.size
-        assertEquals(size, probes.size)
+        Assertions.assertEquals(size, probes.size)
         for (i in 0 until size) {
             val output = probedOutputs()[i]
-            output as DebugOutput
+            output as DelegateOutput
             if (probes[i].hasValue()) {
-                assertEquals(
+                Assertions.assertEquals(
                     expectedValues[i],
                     probes[i].latestValue,
-                    "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${probes[i].latestValue}].")
+                    "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${probes[i].latestValue}]."
+                )
             } else {
-                assertTrue(
+                Assertions.assertTrue(
                     expectedValues[i] == null || expectedValues[i] == None,
-                    "Node ${Graph.getNodeName(output.node)} should not have outputted a value.")
+                    "Node ${Graph.getNodeName(output.node)} should not have outputted a value."
+                )
             }
         }
     }
 
-    protected open fun createInjectors(): List<Injector<Any>> {
+    protected open fun createInjectors(context: GraphContext): List<Injector<Any>> {
         val injectors = mutableListOf<Injector<Any>>()
         val inputs = injectionInputs()
         for (i in inputs.indices) {
             val injector = Injector<Any>()
             injector.name = "Injector${i + 1}"
-            injector.onInit(graph.context)
+            injector.onInit(context)
             injectors.add(injector)
             @Suppress("UNCHECKED_CAST")
             injector.output connect inputs[i] as Rx<Any>
@@ -138,13 +145,13 @@ abstract class GraphTestBench<G: Graph>
         return injectors
     }
 
-    protected open fun createProbes(): List<Probe<Any>> {
+    protected open fun createProbes(context: GraphContext): List<Probe<Any>> {
         val probes = mutableListOf<Probe<Any>>()
         val outputs = probedOutputs()
         for (i in outputs.indices) {
             val probe = Probe<Any>()
             probe.name = "Probe${i + 1}"
-            probe.onInit(graph.context)
+            probe.onInit(context)
             probes.add(probe)
             @Suppress("UNCHECKED_CAST")
             (outputs[i] as Tx<Any>) connect probe

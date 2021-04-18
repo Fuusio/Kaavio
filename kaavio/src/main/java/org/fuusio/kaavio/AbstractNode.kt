@@ -19,6 +19,8 @@ package org.fuusio.kaavio
 
 import androidx.annotation.CallSuper
 import org.fuusio.kaavio.graph.GraphContext
+import org.fuusio.kaavio.input.DelegateInput
+import org.fuusio.kaavio.output.DelegateOutput
 
 /**
  * [AbstractNode] provides an abstract base class for concrete implementations of [Node]s.
@@ -54,7 +56,13 @@ abstract class AbstractNode : Node {
         onFired()
     }
 
+    override fun onDispose() {}
+
     protected fun <I :Any> actionInputOf(action: (I) -> Unit): Input<I> = Kaavio.actionInput(this, action)
+
+    protected fun <I :Any> delegateInputOf(input: Input<I>): DelegateInput<I> = Kaavio.delegateInput(input, this)
+
+    protected fun <O :Any> delegateOutputOf(output: Output<O>): DelegateOutput<O> = Kaavio.delegateOutput(output, this)
 
     protected fun <I :Any> inletOf(): Inlet<I> = Inlet(this)
 

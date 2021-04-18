@@ -16,16 +16,16 @@ internal class SignUpGraph2Test : GraphTestBench<SignUpGraph>() {
      *  returned by [probedOutputs].
      */
     override fun testCases() = cases(
-        inputs(None, "foo@bar.com", "foo@bar.com") to
-                outputs(None, true, true, None, None, None),
-        inputs("foo") to
-                outputs(true, None, None, None, None, None),
-        inputs("foo", "foo@bar.com", "foo@bar.com", "abcd1234","abcd1234") to
-                outputs(true, true, true, true, true, true),
-        inputs("foo", "foo(at)bar.com", "foo@bar.com", "abcd1234","abcd1234") to
-                outputs(true, false, false, true, true, false),
-        inputs("f", "foo@bar.com", "foo@baz.com", "abcd4321","abcd1234") to
-                outputs(false, true, false, true, false, false),
+        inputValues(None, "foo@bar.com", "foo@bar.com") to
+                outputValues(None, true, true, None, None, None),
+        inputValues("foo") to
+                outputValues(true, None, None, None, None, None),
+        inputValues("foo", "foo@bar.com", "foo@bar.com", "abcd1234","abcd1234") to
+                outputValues(true, true, true, true, true, true),
+        inputValues("foo", "foo(at)bar.com", "foo@bar.com", "abcd1234","abcd1234") to
+                outputValues(true, false, false, true, true, false),
+        inputValues("f", "foo@bar.com", "foo@baz.com", "abcd4321","abcd1234") to
+                outputValues(false, true, false, true, false, false),
     )
 
     /**

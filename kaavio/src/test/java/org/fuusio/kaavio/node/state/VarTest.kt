@@ -1,6 +1,9 @@
 package org.fuusio.kaavio.node.state
 
 import org.fuusio.kaavio.KaavioTest
+import org.fuusio.kaavio.debug.node.IntProbe
+import org.fuusio.kaavio.node.function.Fun2
+import org.fuusio.kaavio.node.stream.IntInjector
 import org.fuusio.kaavio.node.stream.StringInjector
 import org.fuusio.kaavio.node.stream.StringSink
 import org.junit.Assert
@@ -26,5 +29,27 @@ class VarTest : KaavioTest() {
         Assert.assertTrue(sink.hasValue())
         Assert.assertEquals("foo", `var`.value)
         Assert.assertEquals("foo", sink.value)
+    }
+
+    @Test
+    fun `Test Var as StatefulNode`() {
+        // Given
+        val intVar = IntVar(2)
+        val injector = IntInjector()
+        val probe = IntProbe()
+        val funNode = Fun2<Int, Int, Int> { int1: Int, int2: Int -> int1 + int2}
+
+        injector.output connect funNode.arg1
+        intVar.output connect funNode.arg2
+        funNode.output connect probe
+
+        // When
+        injector.inject(40)
+
+        // Then
+        Assert.assertTrue(intVar.hasValue())
+        Assert.assertTrue(probe.hasValue())
+
+        probe.hasValue(42)
     }
 }

@@ -21,7 +21,6 @@ import org.fuusio.kaavio.node.comparison.Equals
 import org.fuusio.kaavio.node.function.Fun3
 import org.fuusio.kaavio.node.logic.And
 import org.fuusio.kaavio.node.state.StringVar
-import org.fuusio.kaavio.node.stream.BooleanSink
 import org.fuusio.kaavio.node.validation.EmailValidator
 import org.fuusio.kaavio.node.validation.ValidatorFun
 

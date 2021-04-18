@@ -20,10 +20,14 @@ package org.fuusio.kaavio.factory
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.output.DebugOutput
+import org.fuusio.kaavio.output.DelegateOutput
 
 class DefaultOutputFactory : OutputFactory {
 
     override fun <O :Any> createDebugOutput(node: Node) = DebugOutput<O>(node)
+
+    override fun <O : Any> createDelegateOutput(output: Output<O>, node: Node) =
+        DelegateOutput(output, node)
 
     override fun <O :Any> createOutput(node: Node) = Output<O>(node)
 }

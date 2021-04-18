@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestInstance
  * for a [Node] that have a single input of type [I] and a single output of type [O].
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal abstract class SingleInputNodeTestBench<I: Any, O: Any> : NodeTestBench<O>() {
+internal abstract class SingleInputNodeTestBench<I: Any, O: Any> : SingleOutputNodeTestBench<O>() {
 
     /**
      * Returns a [Map] of test case entries where input value is given as key (of type [I]) and the

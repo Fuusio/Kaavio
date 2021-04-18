@@ -1,6 +1,11 @@
 package org.fuusio.kaavio.testbench
 
+import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.Node
+import org.fuusio.kaavio.Output
+import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.output.DebugOutput
 import org.fuusio.kaavio.util.Quadruple
 import org.fuusio.kaavio.util.Quintuple
 
@@ -23,6 +28,15 @@ abstract class TestBench {
     }
 
     /**
+     * Reconnects this [DebugOutput] to given [receiver]. Reconnecting can be used for debugging purposes
+     * to replace actual [Node]s from a [org.fuusio.kaavio.graph.Graph] e.g. with mock nodes.
+     */
+    fun <O : Any> Output<O>.reconnect(receiver: Rx<O>) {
+        this as DebugOutput<O>
+        reconnect(receiver)
+    }
+
+    /**
      * Asserts that this [Probe] has received the specified [value].
      */
     fun Probe<*>.assertHasValue(value: Any) {
@@ -40,13 +54,27 @@ abstract class TestBench {
         }
     }
 
-    fun <T1, T2> pair(first: T1, second: T2): Pair<T1, T2> = Pair(first, second)
+    fun <K, V> cases(vararg pairs: Pair<K, V>): Map<K, V> = mapOf(*pairs)
 
-    fun <T1, T2, T3> triple(first: T1, second: T2, third: T3): Triple<T1, T2, T3> = Triple(first, second, third)
+    /**
+     * Returns a [List] of input values.
+     */
+    protected fun inputValues(vararg values: Any): List<Any> = values.toList()
 
-    fun <T1, T2, T3, T4> quadruple(first: T1, second: T2, third: T3, fourth: T4): Quadruple<T1, T2, T3, T4> = Quadruple(first, second, third, fourth)
+    /**
+     * Returns a [List] of output values.
+     */
+    protected fun outputValues(vararg values: Any?): List<Any?> = values.toList()
 
-    fun <T1, T2, T3, T4, T5> quintuple(first: T1, second: T2, third: T3, fourth: T4, fifth: T5): Quintuple<T1, T2, T3, T4, T5> = Quintuple(first, second, third, fourth, fifth)
+    /**
+     * Returns a [List] of [Input]s.
+     */
+    protected fun inputs(vararg inputs: Input<*>): List<Input<*>> = inputs.toList()
+
+    /**
+     * Returns a [List] of [Outputs]s.
+     */
+    protected fun outputs(vararg outputs: Output<*>): List<Output<*>> = outputs.toList()
 
     companion object {
         internal fun valueToString(value: Any?): String =

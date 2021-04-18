@@ -16,7 +16,7 @@ import org.junit.jupiter.api.TestInstance
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal abstract class ThreeInputsNodeTestBench<I1: Any, I2: Any, I3: Any, O: Any>
-    : NodeTestBench<O>() {
+    : SingleOutputNodeTestBench<O>() {
 
     /**
      * Returns a [Map] of test case entries where the key is a [Triple] containing the input values

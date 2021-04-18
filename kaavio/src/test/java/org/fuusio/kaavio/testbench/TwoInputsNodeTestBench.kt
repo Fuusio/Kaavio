@@ -15,7 +15,7 @@ import org.junit.jupiter.api.TestInstance
  * for a [Node] that have two inputs of types [I1], [I2] and a single output of type [O].
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal abstract class TwoInputsNodeTestBench<I1: Any, I2: Any, O: Any> : NodeTestBench<O>() {
+internal abstract class TwoInputsNodeTestBench<I1: Any, I2: Any, O: Any> : SingleOutputNodeTestBench<O>() {
 
     /**
      * Returns a [Map] of test case entries where the key is a [Pair] containing the input values

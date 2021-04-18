@@ -58,4 +58,9 @@ interface Node {
      * Invoked when all attached [Input]s have received a value.
      */
     fun onFired()
+
+    /**
+     * Invoked when the [Graph] that contains this [Node] is disposed.
+     */
+    fun onDispose()
 }

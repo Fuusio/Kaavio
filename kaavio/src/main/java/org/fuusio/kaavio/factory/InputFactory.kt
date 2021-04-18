@@ -20,6 +20,8 @@ package org.fuusio.kaavio.factory
 import org.fuusio.kaavio.ActionInput
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
+import org.fuusio.kaavio.input.DelegateInput
+import org.fuusio.kaavio.output.DelegateOutput
 
 /**
  * [InputFactory] define interface for factory objects that are used to create [Input]s.
@@ -41,6 +43,11 @@ interface InputFactory {
      * Creates and returns an [Input] with debug functions for the given [node].
      */
     fun <I :Any> createDebugInput(node: Node): Input<I>
+
+    /**
+     * Creates and returns an [DelegateInput] for the given actual [input] and [node].
+     */
+    fun <I :Any> createDelegateInput(input: Input<I>, node: Node): DelegateInput<I>
 
     /**
      * Creates and returns an [Input] for the given [node].

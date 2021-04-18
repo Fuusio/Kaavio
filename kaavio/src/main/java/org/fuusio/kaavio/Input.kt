@@ -79,14 +79,14 @@ open class Input<I :Any>(val node: Node) : Rx<I> {
     /**
      * Connects the [transmitters], given as [List] of [Tx]s, to this [Input].
      */
-    infix fun connect(transmitters: List<Tx<I>>) {
+    open infix fun connect(transmitters: List<Tx<I>>) {
         transmitters.forEach { transmitter -> this connect transmitter }
     }
 
     /**
      * Connects the [transmitters], given as variable length list of [Tx]s, to this [Input].
      */
-    fun connect(vararg transmitters: Tx<I>) {
+    open fun connect(vararg transmitters: Tx<I>) {
         transmitters.forEach { transmitter -> this connect transmitter }
     }
 

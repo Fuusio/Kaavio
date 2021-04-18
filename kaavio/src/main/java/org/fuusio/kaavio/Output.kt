@@ -52,7 +52,7 @@ open class Output<O :Any>(val node: Node) : Tx<O> {
     /**
      * Connects the [Rx] objects in [receivers] to receive values from this [Output].
      */
-    infix fun connect(receivers: List<Rx<O>>) {
+    open infix fun connect(receivers: List<Rx<O>>) {
         receivers.forEach { receiver ->
             this.receivers.add(receiver connect this)
         }

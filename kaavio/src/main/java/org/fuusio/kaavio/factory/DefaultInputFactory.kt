@@ -22,6 +22,7 @@ import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
+import org.fuusio.kaavio.input.DelegateInput
 
 class DefaultInputFactory: InputFactory {
 
@@ -30,6 +31,9 @@ class DefaultInputFactory: InputFactory {
 
     override fun <I :Any> createDebugInput(node: Node) =
         DebugInput<I>(node)
+
+    override fun <I : Any> createDelegateInput(input: Input<I>, node: Node) =
+        DelegateInput(input, node)
 
     override fun <I :Any> createActionInput(node: Node, action: (I) -> Unit) =
         ActionInput(node, action)

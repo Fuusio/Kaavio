@@ -17,7 +17,7 @@ import org.junit.jupiter.api.TestInstance
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal abstract class FourInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: Any, O: Any>
-    : NodeTestBench<O>() {
+    : SingleOutputNodeTestBench<O>() {
 
     /**
      * Returns a [Map] of test case entries where the key is a [Quadruple] containing the input values

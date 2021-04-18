@@ -21,10 +21,11 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
 /**
- * [Var] is a node that can store a value of specified type.
+ * [Var] is a [StatefulNode] that can store an immutable value of specified type. It can be used to
+ * represent a variable in a graph implementation.
  */
-open class Var<I :Any> : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
-    private var _value: I? = null
+open class Var<I :Any>(initialValue: I? = null) : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
+    private var _value: I? = initialValue
 
     override val state: I?
         get() = value
@@ -40,22 +41,22 @@ open class Var<I :Any> : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
     fun hasValue(): Boolean = _value != null
 }
 
-class AnyVar : Var<Any>()
+class AnyVar(initialValue: Any? = null) : Var<Any>(initialValue)
 
-class BooleanVar : Var<Boolean>()
+class BooleanVar(initialValue: Boolean? = null) : Var<Boolean>(initialValue)
 
-class ByteVar : Var<Byte>()
+class ByteVar(initialValue: Byte? = null) : Var<Byte>(initialValue)
 
-class CharVar : Var<Char>()
+class CharVar(initialValue: Char? = null) : Var<Char>(initialValue)
 
-class DoubleVar : Var<Double>()
+class DoubleVar(initialValue: Double? = null) : Var<Double>(initialValue)
 
-class FloatVar : Var<Float>()
+class FloatVar(initialValue: Float? = null) : Var<Float>(initialValue)
 
-class IntVar : Var<Int>()
+class IntVar(initialValue: Int? = null) : Var<Int>(initialValue)
 
-class LongVar : Var<Long>()
+class LongVar(initialValue: Long? = null) : Var<Long>(initialValue)
 
-class ShortVar : Var<Short>()
+class ShortVar(initialValue: Short? = null): Var<Short>(initialValue)
 
-class StringVar : Var<String>()
+class StringVar(initialValue: String? = null) : Var<String>(initialValue)
