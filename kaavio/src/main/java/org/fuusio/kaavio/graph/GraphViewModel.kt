@@ -27,9 +27,9 @@ import org.fuusio.kaavio.coroutines.CoroutinesConfig
 
 /**
  * A [GraphViewModel] extends [ViewModel] to provide an abstract base class for implementing view
- * models that utilize a [Graph] implementation. In a such [ViewModel] implementation,
+ * models that are based on a [Graph] implementation. In a such [ViewModel] implementation,
  * [androidx.lifecycle.LiveData] objects are implemented using instances of
- * [org.fuusio.kaavio.node.state.LiveData] which also act as nodes of a graph.
+ * [org.fuusio.kaavio.node.state.LiveDataNode] which are nodes and parts of a graph.
  */
 abstract class GraphViewModel : ViewModel(), Graph {
 

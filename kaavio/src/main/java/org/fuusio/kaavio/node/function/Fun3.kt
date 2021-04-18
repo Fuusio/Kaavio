@@ -19,7 +19,7 @@ package org.fuusio.kaavio.node.function
 
 import org.fuusio.kaavio.SingleOutputNode
 
-class Fun3<I1 :Any,I2 :Any,I3 :Any,O :Any>(val function: (I1, I2, I3) -> O)
+class Fun3<I1 : Any, I2 : Any, I3 : Any, O : Any>(val function: (I1, I2, I3) -> O)
     : SingleOutputNode<O>() {
     val arg1 = inputOf<I1>()
     val arg2 = inputOf<I2>()

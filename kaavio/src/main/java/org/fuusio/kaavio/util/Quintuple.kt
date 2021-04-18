@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.util
 
-class Quintuple<T1, T2, T3, T4, T5>(
+data class Quintuple<T1, T2, T3, T4, T5>(
     val first: T1,
     val second: T2,
     val third: T3,
@@ -25,6 +25,7 @@ class Quintuple<T1, T2, T3, T4, T5>(
     val fifth: T5,
 ) : Tuple {
     override val size: Int = 5
+
     override operator fun get(index: Int): Any? =
         when (index) {
             0 -> first

@@ -19,13 +19,8 @@ package org.fuusio.kaavio
 
 /**
  * [SingleInputSingleOutputNode] is an abstract base class for all [Node] implementations that have
- * only single [Input] and a single [output].
+ * only single [input] of type [I] and a single [output] of type [O].
  */
-abstract class SingleInputSingleOutputNode<I :Any,O :Any> : AbstractNode() {
+abstract class SingleInputSingleOutputNode<I : Any, O : Any> : SingleOutputNode<O>() {
     val input = inputOf<I>()
-    val output = outputOf<O>()
-
-    protected open fun transmit(value: O) {
-        output.transmit(value)
-    }
 }

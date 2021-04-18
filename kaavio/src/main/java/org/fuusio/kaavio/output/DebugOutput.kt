@@ -20,9 +20,9 @@ package org.fuusio.kaavio.output
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.Rx
-import org.fuusio.kaavio.debug.GraphDebugger
-import org.fuusio.kaavio.debug.node.Probe
-import org.fuusio.kaavio.debug.node.Probes
+import org.fuusio.kaavio.debugger.GraphDebugger
+import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Probes
 
 /**
  * [DebugOutput] implements an [Output] type which can be used for debugging the transmitted values

@@ -3,7 +3,7 @@ package org.fuusio.kaavio.testbench
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput

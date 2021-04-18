@@ -27,10 +27,7 @@ import org.fuusio.kaavio.StatefulNode
 open class Var<I :Any>(initialValue: I? = null) : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
     private var _value: I? = initialValue
 
-    override val state: I?
-        get() = value
-
-    val value: I?
+    override val value: I?
         get() = _value
 
     override fun onFired() {
@@ -38,7 +35,7 @@ open class Var<I :Any>(initialValue: I? = null) : SingleInputSingleOutputNode<I,
         output.transmit(_value!!)
     }
 
-    fun hasValue(): Boolean = _value != null
+    override fun hasValue(): Boolean = _value != null
 }
 
 class AnyVar(initialValue: Any? = null) : Var<Any>(initialValue)

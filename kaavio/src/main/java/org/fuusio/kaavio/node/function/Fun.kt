@@ -19,8 +19,7 @@ package org.fuusio.kaavio.node.function
 
 import org.fuusio.kaavio.SingleOutputNode
 
-open class Fun<I :Any,O :Any>(val function: (I) -> O)
-    : SingleOutputNode<O>() {
+open class Fun<I : Any,O : Any>(val function: (I) -> O) : SingleOutputNode<O>() {
     val arg = inputOf<I>()
 
     override fun onFired() {

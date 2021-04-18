@@ -2,13 +2,12 @@ package org.fuusio.kaavio.testbench
 
 import io.mockk.mockk
 import org.fuusio.kaavio.*
-import org.fuusio.kaavio.debug.GraphDebugger
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.debugger.GraphDebugger
+import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.graph.GraphContext
 import org.fuusio.kaavio.node.graph.NestedGraphNode
 import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.output.DebugOutput
 import org.fuusio.kaavio.output.DelegateOutput
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -52,7 +51,7 @@ abstract class NestedGraphNodeTestBench<N : NestedGraphNode<*>> : NodeTestBench(
      * Examples of such nodes to be replaced are:
      * * nodes accessing data stores
      * * node performing networking
-     * * [org.fuusio.kaavio.node.state.LiveData] nodes
+     * * [org.fuusio.kaavio.node.state.LiveDataNode] nodes
      */
     protected open fun mockNodes() {}
 

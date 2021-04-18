@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.validation
 
 /**
- * [RegexValidator] implements a [ValidatorFun] that uses the given regular expression, [pattern], for
+ * [RegexValidator] implements a [Validator] that uses the given regular expression, [pattern], for
  * validating a received input [String]. The regular expression can be also defined as a [String]
  * using the secondary constructor.
  */

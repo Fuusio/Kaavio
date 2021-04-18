@@ -20,7 +20,7 @@ package org.fuusio.kaavio
 /**
  * [Tx] is interface for transmitter objects i.e. objects that transmit values.
  */
-interface Tx<O :Any> {
+interface Tx<O : Any> {
 
     /**
      * Request this [Tx] to transmit the latest cached value if any.

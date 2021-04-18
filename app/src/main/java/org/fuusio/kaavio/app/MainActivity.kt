@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.app.databinding.MainActivityBinding
-import org.fuusio.kaavio.debug.GraphDebugger
+import org.fuusio.kaavio.debugger.GraphDebugger
 
 class MainActivity : AppCompatActivity() {
 

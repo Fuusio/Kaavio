@@ -1,6 +1,7 @@
 package org.fuusio.kaavio.node.state
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
@@ -13,16 +14,19 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 
-class LiveDataTest : KaavioTest() {
+class LiveDataNodeTest : KaavioTest() {
 
+    @ExperimentalCoroutinesApi
     private val testDispatcher = TestCoroutineDispatcher()
 
+    @ExperimentalCoroutinesApi
     @Before
     fun setup() {
         // provide the scope explicitly, in this example using a constructor parameter
         Dispatchers.setMain(testDispatcher)
     }
 
+    @ExperimentalCoroutinesApi
     @After
     fun cleanUp() {
         Dispatchers.resetMain()
@@ -30,9 +34,10 @@ class LiveDataTest : KaavioTest() {
     }
 
     //@Test
+    @ExperimentalCoroutinesApi
     fun `Test LiveData with a received value`() {
         // Given
-        val liveData = LiveData<String>()
+        val liveData = LiveDataNode<String>()
         val injector = StringInjector()
         val sink = StringSink()
 
@@ -51,7 +56,7 @@ class LiveDataTest : KaavioTest() {
                // Then
                Assert.assertTrue(liveData.hasValue())
                Assert.assertTrue(sink.hasValue())
-               Assert.assertEquals(FOO, liveData.state)
+               Assert.assertEquals(FOO, liveData.value)
                Assert.assertEquals(FOO, sink.value)
            }
         }

@@ -6,9 +6,17 @@ import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
 
 /**
- * A [DelegateInput] dispatches the received value to the connected [input].
+ * A [DelegateInput] delegates function invocations to the given [input].
  */
 open class DelegateInput<I : Any>(val input: Input<I>, node: Node) : Input<I>(node) {
+
+    override fun cacheValue(value: I) {
+        input.cacheValue(value)
+    }
+
+    override fun onReceive(value: I) {
+        input.onReceive(value)
+    }
 
     override fun connect(transmitter: Tx<I>): Rx<I> {
         return input.connect(transmitter)
@@ -21,4 +29,10 @@ open class DelegateInput<I : Any>(val input: Input<I>, node: Node) : Input<I>(no
     override fun connect(vararg transmitters: Tx<I>) {
         input.connect(*transmitters)
     }
+
+    override fun reset() {
+        input.reset()
+    }
+
+    override fun hasValue() = input.hasValue()
 }

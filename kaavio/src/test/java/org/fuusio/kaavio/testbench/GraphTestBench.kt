@@ -1,8 +1,8 @@
 package org.fuusio.kaavio.testbench
 
 import org.fuusio.kaavio.*
-import org.fuusio.kaavio.debug.GraphDebugger
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.debugger.GraphDebugger
+import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
@@ -61,7 +61,7 @@ abstract class GraphTestBench<G: Graph>
      * Examples of such nodes to be replaced are:
      * * nodes accessing data stores
      * * node performing networking
-     * * [org.fuusio.kaavio.node.state.LiveData] nodes
+     * * [org.fuusio.kaavio.node.state.LiveDataNode] nodes
      */
     protected open fun mockNodes(graph: G) {}
 

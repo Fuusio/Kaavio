@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.node.stream.BooleanInjector
 import org.junit.Assert
 import org.junit.Test

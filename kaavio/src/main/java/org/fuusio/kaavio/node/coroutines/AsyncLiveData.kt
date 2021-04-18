@@ -32,39 +32,39 @@ class AsyncLiveData<I : Any, O : Any>(
     private val liveDataFunction: suspend (I) -> O,
 ) : SingleInputSingleOutputNode<I, O>(), StatefulNode<O> {
 
-    private val data = MutableLiveData<O>()
+    private val liveData = MutableLiveData<O>()
 
-    override val state: O?
-        get() = data.value
+    override val value: O?
+        get() = liveData.value
 
-    fun hasValue(): Boolean = data.value != null
+    override fun hasValue(): Boolean = liveData.value != null
 
     fun observe(owner: LifecycleOwner, observer: Observer<O>) {
-        data.observe(owner, observer)
+        liveData.observe(owner, observer)
     }
 
     fun observer(owner: () -> Lifecycle, observer: (O) -> Unit) {
-        data.observe(owner, observer)
+        liveData.observe(owner, observer)
     }
 
     fun removeObserver(observer: Observer<O>) {
-        data.removeObserver(observer)
+        liveData.removeObserver(observer)
     }
 
     fun removeObserver(owner: LifecycleOwner) {
-        data.removeObservers(owner)
+        liveData.removeObservers(owner)
     }
 
-    fun hasActiveObservers(): Boolean = data.hasActiveObservers()
+    fun hasActiveObservers(): Boolean = liveData.hasActiveObservers()
 
-    fun hasObservers(): Boolean = data.hasObservers()
+    fun hasObservers(): Boolean = liveData.hasObservers()
 
     override fun onFired() {
         context.coroutineScope.launch {
             withContext(context.dispatcher(dispatcherType)) {
                 val value = liveDataFunction(input.value)
                 withContext(context.mainDispatcher) {
-                    data.value = value
+                    liveData.value = value
                     output.transmit(value)
                 }
             }

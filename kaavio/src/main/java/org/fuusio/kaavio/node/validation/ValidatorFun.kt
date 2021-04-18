@@ -22,8 +22,8 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 /**
  *  [ValidatorFun] is a node that uses the given [function] to validate the received input.
  */
-class ValidatorFun<I :Any>(val function: (I) -> Boolean)
-    : SingleInputSingleOutputNode<I,Boolean>() {
+class ValidatorFun<I : Any>(val function: (I) -> Boolean)
+    : SingleInputSingleOutputNode<I, Boolean>() {
 
     override fun onFired() {
         output.transmit(function(input.value))

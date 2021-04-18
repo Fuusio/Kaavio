@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.util
 
-class Septuple<T1 : Any, T2 : Any, T3 : Any, T4 : Any, T5 : Any, T6 : Any, T7 : Any>(
+data class Septuple<T1, T2, T3, T4, T5, T6, T7>(
     val first: T1,
     val second: T2,
     val third: T3,
@@ -28,7 +28,7 @@ class Septuple<T1 : Any, T2 : Any, T3 : Any, T4 : Any, T5 : Any, T6 : Any, T7 : 
 ) : Tuple {
     override val size: Int = 7
 
-    override operator fun get(index: Int): Any =
+    override operator fun get(index: Int): Any? =
         when (index) {
             0 -> first
             1 -> second

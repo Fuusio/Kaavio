@@ -25,52 +25,53 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
 /**
- * [LiveData] TODO
+ * [LiveDataNode] implements a graph node that encapsulates a [MutableLiveData] and provides
+ * an API to delegate function invocations, e.g. [MutableLiveData.observe] to it.
  */
-class LiveData<I : Any> : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
+class LiveDataNode<I : Any> : SingleInputSingleOutputNode<I, I>(), StatefulNode<I> {
 
-    private val data = MutableLiveData<I>()
+    private val liveData = MutableLiveData<I>()
 
-    override val state: I?
-        get() = data.value
+    override val value: I?
+        get() = liveData.value
 
-    fun hasValue(): Boolean = data.value != null
+    override fun hasValue(): Boolean = liveData.value != null
 
     fun observe(owner: LifecycleOwner, observer: Observer<I>) {
-        data.observe(owner, observer)
+        liveData.observe(owner, observer)
     }
 
     fun observer(owner: () -> Lifecycle, observer: (I) -> Unit) {
-        data.observe(owner, observer)
+        liveData.observe(owner, observer)
     }
 
     fun observeForever(observer: Observer<I>) {
-        data.observeForever(observer)
+        liveData.observeForever(observer)
     }
 
     fun removeObserver(observer: Observer<I>) {
-        data.removeObserver(observer)
+        liveData.removeObserver(observer)
     }
 
     fun removeObserver(owner: LifecycleOwner) {
-        data.removeObservers(owner)
+        liveData.removeObservers(owner)
     }
 
     fun postValue(value: I) {
-        data.postValue(value)
+        liveData.postValue(value)
     }
 
     fun setValue(value: I) {
-        data.value = value
+        liveData.value = value
     }
 
-    fun hasActiveObservers(): Boolean = data.hasActiveObservers()
+    fun hasActiveObservers(): Boolean = liveData.hasActiveObservers()
 
-    fun hasObservers(): Boolean = data.hasObservers()
+    fun hasObservers(): Boolean = liveData.hasObservers()
 
     override fun onFired() {
         val value = input.value
-        data.value = value
+        liveData.value = value
         output.transmit(value)
     }
 }

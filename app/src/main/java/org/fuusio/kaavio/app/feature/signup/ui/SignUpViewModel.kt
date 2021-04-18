@@ -9,7 +9,7 @@ import org.fuusio.kaavio.node.logic.And
 import org.fuusio.kaavio.node.state.StringVar
 import org.fuusio.kaavio.node.validation.EmailValidator
 import org.fuusio.kaavio.node.validation.ValidatorFun
-import org.fuusio.kaavio.node.state.LiveData
+import org.fuusio.kaavio.node.state.LiveDataNode
 import org.fuusio.kaavio.node.stream.Map
 import org.fuusio.kaavio.inputs
 import org.fuusio.kaavio.node.function.Fun2
@@ -26,7 +26,7 @@ data class SignUpViewModel(
     val doSignUp: Map<Unit, SignUpState> = Map { SignUpRequested },
 
     // LiveData nodes
-    val signUpState: LiveData<SignUpState> = LiveData(),
+    val signUpState: LiveDataNode<SignUpState> = LiveDataNode(),
 
     // Internal nodes
     internal val isUserNameValid: ValidatorFun<String> = ValidatorFun { string -> string.length > 2 },

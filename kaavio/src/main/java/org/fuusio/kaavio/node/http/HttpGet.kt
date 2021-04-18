@@ -1,4 +1,4 @@
-package org.fuusio.kaavio.http
+package org.fuusio.kaavio.node.http
 
 import org.fuusio.kaavio.SingleInputNode
 

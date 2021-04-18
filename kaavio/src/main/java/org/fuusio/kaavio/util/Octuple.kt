@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.util
 
-class Octuple<T1, T2, T3, T4, T5, T6, T7, T8>(
+data class Octuple<T1, T2, T3, T4, T5, T6, T7, T8>(
     val first: T1,
     val second: T2,
     val third: T3,

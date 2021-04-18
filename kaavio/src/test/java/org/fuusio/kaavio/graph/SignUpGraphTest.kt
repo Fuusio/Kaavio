@@ -1,6 +1,6 @@
 package org.fuusio.kaavio.graph
 
-import org.fuusio.kaavio.debug.node.Probes
+import org.fuusio.kaavio.node.debug.Probes
 import org.junit.jupiter.api.*
 
 @DisplayName("Given a SignUpGraph")

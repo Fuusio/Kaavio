@@ -21,7 +21,7 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
 
 /**
  * [Injector] is a [org.fuusio.kaavio.Node] that has an output of specified type. [Injector]
- * is capable of transmitting a given value Am [Injector] stores the latest given value so it can
+ * is capable of transmitting a given value. An [Injector] stores the latest given value so it can
  * be transmitter when ever the [Injector] is triggered to transmit the value.
  */
 open class Injector<O :Any> : SingleInputSingleOutputNode<Unit, O>() {

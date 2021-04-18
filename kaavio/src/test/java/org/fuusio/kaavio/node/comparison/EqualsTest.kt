@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.comparison
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.node.BooleanProbe
+import org.fuusio.kaavio.node.debug.BooleanProbe
 import org.fuusio.kaavio.node.stream.IntInjector
 import org.fuusio.kaavio.node.stream.StringInjector
 import org.junit.jupiter.api.*

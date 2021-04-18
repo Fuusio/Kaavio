@@ -99,8 +99,8 @@ open class Input<I :Any>(val node: Node) : Rx<I> {
         } else {
             val node = statefulNode
             if (node != null) {
-                _value = node.state
-                _value != null
+                _value = node.value
+                node.hasValue()
             } else {
                 false
             }

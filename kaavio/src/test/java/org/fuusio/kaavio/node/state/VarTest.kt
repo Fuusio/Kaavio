@@ -1,7 +1,7 @@
 package org.fuusio.kaavio.node.state
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.node.IntProbe
+import org.fuusio.kaavio.node.debug.IntProbe
 import org.fuusio.kaavio.node.function.Fun2
 import org.fuusio.kaavio.node.stream.IntInjector
 import org.fuusio.kaavio.node.stream.StringInjector

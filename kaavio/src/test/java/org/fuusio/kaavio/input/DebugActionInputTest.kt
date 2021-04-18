@@ -19,8 +19,8 @@ package org.fuusio.kaavio.input
 
 import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.GraphDebugger
-import org.fuusio.kaavio.debug.OnActionEntry
+import org.fuusio.kaavio.debugger.GraphDebugger
+import org.fuusio.kaavio.debugger.OnActionEntry
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

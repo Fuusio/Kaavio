@@ -24,14 +24,13 @@ import org.fuusio.kaavio.StatefulNode
  * [Val] is a [StatefulNode] that stores an immutable value of specified type. It can be used to
  * represent a constant in a graph implementation.
  */
-open class Val<I :Any>(val value: I) : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
-    
-    override val state: I?
-        get() = value
-    
+open class Val<I :Any>(override val value: I) : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
+
     override fun onFired() {
         output.transmit(value)
     }
+
+    override fun hasValue(): Boolean = true
 }
 
 class AnyVal(value: Any) : Val<Any>(value)

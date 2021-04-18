@@ -19,7 +19,7 @@ package org.fuusio.kaavio.input
 
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.debug.GraphDebugger
+import org.fuusio.kaavio.debugger.GraphDebugger
 
 /**
  * [DebugInput] implements an [Input] type which can be used for debugging the received values by

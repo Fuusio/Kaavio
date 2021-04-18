@@ -1,21 +1,9 @@
 package org.fuusio.kaavio.testbench
 
-import org.fuusio.kaavio.Kaavio
-import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.graph.Graph
-import org.fuusio.kaavio.input.DebugActionInput
-import org.fuusio.kaavio.input.DebugInput
-import org.fuusio.kaavio.output.DebugOutput
-import org.fuusio.kaavio.util.Quadruple
-import org.fuusio.kaavio.util.Quintuple
-import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.TestInstance
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.javaField
 
 /**
  * [SingleOutputNodeTestBench] provides an abstract base class for implementing concrete test bench classes

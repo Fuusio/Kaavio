@@ -22,8 +22,8 @@ import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.debug.node.Probe
-import org.fuusio.kaavio.debug.node.Probes
+import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Probes
 import org.fuusio.kaavio.output.DebugOutput
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll

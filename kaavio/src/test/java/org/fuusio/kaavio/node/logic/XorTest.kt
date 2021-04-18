@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.logic
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.node.BooleanProbe
+import org.fuusio.kaavio.node.debug.BooleanProbe
 import org.fuusio.kaavio.node.stream.BooleanInjector
 
 import org.junit.Assert.*

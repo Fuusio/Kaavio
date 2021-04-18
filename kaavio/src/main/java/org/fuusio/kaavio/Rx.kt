@@ -18,9 +18,9 @@
 package org.fuusio.kaavio
 
 /**
- * [Tx] is interface for receiver objects i.e. objects that receive values.
+ * [Rx] is interface for receiver objects i.e. objects that receive values.
  */
-interface Rx<I :Any> {
+interface Rx<I : Any> {
 
     /**
      * Invoked to this receiver [Rx] to receive a [value] transmitter by connected transmitter [Tx].

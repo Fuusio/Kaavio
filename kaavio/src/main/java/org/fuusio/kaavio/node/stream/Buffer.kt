@@ -19,7 +19,7 @@ package org.fuusio.kaavio.node.stream
 
 import org.fuusio.kaavio.SingleInputSingleOutputNode
 
-class Buffer<I :Any>(private val capacity: Int = Int.MAX_VALUE)
+class Buffer<I : Any>(private val capacity: Int = Int.MAX_VALUE)
     : SingleInputSingleOutputNode<I, List<I>>() {
 
     val flush = actionInputOf<Unit> { flush() }

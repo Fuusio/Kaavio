@@ -17,20 +17,15 @@
  */
 package org.fuusio.kaavio.node.view
 
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
+import androidx.annotation.IdRes
+import org.fuusio.kaavio.SingleInputNode
 
-fun EditText.onTextChanged(action: (CharSequence) -> Unit) {
-    addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(string: Editable?) = Unit
-        override fun beforeTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) = Unit
-        override fun onTextChanged(string: CharSequence?, start: Int, before: Int, count: Int) {
-            action(string ?: "")
-        }
-    })
-}
+/**
+ * [Navigation] is a node that TODO
+ */
+class Navigation(@IdRes private val resId: Int) : SingleInputNode<Unit>() {
 
-fun EditText.clearOnTextChangedListener() {
-    onTextChanged {}
+    override fun onFired() {
+        TODO("Not yet implemented")
+    }
 }

@@ -20,7 +20,7 @@ package org.fuusio.kaavio
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.testbench.None
 import org.fuusio.kaavio.testbench.Trigger
 import org.fuusio.kaavio.util.Quadruple

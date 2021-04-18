@@ -19,28 +19,24 @@ package org.fuusio.kaavio.node.stream
 
 import org.fuusio.kaavio.SingleInputNode
 import org.fuusio.kaavio.StatefulNode
-import org.fuusio.kaavio.node.state.Var
 
 /**
- * [Sink] is a [org.fuusio.kaavio.Node] that has only an input of specified type. [Sink] is
- * capable of receive a value, but it does not transmit the received value. An instance of [Sink]
+ * [Sink] is a [org.fuusio.kaavio.Node] that has only an input of specified type [I]. [Sink] is
+ * capable of receiving a value, but it does not transmit the received value. An instance of [Sink]
  * represents a terminal node in a [org.fuusio.kaavio.graph.Graph]. A [Sink] stores only the latest
  * value it has received.
  */
-open class Sink<I :Any> : SingleInputNode<I>(), StatefulNode<I> {
+open class Sink<I : Any> : SingleInputNode<I>(), StatefulNode<I> {
     private var _value: I? = null
 
-    override val state: I?
-        get() = value
-
-    val value: I?
+    override val value: I?
         get() = _value
 
     override fun onFired() {
         _value = input.value
     }
 
-    fun hasValue(): Boolean = _value != null
+    override fun hasValue(): Boolean = _value != null
 }
 
 class AnySink : Sink<Any>()

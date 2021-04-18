@@ -1,6 +1,6 @@
 package org.fuusio.kaavio.app.feature.signup.ui
 
-import org.fuusio.kaavio.debug.node.Probe
+import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.testbench.GraphTestBench
 import org.fuusio.kaavio.testbench.None
 
@@ -67,7 +67,7 @@ internal class SignUpViewModelTest : GraphTestBench<SignUpViewModel>() {
      * Examples of such nodes to be replaced are:
      * * nodes accessing data stores
      * * node performing networking
-     * * [org.fuusio.kaavio.node.state.LiveData] nodes
+     * * [org.fuusio.kaavio.node.state.LiveDataNode] nodes
      */
     override fun mockNodes(graph: SignUpViewModel) {
         graph.apply {

@@ -1,4 +1,4 @@
-package org.fuusio.kaavio.debug.node
+package org.fuusio.kaavio.node.debug
 
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output

@@ -26,10 +26,10 @@ import java.util.concurrent.TimeUnit
 /**
  * [Delay] waits for the specified [delay] before the transmitting the received value via output.
  */
-class Delay<I :Any>(
+class Delay<I : Any>(
     private val delay: Long,
-    private val timeUnit: TimeUnit = TimeUnit.MILLISECONDS
-) : SingleInputSingleOutputNode<I,I>() {
+    private val timeUnit: TimeUnit = TimeUnit.MILLISECONDS,
+) : SingleInputSingleOutputNode<I, I>() {
 
     override fun onFired() {
         val value = input.value

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.debug
+package org.fuusio.kaavio.debugger
 
 import org.fuusio.kaavio.*
 import org.fuusio.kaavio.graph.Graph

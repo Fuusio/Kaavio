@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.debug.node.BooleanProbe
+import org.fuusio.kaavio.node.debug.BooleanProbe
 import org.junit.jupiter.api.*
 
 @DisplayName("Given EmailValidator")

@@ -25,7 +25,7 @@ import org.fuusio.kaavio.SingleInputSingleOutputNode
  * only if the value matches to the specified pattern.
  */
 class RegexFilter(private val pattern: Regex)
-    : SingleInputSingleOutputNode<String,String>() {
+    : SingleInputSingleOutputNode<String, String>() {
 
     constructor(pattern: String) : this(Regex(pattern))
 

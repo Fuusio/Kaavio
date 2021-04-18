@@ -22,6 +22,9 @@ package org.fuusio.kaavio.node.validation
  * regular expression [pattern]. [EmailValidator] uses the default pattern of:
  * `^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$`
  */
-class EmailValidator(
-    pattern: String = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
-) : RegexValidator(pattern)
+class EmailValidator(pattern: String = PATTERN) : RegexValidator(pattern) {
+
+    companion object {
+        const val PATTERN = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
+    }
+}

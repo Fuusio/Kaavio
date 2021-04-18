@@ -20,6 +20,15 @@ package org.fuusio.kaavio
 /**
  * [StatefulNode] is interface for [Node] implementations that maintain an internal state.
  */
-interface StatefulNode<I :Any> {
-    val state: I?
+interface StatefulNode<I : Any> : Node {
+
+    /**
+     * The value of type [I] of this [StatefulNode].
+     */
+    val value: I?
+
+    /**
+     * Tests if this [StatefulNode] has a value.
+     */
+    fun hasValue(): Boolean
 }

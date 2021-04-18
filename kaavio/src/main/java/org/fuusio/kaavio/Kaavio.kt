@@ -50,7 +50,7 @@ object Kaavio {
     var inputFactory: InputFactory = DefaultInputFactory()
 
     /**
-     * The out [PrintStream] which is used, for instance, by [org.fuusio.kaavio.debug.node.Print]
+     * The out [PrintStream] which is used, for instance, by [org.fuusio.kaavio.debugger.node.Print]
      * node.
      */
     var out: PrintStream = System.out

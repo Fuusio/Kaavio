@@ -22,7 +22,7 @@ package org.fuusio.kaavio
  * transmitters [Tx] to a receiver [Node]. Each transmitter is bound to a dedicated instance of
  * [Input].
  */
-class Inlet<I :Any>(private val node: Node) : Rx<I> {
+class Inlet<I : Any>(private val node: Node) : Rx<I> {
 
     private val inputs: MutableList<Input<I>> = mutableListOf()
 
