@@ -1,6 +1,7 @@
-package org.fuusio.kaavio
+package org.fuusio.kaavio.node.base
 
 import io.mockk.verify
+import org.fuusio.kaavio.KaavioTest
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertTrue
 
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 class SingleInputSingleOutputNodeTest : KaavioTest() {
 
     // Test subject
-    private val node = object : SingleInputSingleOutputNode<Int,Int>() {
+    private val node = object : SingleInputSingleOutputNode<Int, Int>() {
         var isOnFiredInvoked = false
 
         override fun onFired() {

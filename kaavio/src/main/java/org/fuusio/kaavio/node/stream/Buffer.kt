@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 class Buffer<I : Any>(private val capacity: Int = Int.MAX_VALUE)
     : SingleInputSingleOutputNode<I, List<I>>() {

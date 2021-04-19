@@ -1,7 +1,7 @@
 package org.fuusio.kaavio.node.graph
 
 import androidx.annotation.CallSuper
-import org.fuusio.kaavio.AbstractNode
+import org.fuusio.kaavio.node.base.AbstractNode
 import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.graph.GraphContext
 

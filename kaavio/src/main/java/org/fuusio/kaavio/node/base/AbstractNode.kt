@@ -15,11 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio
+package org.fuusio.kaavio.node.base
 
 import androidx.annotation.CallSuper
+import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.Kaavio
+import org.fuusio.kaavio.Node
+import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.graph.GraphContext
 import org.fuusio.kaavio.input.DelegateInput
+import org.fuusio.kaavio.input.Inlet
 import org.fuusio.kaavio.output.DelegateOutput
 
 /**
@@ -58,11 +63,14 @@ abstract class AbstractNode : Node {
 
     override fun onDispose() {}
 
-    protected fun <I : Any> actionInputOf(action: (I) -> Unit): Input<I> = Kaavio.actionInput(this, action)
+    protected fun <I : Any> actionInputOf(action: (I) -> Unit): Input<I> =
+        Kaavio.actionInput(this, action)
 
-    protected fun <I : Any> delegateInputOf(input: Input<I>): DelegateInput<I> = Kaavio.delegateInput(input, this)
+    protected fun <I : Any> delegateInputOf(input: Input<I>): DelegateInput<I> =
+        Kaavio.delegateInput(input, this)
 
-    protected fun <O : Any> delegateOutputOf(output: Output<O>): DelegateOutput<O> = Kaavio.delegateOutput(output, this)
+    protected fun <O : Any> delegateOutputOf(output: Output<O>): DelegateOutput<O> =
+        Kaavio.delegateOutput(output, this)
 
     protected fun <I : Any> inletOf(): Inlet<I> = Inlet(this)
 

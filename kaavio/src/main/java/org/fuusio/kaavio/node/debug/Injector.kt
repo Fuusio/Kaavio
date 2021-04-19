@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [Injector] is a [org.fuusio.kaavio.Node] that has an output of specified type. [Injector]

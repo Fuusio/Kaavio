@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.comparison
 
-import org.fuusio.kaavio.AbstractNode
+import org.fuusio.kaavio.node.base.AbstractNode
 
 /**
  * [Equals] is a node that outputs [Boolean] true value if the values received via all the inputs

@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [Map] is a node that uses the given map function to convert the received input value to an output

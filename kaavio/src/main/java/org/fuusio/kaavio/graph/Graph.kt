@@ -18,8 +18,10 @@
 package org.fuusio.kaavio.graph
 
 import kotlinx.coroutines.CoroutineScope
+import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.Node
+import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.coroutines.CoroutinesConfig
 import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput

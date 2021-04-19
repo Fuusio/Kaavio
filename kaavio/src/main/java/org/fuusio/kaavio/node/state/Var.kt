@@ -17,14 +17,15 @@
  */
 package org.fuusio.kaavio.node.state
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
 /**
  * [Var] is a [StatefulNode] that can store an immutable value of specified type. It can be used to
  * represent a variable in a graph implementation.
  */
-open class Var<I :Any>(initialValue: I? = null) : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
+open class Var<I : Any>(initialValue: I? = null) :
+    SingleInputSingleOutputNode<I, I>(), StatefulNode<I> {
     private var _value: I? = initialValue
 
     override val value: I?

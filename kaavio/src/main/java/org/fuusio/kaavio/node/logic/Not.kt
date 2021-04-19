@@ -17,13 +17,13 @@
  */
 package org.fuusio.kaavio.node.logic
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [And] implements logical NOT function which inverses the input value, from true to false or
  * from false to true.
  */
-class Not : SingleInputSingleOutputNode<Boolean,Boolean>() {
+class Not : SingleInputSingleOutputNode<Boolean, Boolean>() {
 
     override fun onFired() {
         output.transmit(!input.value)

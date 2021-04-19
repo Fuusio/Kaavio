@@ -15,20 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio
+package org.fuusio.kaavio.node.base
 
 /**
- * [ActionInput] is an [Input] which, when a value is received, executes he given [action]
- * function without notifying the owner [Node] about the received value.
+ * [SingleInputNode] is an abstract base class for all [Node] implementations that have only single
+ * [Input] of type [I].
  */
-open class ActionInput<I: Any>(node: Node, private val action: (I) -> Unit) : Input<I>(node) {
-
-    override fun onReceive(value: I) {
-        action(value)
-    }
-
-    /**
-     * [ActionInput] is interpreted to always to have value.
-     */
-    override fun hasValue(): Boolean  = true
+abstract class SingleInputNode<I :Any> : AbstractNode() {
+    val input = inputOf<I>()
 }

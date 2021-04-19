@@ -15,12 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio
+package org.fuusio.kaavio.input
+
+import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.Node
 
 /**
- * [SingleInputSingleOutputNode] is an abstract base class for all [Node] implementations that have
- * only single [input] of type [I] and a single [output] of type [O].
+ * [ActionInput] is an [Input] which, when a value is received, executes he given [action]
+ * function without notifying the owner [Node] about the received value.
  */
-abstract class SingleInputSingleOutputNode<I : Any, O : Any> : SingleOutputNode<O>() {
-    val input = inputOf<I>()
+open class ActionInput<I : Any>(node: Node, private val action: (I) -> Unit) : Input<I>(node) {
+
+    override fun onReceive(value: I) {
+        action(value)
+    }
+
+    /**
+     * [ActionInput] is interpreted to always to have value.
+     */
+    override fun hasValue(): Boolean  = true
 }

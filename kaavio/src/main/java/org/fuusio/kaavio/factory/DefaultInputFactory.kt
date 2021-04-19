@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.factory
 
-import org.fuusio.kaavio.ActionInput
+import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.input.DebugActionInput

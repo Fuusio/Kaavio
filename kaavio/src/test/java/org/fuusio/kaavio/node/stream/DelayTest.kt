@@ -19,7 +19,7 @@ package org.fuusio.kaavio.node.stream
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import org.fuusio.kaavio.ActionInput
+import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.KaavioTest
 import org.junit.Assert.*
 import org.junit.Test

@@ -1,6 +1,6 @@
 package org.fuusio.kaavio.node.http
 
-import org.fuusio.kaavio.SingleInputNode
+import org.fuusio.kaavio.node.base.SingleInputNode
 
 class HttpGet<I : Any> : SingleInputNode<I>() {
 

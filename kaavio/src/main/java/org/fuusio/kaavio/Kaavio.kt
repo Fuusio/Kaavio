@@ -91,4 +91,14 @@ object Kaavio {
     fun <O: Any> output(node: Node): Output<O> =
         if (isDebugMode) outputFactory.createDebugOutput(node)
         else outputFactory.createOutput(node)
+
+    /**
+     * Returns a [List] of [Rx] instances created from the given [receivers].
+     */
+    fun <T : Any> inputs(vararg receivers: Rx<T>): List<Rx<T>> = receivers.toList()
+
+    /**
+     * Returns a [List] of [Tx] instances created from the given [transmitters].
+     */
+    fun <T : Any> outputs(vararg transmitters: Tx<T>): List<Tx<T>> = transmitters.toList()
 }

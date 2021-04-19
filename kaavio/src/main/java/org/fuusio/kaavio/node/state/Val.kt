@@ -17,14 +17,15 @@
  */
 package org.fuusio.kaavio.node.state
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
 /**
  * [Val] is a [StatefulNode] that stores an immutable value of specified type. It can be used to
  * represent a constant in a graph implementation.
  */
-open class Val<I :Any>(override val value: I) : SingleInputSingleOutputNode<I,I>(), StatefulNode<I> {
+open class Val<I : Any>(override val value: I)
+    : SingleInputSingleOutputNode<I, I>(), StatefulNode<I> {
 
     override fun onFired() {
         output.transmit(value)

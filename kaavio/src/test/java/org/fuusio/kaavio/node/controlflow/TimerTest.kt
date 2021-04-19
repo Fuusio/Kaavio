@@ -19,7 +19,7 @@ package org.fuusio.kaavio.node.controlflow
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import org.fuusio.kaavio.ActionInput
+import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.node.stream.IntSink

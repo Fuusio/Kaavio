@@ -75,8 +75,3 @@ open class Output<O :Any>(val node: Node) : Tx<O> {
      */
     fun hasReceiver(receiver: Rx<O>): Boolean = receivers.contains(receiver)
 }
-
-/**
- * Returns a [List] of [Rx] instances created from the given [receivers].
- */
-fun <T : Any> inputs(vararg receivers: Rx<T>): List<Rx<T>> = mutableListOf(*receivers)

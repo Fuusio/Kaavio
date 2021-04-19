@@ -20,7 +20,7 @@ package org.fuusio.kaavio.node.controlflow
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import java.util.concurrent.TimeUnit
 
 /**
@@ -30,7 +30,7 @@ class Timer(
     private val period: Long,
     private val timeUnit: TimeUnit = TimeUnit.MILLISECONDS,
     private val periodic: Boolean = false,
-) : SingleInputSingleOutputNode<Unit,Unit>() {
+) : SingleInputSingleOutputNode<Unit, Unit>() {
 
     override fun onFired() {
         start()

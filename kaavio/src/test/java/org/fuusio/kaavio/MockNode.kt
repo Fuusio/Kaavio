@@ -17,6 +17,8 @@
  */
 package org.fuusio.kaavio
 
+import org.fuusio.kaavio.node.base.AbstractNode
+
 class MockNode(name: String? = null) : AbstractNode() {
 
     init {

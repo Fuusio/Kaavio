@@ -17,12 +17,12 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [TrueTrigger] outputs a [Unit] when it receives a [Boolean] true via its input.
  */
-class TrueTrigger : SingleInputSingleOutputNode<Boolean,Unit>() {
+class TrueTrigger : SingleInputSingleOutputNode<Boolean, Unit>() {
 
     override fun onFired() {
         if (input.value) transmit(Unit)

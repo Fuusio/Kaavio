@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.view
 
 import androidx.annotation.IdRes
-import org.fuusio.kaavio.SingleInputNode
+import org.fuusio.kaavio.node.base.SingleInputNode
 
 /**
  * [Navigation] is a node that TODO

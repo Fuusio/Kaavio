@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.validation
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  *  [ValidatorFun] is a node that uses the given [function] to validate the received input.

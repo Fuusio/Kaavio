@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [If] is a node that uses the given [function] and received input value to select if value [Unit]

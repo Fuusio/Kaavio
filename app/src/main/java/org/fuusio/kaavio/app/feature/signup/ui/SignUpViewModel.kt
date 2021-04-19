@@ -1,6 +1,8 @@
 package org.fuusio.kaavio.app.feature.signup.ui
 
 
+import org.fuusio.kaavio.Kaavio.inputs
+import org.fuusio.kaavio.Kaavio.outputs
 import org.fuusio.kaavio.app.feature.signup.domain.SignUpInfo
 import org.fuusio.kaavio.graph.GraphViewModel
 import org.fuusio.kaavio.node.comparison.Equals
@@ -11,9 +13,7 @@ import org.fuusio.kaavio.node.validation.EmailValidator
 import org.fuusio.kaavio.node.validation.ValidatorFun
 import org.fuusio.kaavio.node.state.LiveDataNode
 import org.fuusio.kaavio.node.stream.Map
-import org.fuusio.kaavio.inputs
 import org.fuusio.kaavio.node.function.Fun2
-import org.fuusio.kaavio.outputs
 
 data class SignUpViewModel(
 

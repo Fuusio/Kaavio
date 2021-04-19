@@ -17,11 +17,10 @@
  */
 package org.fuusio.kaavio.factory
 
-import org.fuusio.kaavio.ActionInput
+import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.input.DelegateInput
-import org.fuusio.kaavio.output.DelegateOutput
 
 /**
  * [InputFactory] define interface for factory objects that are used to create [Input]s.

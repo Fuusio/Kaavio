@@ -1,7 +1,7 @@
 package org.fuusio.kaavio.node.security
 
 import android.util.Base64
-import org.fuusio.kaavio.SingleOutputNode
+import org.fuusio.kaavio.node.base.SingleOutputNode
 import java.io.UnsupportedEncodingException
 
 class MessageDigest(

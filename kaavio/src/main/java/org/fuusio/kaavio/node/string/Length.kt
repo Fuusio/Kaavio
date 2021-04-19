@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.string
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [Length] is node that outputs a length the [String] received as an input.

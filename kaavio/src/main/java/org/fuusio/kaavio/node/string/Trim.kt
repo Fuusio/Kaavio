@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.string
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [Trim] is node that outputs a trimmed version of the [String] received as an input.

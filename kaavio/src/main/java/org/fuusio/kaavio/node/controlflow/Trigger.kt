@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [Trigger] is a [org.fuusio.kaavio.Node] that can be programmatically triggered to transmit

@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.logic
 
-import org.fuusio.kaavio.SingleOutputNode
+import org.fuusio.kaavio.node.base.SingleOutputNode
 
 /**
  * [Xor] implements logical xor function which takes any number of input values and outputs

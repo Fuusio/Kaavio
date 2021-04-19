@@ -1,5 +1,6 @@
-package org.fuusio.kaavio
+package org.fuusio.kaavio.node.base
 
+import org.fuusio.kaavio.KaavioTest
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 

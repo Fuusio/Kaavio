@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio
+package org.fuusio.kaavio.node.base
 
 /**
  * [SingleOutputNode] is an abstract base class for all [Node] implementations that have only single

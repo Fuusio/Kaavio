@@ -20,7 +20,7 @@ package org.fuusio.kaavio.node.coroutines
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 import org.fuusio.kaavio.coroutines.DispatcherType
 

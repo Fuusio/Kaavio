@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio
+package org.fuusio.kaavio.node.base
 
 /**
- * [SingleInputNode] is an abstract base class for all [Node] implementations that have only single
- * [Input] of type [I].
+ * [SingleInputSingleOutputNode] is an abstract base class for all [Node] implementations that have
+ * only single [input] of type [I] and a single [output] of type [O].
  */
-abstract class SingleInputNode<I :Any> : AbstractNode() {
+abstract class SingleInputSingleOutputNode<I : Any, O : Any> : SingleOutputNode<O>() {
     val input = inputOf<I>()
 }

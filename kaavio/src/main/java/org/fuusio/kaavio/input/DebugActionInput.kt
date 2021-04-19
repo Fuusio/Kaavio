@@ -17,7 +17,6 @@
  */
 package org.fuusio.kaavio.input
 
-import org.fuusio.kaavio.ActionInput
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.debugger.GraphDebugger

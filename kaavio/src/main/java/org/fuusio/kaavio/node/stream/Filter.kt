@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [Filter] is node that uses the given [function] to filter which received values are further

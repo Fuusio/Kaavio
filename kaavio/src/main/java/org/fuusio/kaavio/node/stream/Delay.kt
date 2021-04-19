@@ -20,7 +20,7 @@ package org.fuusio.kaavio.node.stream
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import java.util.concurrent.TimeUnit
 
 /**

@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.function
 
-import org.fuusio.kaavio.SingleOutputNode
+import org.fuusio.kaavio.node.base.SingleOutputNode
 
 class Fun4<I1 :Any,I2 :Any,I3 :Any,I4 :Any,O :Any>(val function: (I1, I2, I3, I4) -> O)
     : SingleOutputNode<O>() {

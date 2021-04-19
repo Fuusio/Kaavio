@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.SingleInputNode
+import org.fuusio.kaavio.node.base.SingleInputNode
 
 class When<I: Any>(caseValues: List<I>) : SingleInputNode<I>() {
 

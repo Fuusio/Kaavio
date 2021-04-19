@@ -48,7 +48,7 @@ abstract class TestBench : KaavioTest() {
     protected fun inputs(vararg inputs: Input<*>): List<Input<*>> = inputs.toList()
 
     /**
-     * Returns a [List] of [Outputs]s.
+     * Returns a [List] of [Output]s.
      */
     protected fun outputs(vararg outputs: Output<*>): List<Output<*>> = outputs.toList()
 

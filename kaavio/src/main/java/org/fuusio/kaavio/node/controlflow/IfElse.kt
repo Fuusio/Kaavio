@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
-import org.fuusio.kaavio.SingleInputNode
+import org.fuusio.kaavio.node.base.SingleInputNode
 
 /**
  * [IfElse] is a node that uses the given [function] and received input value to select either the

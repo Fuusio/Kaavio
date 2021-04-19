@@ -1,6 +1,8 @@
-package org.fuusio.kaavio
+package org.fuusio.kaavio.input
 
 import io.mockk.verify
+import org.fuusio.kaavio.KaavioTest
+import org.fuusio.kaavio.Rx
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 

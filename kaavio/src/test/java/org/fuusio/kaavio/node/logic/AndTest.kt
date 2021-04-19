@@ -17,8 +17,9 @@
  */
 package org.fuusio.kaavio.node.logic
 
-import org.fuusio.kaavio.*
 import org.fuusio.kaavio.KaavioTest
+import org.fuusio.kaavio.node.debug.BooleanProbe
+import org.fuusio.kaavio.node.stream.BooleanInjector
 
 import org.junit.Assert.*
 import org.junit.Test
@@ -26,83 +27,59 @@ import org.junit.Test
 internal class AndTest : KaavioTest() {
 
     @Test
-    fun `Test 4 inputs true`() {
-        // Given
-        val node = And()
-        val output1 = Output<Boolean>(mock())
-        val output2 = Output<Boolean>(mock())
-        val output3 = Output<Boolean>(mock())
-        val output4 = Output<Boolean>(mock())
-        val outputs = arrayOf(output1, output2, output3, output4)
-
-        val receiver = Input<Boolean>(mock())
-
-        //node.input .rx (output1, output2, output3, output4)
-        node.input connect outputs(output1, output2, output3, output4)
-        node.output connect receiver
-
-        // When
-        outputs.forEach { output -> output.transmit(true) }
-
-        // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(true, receiver.value)
-    }
-
-    @Test
     fun `Test all inputs true`() {
         // Given
         val node = And()
-        val outputs = Array(4) { Output<Boolean>(mock()) }
-        val receiver = Input<Boolean>(mock())
-        outputs.forEach { output -> output connect node.input }
-        node.output connect receiver
+        val injectors = Array(4) { BooleanInjector() }
+        val probe = BooleanProbe()
+        injectors.forEach { injector -> injector.output connect node.input }
+        node.output connect probe
 
         // When
-        outputs.forEach { output -> output.transmit(true) }
+        injectors.forEach { injector -> injector.inject(true) }
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(true, receiver.value)
+        assertTrue(probe.hasValue())
+        probe.assertHasValue(true)
     }
 
     @Test
     fun `Test all inputs false`() {
         // Given
         val node = And()
-        val outputs = Array(4) { Output<Boolean>(mock()) }
-        val receiver = Input<Boolean>(mock())
-        outputs.forEach { output -> output connect node.input }
-        receiver connect node.output
+        val injectors = Array(4) { BooleanInjector() }
+        val probe = BooleanProbe()
+        injectors.forEach { injector -> injector.output connect node.input }
+        node.output connect probe
 
         // When
-        outputs.forEach { output -> output.transmit(false) }
+        injectors.forEach { injector -> injector.inject(false) }
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(false, receiver.value)
+        assertTrue(probe.hasValue())
+        probe.assertHasValue(false)
     }
 
     @Test
     fun `Test one of inputs false`() {
         // Given
         val node = And()
-        val outputs = Array(4) { Output<Boolean>(mock()) }
-        val receiver = Input<Boolean>(mock())
-        outputs.forEach { output -> output connect node.input }
-        node.output connect receiver
+        val injectors = Array(4) { BooleanInjector() }
+        val probe = BooleanProbe()
+        injectors.forEach { injector -> injector.output connect node.input }
+        node.output connect probe
 
         // When
-        outputs.forEachIndexed { index, output ->
+        injectors.forEachIndexed { index, injector ->
             val value = when(index) {
                             2 -> false
                             else -> true
                         }
-            output.transmit(value)
+            injector.inject(value)
         }
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(false, receiver.value)
+        assertTrue(probe.hasValue())
+        probe.assertHasValue(false)
     }
 }

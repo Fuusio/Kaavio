@@ -15,7 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio
+package org.fuusio.kaavio.input
+
+import org.fuusio.kaavio.Input
+import org.fuusio.kaavio.Node
+import org.fuusio.kaavio.Rx
+import org.fuusio.kaavio.Tx
 
 /**
  * [Inlet] implements a mechanism that enables dynamically attaching any number of
@@ -45,8 +50,3 @@ class Inlet<I : Any>(private val node: Node) : Rx<I> {
 
     override fun onReceive(value: I) {}
 }
-
-/**
- * Returns a [List] of [Tx] instances created from the given [transmitters].
- */
-fun <T : Any> outputs(vararg transmitters: Tx<T>): List<Tx<T>> = mutableListOf(*transmitters)

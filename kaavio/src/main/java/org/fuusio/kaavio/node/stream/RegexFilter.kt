@@ -17,7 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
-import org.fuusio.kaavio.SingleInputSingleOutputNode
+import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
  * [RegexFilter] implements a node that uses the given regular expression [pattern] to filter
