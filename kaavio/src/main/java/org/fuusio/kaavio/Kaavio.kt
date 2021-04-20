@@ -34,7 +34,8 @@ import java.io.PrintStream
 object Kaavio {
     /**
      * The [CoroutinesConfig] applied for injecting coroutines related objects such as coroutine
-     * scopes and dispatchers.
+     * scopes and dispatchers. The initial value is [DefaultCoroutinesConfig] which is the default
+     * implementation of [CoroutinesConfig].
      */
     var coroutinesConfig: CoroutinesConfig = DefaultCoroutinesConfig
 
@@ -44,16 +45,17 @@ object Kaavio {
     var isDebugMode: Boolean = false
 
     /**
-     * The [InputFactory] used for creating [Input] and [ActionInput] instances when corresponding
-     * functions [input] or [actionInput] are invoked.
+     * The [InputFactory] used for creating instances of various [Input] types when their
+     * corresponding create functions, e.g. [input] or [actionInput] are invoked.
      */
     var inputFactory: InputFactory = DefaultInputFactory()
 
     /**
-     * The out [PrintStream] which is used, for instance, by [org.fuusio.kaavio.debugger.node.Print]
+     * The out [PrintStream] which is used, for instance, by [org.fuusio.kaavio.node.debug.Print]
      * node.
      */
     var out: PrintStream = System.out
+
     /**
      * The [OutputFactory] used for creating [Output] instances when function [output] is invoked.
      */

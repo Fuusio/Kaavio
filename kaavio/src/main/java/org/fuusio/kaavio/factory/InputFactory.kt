@@ -23,7 +23,8 @@ import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.input.DelegateInput
 
 /**
- * [InputFactory] define interface for factory objects that are used to create [Input]s.
+ * [InputFactory] define interface for factory objects that are used to create  various types of
+ * [Input]s.
  */
 interface InputFactory {
 

@@ -17,6 +17,9 @@
  */
 package org.fuusio.kaavio.util
 
+/**
+ * [Septuple] is a [Tuple] of seven values.
+ */
 data class Septuple<T1, T2, T3, T4, T5, T6, T7>(
     val first: T1,
     val second: T2,

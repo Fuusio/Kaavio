@@ -18,7 +18,9 @@
 package org.fuusio.kaavio
 
 /**
- * [Rx] is interface for receiver objects i.e. objects that receive values.
+ * [Rx] is an interface for receiver objects i.e. objects that receive values of type [I].
+ *
+ * [Rx] objects can be connected to transmitting [Tx] objects of the same type.
  */
 interface Rx<I : Any> {
 

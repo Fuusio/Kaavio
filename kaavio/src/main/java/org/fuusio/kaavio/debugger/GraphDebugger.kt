@@ -18,21 +18,18 @@
 package org.fuusio.kaavio.debugger
 
 import org.fuusio.kaavio.*
-import org.fuusio.kaavio.graph.Graph
+import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
 import java.lang.Exception
 
 /**
- * [GraphDebugger] is a utility for graph debugging.
+ * [GraphDebugger] is a utility object for graph debugging.
  */
 object GraphDebugger {
 
     var tag: String? = null
-
-    private const val DEFAULT_INPUT_NAME = "input"
-    private const val DEFAULT_OUTPUT_NAME = "output"
 
     private fun isDebuggingEnabled() = Kaavio.isDebugMode
 

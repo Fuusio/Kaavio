@@ -22,6 +22,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 
+/**
+ * [DefaultCoroutinesConfig] is a default implementation of [CoroutinesConfig].
+ */
 object DefaultCoroutinesConfig : CoroutinesConfig {
 
     override val graphCoroutineScope: CoroutineScope = GlobalScope

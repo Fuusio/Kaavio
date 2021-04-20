@@ -18,7 +18,9 @@
 package org.fuusio.kaavio
 
 /**
- * [Tx] is interface for transmitter objects i.e. objects that transmit values.
+ * [Tx] is an interface for transmitter objects i.e. objects that transmit values of type [O].
+ *
+ * [Tx] objects can be connected to transmitting [Rx] objects of the same type.
  */
 interface Tx<O : Any> {
 

@@ -52,7 +52,7 @@ sealed class DebugEntry(open val node: Node) {
 }
 
 /**
- * [OnActionEntry] is a [DebugEntry] which is received when an [DebugActionInput] has received
+ * [OnActionEntry] is a [DebugEntry] which is received when a [DebugActionInput] has received
  * a value.
  */
 data class OnActionEntry(val input: DebugActionInput<*>, val value: Any) : DebugEntry(input.node)
@@ -63,13 +63,13 @@ data class OnActionEntry(val input: DebugActionInput<*>, val value: Any) : Debug
 data class OnException(override val node: Node, val exception: Exception) : DebugEntry(node)
 
 /**
- * [OnValueReceivedEntry] is a [DebugEntry] which is received when an [DebugInput] has received
+ * [OnValueReceivedEntry] is a [DebugEntry] which is received when a [DebugInput] has received
  * a value.
  */
 data class OnValueReceivedEntry(val input: DebugInput<*>, val value: Any) : DebugEntry(input.node)
 
 /**
- * [OnValueTransmittedEntry] is a [DebugEntry] which is received when an [DebugOutput] has
+ * [OnValueTransmittedEntry] is a [DebugEntry] which is received when a [DebugOutput] has
  * transmitted a value.
  */
 data class OnValueTransmittedEntry(val output: DebugOutput<*>, val value: Any, val receiver: Rx<*>) : DebugEntry(output.node)

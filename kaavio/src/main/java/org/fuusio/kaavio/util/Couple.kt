@@ -17,6 +17,9 @@
  */
 package org.fuusio.kaavio.util
 
+/**
+ * [Couple] is a [Tuple] of two values.
+ */
 data class Couple<T1, T2>(
     val first: T1,
     val second: T2,

@@ -22,7 +22,8 @@ import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.output.DelegateOutput
 
 /**
- * [OutputFactory] define interface for factory objects that are used to create [Output]s.
+ * [OutputFactory] define interface for factory objects that are used to create various types of
+ * [Output]s.
  */
 interface OutputFactory {
 

@@ -2,7 +2,7 @@ package org.fuusio.kaavio.testbench
 
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.node.debug.Probe
-import org.fuusio.kaavio.graph.Graph
+import org.fuusio.kaavio.Graph
 import org.junit.jupiter.api.Assertions
 
 /**

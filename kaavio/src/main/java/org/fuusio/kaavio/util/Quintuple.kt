@@ -17,6 +17,9 @@
  */
 package org.fuusio.kaavio.util
 
+/**
+ * [Quintuple] is a [Tuple] of five values.
+ */
 data class Quintuple<T1, T2, T3, T4, T5>(
     val first: T1,
     val second: T2,

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import org.fuusio.kaavio.app.databinding.SignUpFragmentBinding
+import org.fuusio.kaavio.app.feature.signup.domain.*
 import org.fuusio.kaavio.extensions.connect
 
 class SignUpFragment : Fragment() {
@@ -53,15 +54,28 @@ class SignUpFragment : Fragment() {
             confirmPasswordEditText  connect password2.input
             signUpButton connect doSignUp.input
 
+            infoInputState.observe(viewLifecycleOwner) { errors -> onInputStateChanged(errors)}
             signUpState.observe(viewLifecycleOwner) { state -> onSignUpStateChanged(state) }
+        }
+    }
+
+    private fun onInputStateChanged(inputState: InputState) {
+        when (inputState) {
+            is UserNameInputState -> { userNameEditText.error = inputState.error }
+            is EmailInputState -> { emailEditText.error = inputState.error }
+            is EmailConfirmInputState -> { confirmEmailEditText.error = inputState.error}
+            is PasswordInputState -> { passwordEditText.error = inputState.error }
+            is PasswordConfirmInputState -> { confirmPasswordEditText.error = inputState.error }
         }
     }
 
     private fun onSignUpStateChanged(state: SignUpState) {
         when (state) {
-            is SignUpInfoInput -> { signUpButton.isEnabled = false }
+            is SignUpInfoNotReady -> { signUpButton.isEnabled = false }
             is SignUpInfoReady -> { signUpButton.isEnabled = true }
             is SignUpRequested -> {
+                setEditTextsEnabled(false)
+                signUpButton.isEnabled = false
                 showProgressIndicator()
             }
             is SignUpSucceeded -> {
@@ -69,8 +83,18 @@ class SignUpFragment : Fragment() {
             }
             is SignUpFailed -> {
                 hideProgressIndicator()
+                setEditTextsEnabled(true)
+                signUpButton.isEnabled = true
             }
         }
+    }
+
+    private fun setEditTextsEnabled(isEnabled: Boolean) {
+        userNameEditText.isEnabled = isEnabled
+        emailEditText.isEnabled = isEnabled
+        confirmEmailEditText.isEnabled = isEnabled
+        passwordEditText.isEnabled = isEnabled
+        confirmPasswordEditText.isEnabled = isEnabled
     }
 
     override fun onResume() {

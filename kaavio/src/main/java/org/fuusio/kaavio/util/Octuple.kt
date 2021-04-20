@@ -17,6 +17,9 @@
  */
 package org.fuusio.kaavio.util
 
+/**
+ * [Octuple] ris a [Tuple] of eight values.
+ */
 data class Octuple<T1, T2, T3, T4, T5, T6, T7, T8>(
     val first: T1,
     val second: T2,

@@ -20,7 +20,7 @@ package org.fuusio.kaavio.node.debug
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.node.base.SingleInputNode
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.graph.Graph
+import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
 

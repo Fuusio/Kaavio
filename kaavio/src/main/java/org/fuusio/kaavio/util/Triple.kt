@@ -17,6 +17,9 @@
  */
 package org.fuusio.kaavio.util
 
+/**
+ * [Triple] is a [Tuple] of three values.
+ */
 data class Triple<T1, T2, T3>(
     val first: T1,
     val second: T2,

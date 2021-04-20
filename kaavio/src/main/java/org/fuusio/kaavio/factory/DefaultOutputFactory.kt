@@ -22,6 +22,9 @@ import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.output.DebugOutput
 import org.fuusio.kaavio.output.DelegateOutput
 
+/**
+ * [DefaultOutputFactory] provides a default implementation of [OutputFactory].
+ */
 class DefaultOutputFactory : OutputFactory {
 
     override fun <O :Any> createDebugOutput(node: Node) = DebugOutput<O>(node)

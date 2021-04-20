@@ -4,7 +4,7 @@ import io.mockk.mockk
 import org.fuusio.kaavio.*
 import org.fuusio.kaavio.debugger.GraphDebugger
 import org.fuusio.kaavio.node.debug.Probe
-import org.fuusio.kaavio.graph.Graph
+import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.graph.GraphContext
 import org.fuusio.kaavio.node.graph.NestedGraphNode
 import org.fuusio.kaavio.node.stream.Injector

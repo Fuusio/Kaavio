@@ -24,6 +24,9 @@ import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.input.DelegateInput
 
+/**
+ * [DefaultInputFactory] provides a default implementation of [InputFactory].
+ */
 class DefaultInputFactory: InputFactory {
 
     override fun <I :Any> createDebugActionInput(node: Node, action: (I) -> Unit) =

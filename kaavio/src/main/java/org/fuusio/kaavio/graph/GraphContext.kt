@@ -19,6 +19,7 @@ package org.fuusio.kaavio.graph
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.coroutines.DispatcherType
 
 /**

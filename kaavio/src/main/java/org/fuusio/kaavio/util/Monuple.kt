@@ -17,6 +17,9 @@
  */
 package org.fuusio.kaavio.util
 
+/**
+ * [Monuple] is a [Tuple] of single value.
+ */
 data class Monuple<T1>(val first: T1) : Tuple {
     override val size: Int = 1
 

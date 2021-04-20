@@ -4,7 +4,7 @@ import org.fuusio.kaavio.app.feature.signup.domain.SignUpInfo
 
 sealed class SignUpState
 
-object SignUpInfoInput : SignUpState()
+object SignUpInfoNotReady : SignUpState()
 
 data class SignUpInfoReady(val signUpInfo: SignUpInfo) : SignUpState()
 

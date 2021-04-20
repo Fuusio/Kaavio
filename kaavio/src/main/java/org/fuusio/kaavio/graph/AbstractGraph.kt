@@ -19,6 +19,7 @@ package org.fuusio.kaavio.graph
 
 import androidx.annotation.CallSuper
 import kotlinx.coroutines.CoroutineScope
+import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.coroutines.CoroutinesConfig

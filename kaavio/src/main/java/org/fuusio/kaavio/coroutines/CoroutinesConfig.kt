@@ -20,6 +20,10 @@ package org.fuusio.kaavio.coroutines
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * [CoroutinesConfig] defines an interface for an object that can provide configuration for
+ * coroutines for [org.fuusio.kaavio.Graph]s by using [org.fuusio.kaavio.Kaavio.coroutinesConfig].
+ */
 interface CoroutinesConfig {
 
     /**

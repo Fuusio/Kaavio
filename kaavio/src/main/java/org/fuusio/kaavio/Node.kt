@@ -17,7 +17,6 @@
  */
 package org.fuusio.kaavio
 
-import org.fuusio.kaavio.graph.Graph
 import org.fuusio.kaavio.graph.GraphContext
 
 /**

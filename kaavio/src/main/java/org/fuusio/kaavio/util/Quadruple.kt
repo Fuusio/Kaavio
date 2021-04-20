@@ -17,6 +17,9 @@
  */
 package org.fuusio.kaavio.util
 
+/**
+ * [Quadruple] is a [Tuple] of four values.
+ */
 data class Quadruple<T1, T2, T3, T4>(
     val first: T1,
     val second: T2,

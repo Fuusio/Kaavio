@@ -15,14 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.graph
+package org.fuusio.kaavio
 
 import kotlinx.coroutines.CoroutineScope
-import org.fuusio.kaavio.Input
-import org.fuusio.kaavio.Kaavio
-import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.coroutines.CoroutinesConfig
+import org.fuusio.kaavio.graph.GraphContext
 import org.fuusio.kaavio.input.DebugActionInput
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
@@ -53,9 +50,9 @@ interface Graph {
 
     /**
      * Returns the [List] of [Node]s contained by this [Graph]. The default implementations in
-     * [AbstractGraph] and [GraphViewModel] use reflection to obtain the nodes. For improved
-     * performance, if necessary, this method can be implemented to provide the nodes list
-     * explicitly.
+     * [org.fuusio.kaavio.graph.AbstractGraph] and [org.fuusio.kaavio.graph.GraphViewModel] use
+     * reflection to obtain the nodes. For improved performance, if necessary, this method can be
+     * implemented to provide the nodes list explicitly.
      */
     fun getNodes(): List<Node>
 
@@ -78,7 +75,8 @@ interface Graph {
     /**
      * Attach the given [nodes] to this [Graph]. An implementation of this method should invoke
      * [Node.onInit] is for each [Node] in the given list. The default implementations in
-     * [AbstractGraph] and [GraphViewModel] takes care of proper invoking [Node.onInit] method.
+     * [org.fuusio.kaavio.graph.AbstractGraph] and [org.fuusio.kaavio.graph.GraphViewModel] takes
+     * care of proper invoking [Node.onInit] method.
      */
     fun attachNodes(nodes: List<Node>)
 
@@ -130,7 +128,6 @@ interface Graph {
             }
             return nodes
         }
-
 
         private fun getInputAndOutputNames(node: Node) {
             node::class.memberProperties.forEach { property ->

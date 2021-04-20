@@ -3,7 +3,7 @@ package org.fuusio.kaavio.testbench
 import org.fuusio.kaavio.*
 import org.fuusio.kaavio.debugger.GraphDebugger
 import org.fuusio.kaavio.node.debug.Probe
-import org.fuusio.kaavio.graph.Graph
+import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.node.stream.Injector
 import org.fuusio.kaavio.output.DebugOutput
 import org.junit.jupiter.api.AfterAll
