@@ -22,7 +22,7 @@ package org.fuusio.kaavio.node.validation
  * validating a received input [String]. The regular expression can be also defined as a [String]
  * using the secondary constructor.
  */
-open class RegexValidator(private val pattern: Regex) : Validator<String>() {
+open class RegexValidator(private val pattern: Regex) : Validator<String, Boolean>() {
 
     constructor(pattern: String) : this(Regex(pattern))
 

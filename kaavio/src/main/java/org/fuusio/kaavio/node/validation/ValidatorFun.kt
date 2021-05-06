@@ -20,10 +20,11 @@ package org.fuusio.kaavio.node.validation
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
- *  [ValidatorFun] is a node that uses the given [function] to validate the received input.
+ *  [ValidatorFun] is a node that uses the given [function] to validate the received input of type
+ *  [I]. Validation result is of type [O].
  */
-class ValidatorFun<I : Any>(val function: (I) -> Boolean)
-    : SingleInputSingleOutputNode<I, Boolean>() {
+class ValidatorFun<I : Any, O : Any>(val function: (I) -> O)
+    : SingleInputSingleOutputNode<I, O>() {
 
     override fun onFired() {
         output.transmit(function(input.value))

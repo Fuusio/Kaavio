@@ -15,7 +15,7 @@ import org.fuusio.kaavio.extensions.connect
 
 class SignUpFragment : Fragment() {
 
-    private lateinit var viewModel: SignUpViewModel
+    private lateinit var viewModel: SignUpViewModelNew
 
     private lateinit var userNameEditText: EditText
     private lateinit var emailEditText: EditText
@@ -30,7 +30,7 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SignUpViewModelNew::class.java)
         val binding = SignUpFragmentBinding.inflate(inflater)
 
         userNameEditText = binding.editTextUserName
