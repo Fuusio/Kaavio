@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -29,17 +29,17 @@ open class Output<O :Any>(val node: Node) : Tx<O> {
      * Transmits the given [value] to connected, receiving [Rx] objects. The value is optionally
      * cached (see [Output.isValueCached].
      */
-    internal open fun transmit(value: O) {
+    internal open fun transmit(ctx: Ctx, value: O) {
         this.value = value
-        transmit()
+        transmit(ctx)
         if (!isValueCached()) { this.value = null }
     }
 
     /**
      * Transmits the cached [value], if any, to connected, receiving [Rx] objects.
      */
-    override fun transmit() {
-        value?.let { receivers.forEach { receiver -> receiver.onReceive(it) } }
+    override fun transmit(ctx: Ctx) {
+        value?.let { receivers.forEach { receiver -> receiver.onReceive(ctx, it) } }
     }
 
     /**

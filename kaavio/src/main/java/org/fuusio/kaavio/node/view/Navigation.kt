@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -18,6 +18,7 @@
 package org.fuusio.kaavio.node.view
 
 import androidx.annotation.IdRes
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputNode
 
 /**
@@ -25,7 +26,7 @@ import org.fuusio.kaavio.node.base.SingleInputNode
  */
 class Navigation(@IdRes private val resId: Int) : SingleInputNode<Unit>() {
 
-    override fun onFired() {
+    override fun onFired(ctx: Ctx) {
         TODO("Not yet implemented")
     }
 }

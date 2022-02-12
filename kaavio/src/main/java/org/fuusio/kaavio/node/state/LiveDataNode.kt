@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -22,6 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
@@ -103,9 +104,9 @@ class LiveDataNode<I : Any> : SingleInputSingleOutputNode<I, I>(), StatefulNode<
      */
     fun hasObservers(): Boolean = liveData.hasObservers()
 
-    override fun onFired() {
-        val value = input.value
+    override fun onFired(ctx: Ctx) {
+        val value = input.get(ctx)
         liveData.value = value
-        output.transmit(value)
+        output.transmit(ctx, value)
     }
 }

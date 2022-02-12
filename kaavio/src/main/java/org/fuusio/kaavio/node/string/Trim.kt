@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.string
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
@@ -24,7 +25,7 @@ import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
  */
 class Trim : SingleInputSingleOutputNode<String, String>() {
 
-    override fun onFired() {
-        transmit(input.value.trim())
+    override fun onFired(ctx: Ctx) {
+        transmit(ctx, input.get(ctx).trim())
     }
 }

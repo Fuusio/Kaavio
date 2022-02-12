@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
@@ -25,9 +26,9 @@ import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
  */
 class If<I : Any>(val function: (I) -> Boolean) : SingleInputSingleOutputNode<I, Unit>() {
 
-    override fun onFired() {
-        if (function(input.value)) {
-            output.transmit(Unit)
+    override fun onFired(ctx: Ctx) {
+        if (function(input.get(ctx))) {
+            output.transmit(ctx, Unit)
         }
     }
 }

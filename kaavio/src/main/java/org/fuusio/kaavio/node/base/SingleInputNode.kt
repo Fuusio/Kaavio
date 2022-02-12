@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -18,8 +18,8 @@
 package org.fuusio.kaavio.node.base
 
 /**
- * [SingleInputNode] is an abstract base class for all [Node] implementations that have only single
- * [Input] of type [I].
+ * [SingleInputNode] is an abstract base class for all [org.fuusio.kaavio.Node] implementations
+ * that have only single [org.fuusio.kaavio.Input] of type [I].
  */
 abstract class SingleInputNode<I :Any> : AbstractNode() {
     val input = inputOf<I>()

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.input
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.debugger.GraphDebugger
@@ -28,8 +29,8 @@ import org.fuusio.kaavio.debugger.GraphDebugger
 class DebugInput<I: Any>(node: Node, var name: String? = null) :
     Input<I>(node) {
 
-    override fun onReceive(value: I) {
+    override fun onReceive(ctx: Ctx, value: I) {
         GraphDebugger.onValueReceived(this, value)
-        super.onReceive(value)
+        super.onReceive(ctx, value)
     }
 }

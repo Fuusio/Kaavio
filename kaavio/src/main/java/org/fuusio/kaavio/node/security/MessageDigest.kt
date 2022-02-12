@@ -1,6 +1,7 @@
 package org.fuusio.kaavio.node.security
 
 import android.util.Base64
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleOutputNode
 import java.io.UnsupportedEncodingException
 
@@ -8,22 +9,19 @@ class MessageDigest(
     algorithm: String,
     private val iterations: Int = 2,
     private val encoderFlags: Int = Base64.DEFAULT,
-     useSaltInput: Boolean = true
+    private val useSaltInput: Boolean = true
 ) : SingleOutputNode<String>() {
 
     val message = inputOf<String>()
     val salt = inputOf<String>()
 
-    init {
-        if (!useSaltInput) {
-            salt.cacheValue(System.currentTimeMillis().toString())
-        }
-    }
-
     private val messageDigest = java.security.MessageDigest.getInstance(algorithm)
 
-    override fun onFired() {
-        output.transmit(hash(message.value, salt.value))
+    override fun onFired(ctx: Ctx) {
+        if (!useSaltInput && !salt.hasValue(ctx)) {
+            salt.cacheValue(ctx, System.currentTimeMillis().toString())
+        }
+        output.transmit(ctx, hash(message.get(ctx), salt.get(ctx)))
     }
 
     private fun hash(message: String, salt: String): String {

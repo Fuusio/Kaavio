@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.validation
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.node.debug.BooleanProbe
 import org.junit.jupiter.api.*
@@ -27,8 +28,13 @@ internal class EmailValidatorGwtTest : KaavioTest() {
 
     // Test subject
     private val node = EmailValidator()
-
     private val probe = BooleanProbe()
+    private val ctx = Ctx()
+
+    @BeforeEach
+    fun beforeEachCase() {
+        ctx.clear()
+    }
 
     @BeforeAll
     fun beforeAllCases() {
@@ -41,7 +47,7 @@ internal class EmailValidatorGwtTest : KaavioTest() {
 
         @BeforeEach
         fun beforeEachCase() {
-            node.input.onReceive("foo.bar@baz.com")
+            node.input.onReceive(ctx,"foo.bar@baz.com")
         }
 
         @Test
@@ -57,7 +63,7 @@ internal class EmailValidatorGwtTest : KaavioTest() {
 
         @BeforeEach
         fun beforeEachCase() {
-            node.input.onReceive("foo.bar(at))baz.com")
+            node.input.onReceive(ctx,"foo.bar(at))baz.com")
         }
 
         @Test

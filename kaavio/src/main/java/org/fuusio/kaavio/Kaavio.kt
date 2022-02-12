@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -64,7 +64,7 @@ object Kaavio {
     /**
      * Creates a new instance of an [ActionInput] for the given [Node] and [action] function.
      */
-    fun <I: Any> actionInput(node: Node, action: (I) -> Unit) =
+    fun <I: Any> actionInput(node: Node, action: (Ctx, I) -> Unit) =
         if (isDebugMode) inputFactory.createDebugActionInput(node, action)
         else inputFactory.createActionInput(node, action)
 

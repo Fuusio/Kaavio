@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -27,7 +27,7 @@ interface Rx<I : Any> {
     /**
      * Invoked to this receiver [Rx] to receive a [value] transmitter by connected transmitter [Tx].
      */
-    fun onReceive(value: I)
+    fun onReceive(ctx: Ctx, value: I)
 
     /**
      * Connects the given [transmitter] object to this or some other receiver object returned

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,12 +17,16 @@
  */
 package org.fuusio.kaavio.node.function
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleOutputNode
 
+/**
+ * [Fun] TODO
+ */
 open class Fun<I : Any,O : Any>(val function: (I) -> O) : SingleOutputNode<O>() {
     val arg = inputOf<I>()
 
-    override fun onFired() {
-        output.transmit(function(arg.value))
+    override fun onFired(ctx: Ctx) {
+        output.transmit(ctx, function(arg.get(ctx)))
     }
 }

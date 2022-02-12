@@ -18,17 +18,39 @@
 package org.fuusio.kaavio
 
 /**
- * [StatefulNode] is interface for [Node] implementations that maintain an internal state.
+ * [Ctx] TODO
  */
-interface StatefulNode<I : Any> : Node {
+@Suppress("UNCHECKED_CAST")
+data class Ctx(val values: MutableMap<Int, Any> = mutableMapOf()) {
 
     /**
-     * The value of type [I] of this [StatefulNode].
+     * Checks if there is value for the given [key].
      */
-    val value: I?
+    fun has(key: Int): Boolean = values.containsKey(key)
 
     /**
-     * Tests if this [StatefulNode] has a value.
+     * Gets the value for the given [key].
      */
-    fun hasValue(): Boolean
+    fun <T: Any> get(key: Int): T = values[key]!! as T
+
+    /**
+     * Sets the given [value] for the given [key].
+     */
+    fun set(key: Int, value: Any) {
+        values[key] = value
+    }
+
+    /**
+     * Clear all the values.
+     */
+    fun clear() {
+        values.clear()
+    }
+
+    /**
+     * Clear the value for the given [key].
+     */
+    fun clear(key: Int) {
+        values.remove(key)
+    }
 }

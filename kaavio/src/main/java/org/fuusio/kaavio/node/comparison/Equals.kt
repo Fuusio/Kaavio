@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.comparison
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.AbstractNode
 
 /**
@@ -27,8 +28,8 @@ class Equals<I :Any> : AbstractNode() {
     val input = inletOf<I>()
     val output = outputOf<Boolean>()
 
-    override fun onFired() {
-        val values = input.values
+    override fun onFired(ctx: Ctx) {
+        val values = input.getValues(ctx)
 
         if (values.size < 2) {
             throw IllegalStateException("Equals requires at least two inputs.")
@@ -36,11 +37,11 @@ class Equals<I :Any> : AbstractNode() {
         var previous: I? = null
         values.forEach { value ->
             if (previous != null && value != previous) {
-                output.transmit(false)
+                output.transmit(ctx,false)
                 return
             }
             previous = value
         }
-        output.transmit(true)
+        output.transmit(ctx,true)
     }
 }

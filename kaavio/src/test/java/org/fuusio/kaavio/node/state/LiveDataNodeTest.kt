@@ -8,8 +8,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withContext
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.StringInjector
-import org.fuusio.kaavio.node.stream.StringSink
+import org.fuusio.kaavio.node.debug.StringInjector
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before

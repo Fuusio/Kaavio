@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
@@ -26,7 +27,7 @@ import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 class Map<I: Any, O: Any>(private val mapFunction: (I) -> O)
     : SingleInputSingleOutputNode<I, O>() {
 
-    override fun onFired() {
-        output.transmit(mapFunction(input.value))
+    override fun onFired(ctx: Ctx) {
+        output.transmit(ctx, mapFunction(input.get(ctx)))
     }
 }

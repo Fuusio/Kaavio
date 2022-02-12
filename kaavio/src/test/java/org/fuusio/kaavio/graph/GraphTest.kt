@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -31,7 +31,7 @@ import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.fail
 
 /**
- * [GraphTest] provides an abstract base class for implementing tests for [Graph]s.
+ * [GraphTest] provides an abstract base class for implementing tests for [org.fuusio.kaavio.Graph]s.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class GraphTest : KaavioTest() {

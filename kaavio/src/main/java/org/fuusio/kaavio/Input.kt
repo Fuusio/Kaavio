@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -24,42 +24,48 @@ import androidx.annotation.CallSuper
  * When an input receives a value it invokes [Node.onInputValueReceived] for the owner node.
  */
 @Suppress("LeakingThis")
-open class Input<I :Any>(val node: Node) : Rx<I> {
-    private var _value: I? = null
+open class Input<I :Any>(val node: Node, val id: Int = generateId()) : Rx<I> {
+    // TODO REMOVE private var _value: I? = null
     private var statefulNode: StatefulNode<I>? = null
 
-    /**
+    /*
      * The received value (if any). See [hasValue].
-     */
+     *
     internal val value: I
-        get() = _value!!
+        get() = _value!!*/
 
     init {
         node.attachInput(this)
     }
 
     /**
+     * Gets the value received for the given [ctx].
+     */
+    internal fun get(ctx: Ctx): I = ctx.get(id)
+
+    /**
      * Invoked for this [Input] to receive the given [value]. By default the received is cached and
      * the owned [Node] is notified about the received value by invoking [Node.onInputValueReceived].
      */
-    override fun onReceive(value: I) {
-        cacheValue(value)
-        node.onInputValueReceived(this)
+    override fun onReceive(ctx: Ctx, value: I) {
+        cacheValue(ctx, value)
+        node.onInputValueReceived(ctx,this)
     }
 
     /**
      * Cache the given value to internal cache.
      */
-    internal open fun cacheValue(value: I) {
-        _value = value
+    internal open fun cacheValue(ctx: Ctx, value: I) {
+        ctx.set(id, value)
+        // TODO _value = value
     }
 
     /**
      * Resets this [Input] by removing the received value.
      */
     @CallSuper
-    open fun reset() {
-        _value = null
+    open fun reset(ctx: Ctx) {
+        ctx.clear(id)
     }
 
     override infix fun connect(transmitter: Tx<I>): Rx<I> =
@@ -93,16 +99,22 @@ open class Input<I :Any>(val node: Node) : Rx<I> {
     /**
      * Tests if this [Input] has received a value.
      */
-    open fun hasValue(): Boolean =
-        if (_value != null) {
+    open fun hasValue(ctx: Ctx): Boolean =
+        if (ctx.has(id)) {
             true
         } else {
             val node = statefulNode
             if (node != null) {
-                _value = node.value
+                ctx.set(id, node.value as I)
                 node.hasValue()
             } else {
                 false
             }
         }
+
+    companion object {
+        private var nextId: Int = 0xF00
+
+        fun generateId(): Int = nextId++
+    }
 }

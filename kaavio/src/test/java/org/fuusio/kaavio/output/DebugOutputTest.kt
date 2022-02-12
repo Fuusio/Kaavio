@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -22,8 +22,8 @@ import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.debugger.GraphDebugger
 import org.fuusio.kaavio.debugger.OnValueReceivedEntry
 import org.fuusio.kaavio.debugger.OnValueTransmittedEntry
-import org.fuusio.kaavio.node.stream.IntInjector
-import org.fuusio.kaavio.node.stream.IntSink
+import org.fuusio.kaavio.node.debug.IntInjector
+import org.fuusio.kaavio.node.state.IntSink
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

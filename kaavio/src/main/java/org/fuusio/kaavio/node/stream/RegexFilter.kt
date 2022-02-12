@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
@@ -29,8 +30,8 @@ class RegexFilter(private val pattern: Regex)
 
     constructor(pattern: String) : this(Regex(pattern))
 
-    override fun onFired() {
-        val value = input.value
-        if (pattern.matches(value)) transmit(value)
+    override fun onFired(ctx: Ctx) {
+        val value = input.get(ctx)
+        if (pattern.matches(value)) transmit(ctx, value)
     }
 }

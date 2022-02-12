@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 internal class InputTest : KaavioTest() {
 
     private val node = mockNode()
+    private val ctx = Ctx()
 
     // Test subject
     private val input = Input<Int>(node)
@@ -36,25 +37,26 @@ internal class InputTest : KaavioTest() {
 
         @BeforeEach
         fun beforeEachCase() {
-            input.onReceive(42)
+            ctx.clear()
+            input.onReceive(ctx,42)
         }
 
         @Test
         @DisplayName("Then should have a value")
         fun case1() {
-            assertTrue(input.hasValue())
+            assertTrue(input.hasValue(ctx))
         }
 
         @Test
-        @DisplayName("Then INput should have cached Int value 42")
+        @DisplayName("Then Input should have cached Int value 42")
         fun case2() {
-            assertEquals(42, input.value)
+            assertEquals(42, input.get(ctx))
         }
 
         @Test
         @DisplayName("Then should have invoked Node.onInputReceived")
         fun case3() {
-            verify { node.onInputValueReceived(input) }
+            verify { node.onInputValueReceived(ctx, input) }
         }
     }
 
@@ -64,14 +66,15 @@ internal class InputTest : KaavioTest() {
 
         @BeforeEach
         fun beforeCase() {
-            input.onReceive(42)
-            input.reset()
+            ctx.clear()
+            input.onReceive(ctx,42)
+            input.reset(ctx)
         }
 
         @Test
         @DisplayName("Then Input should not have a value")
         fun case1() {
-            assertTrue(!input.hasValue())
+            assertTrue(!input.hasValue(ctx))
         }
     }
 

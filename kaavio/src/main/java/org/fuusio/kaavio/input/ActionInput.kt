@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.input
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
 
@@ -24,14 +25,14 @@ import org.fuusio.kaavio.Node
  * [ActionInput] is an [Input] which, when a value is received, executes he given [action]
  * function without notifying the owner [Node] about the received value.
  */
-open class ActionInput<I : Any>(node: Node, private val action: (I) -> Unit) : Input<I>(node) {
+open class ActionInput<I : Any>(node: Node, private val action: (Ctx, I) -> Unit) : Input<I>(node) {
 
-    override fun onReceive(value: I) {
-        action(value)
+    override fun onReceive(ctx: Ctx, value: I) {
+        action(ctx, value)
     }
 
     /**
      * [ActionInput] is interpreted to always to have value.
      */
-    override fun hasValue(): Boolean  = true
+    override fun hasValue(ctx: Ctx): Boolean  = true
 }

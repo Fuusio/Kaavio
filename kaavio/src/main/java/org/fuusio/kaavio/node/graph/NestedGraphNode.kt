@@ -1,6 +1,7 @@
 package org.fuusio.kaavio.node.graph
 
 import androidx.annotation.CallSuper
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.AbstractNode
 import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.graph.GraphContext
@@ -16,7 +17,7 @@ abstract class NestedGraphNode<T : Graph>(val graph: T) : AbstractNode() {
         graph.activate()
     }
 
-    override fun onFired() {}
+    override fun onFired(ctx: Ctx) {}
 
     override fun onDispose() {
         graph.dispose()

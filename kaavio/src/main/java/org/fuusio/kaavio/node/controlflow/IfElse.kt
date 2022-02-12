@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputNode
 
 /**
@@ -27,10 +28,10 @@ class IfElse<I : Any>(val function: (I) -> Boolean) : SingleInputNode<I>() {
     val onTrue = outputOf<Unit>()
     val onFalse = outputOf<Unit>()
 
-    override fun onFired() {
-        when (function(input.value)) {
-            true -> onTrue.transmit(Unit)
-            false -> onFalse.transmit(Unit)
+    override fun onFired(ctx: Ctx) {
+        when (function(input.get(ctx))) {
+            true -> onTrue.transmit(ctx, Unit)
+            false -> onFalse.transmit(ctx, Unit)
         }
     }
 }

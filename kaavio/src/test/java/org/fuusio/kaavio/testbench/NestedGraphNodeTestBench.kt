@@ -7,7 +7,7 @@ import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.graph.GraphContext
 import org.fuusio.kaavio.node.graph.NestedGraphNode
-import org.fuusio.kaavio.node.stream.Injector
+import org.fuusio.kaavio.node.debug.Injector
 import org.fuusio.kaavio.output.DelegateOutput
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

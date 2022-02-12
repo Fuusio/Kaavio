@@ -4,7 +4,7 @@ import org.fuusio.kaavio.*
 import org.fuusio.kaavio.debugger.GraphDebugger
 import org.fuusio.kaavio.node.debug.Probe
 import org.fuusio.kaavio.Graph
-import org.fuusio.kaavio.node.stream.Injector
+import org.fuusio.kaavio.node.debug.Injector
 import org.fuusio.kaavio.output.DebugOutput
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.*

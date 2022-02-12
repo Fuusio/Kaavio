@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.input
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.debugger.GraphDebugger
@@ -28,6 +29,8 @@ import org.junit.Before
 import org.junit.Test
 
 class DebugActionInputTest : KaavioTest() {
+
+    private val ctx = Ctx()
 
     @Before
     fun before() {
@@ -45,10 +48,10 @@ class DebugActionInputTest : KaavioTest() {
     fun `Test transmitting a value`() {
         // Given
         var boolean = false
-        val actionInput = DebugActionInput<Int>(mock()) { int -> boolean = int > 10 }
+        val actionInput = DebugActionInput<Int>(mock()) { _, int -> boolean = int > 10 }
 
         // When
-        actionInput.onReceive(42)
+        actionInput.onReceive(ctx,42)
 
         // Then
         assertTrue(boolean)

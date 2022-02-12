@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -25,9 +25,9 @@ package org.fuusio.kaavio
 interface Tx<O : Any> {
 
     /**
-     * Request this [Tx] to transmit the latest cached value if any.
+     * Request this [Tx] to transmit the latest cached value if any using the given [Ctx].
      */
-    fun transmit()
+    fun transmit(ctx: Ctx)
 
     /**
      * Connects the given [receiver] object given as [Rx] object to this transmitter.

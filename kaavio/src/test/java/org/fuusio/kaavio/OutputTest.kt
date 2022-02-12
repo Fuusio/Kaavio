@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -27,6 +27,7 @@ internal class OutputTest : KaavioTest() {
 
     // Test subject
     private val output = Output<Int>(mockk())
+    private val ctx = Ctx()
 
     @DisplayName("When transmitting Int value 42")
     @Nested
@@ -36,20 +37,21 @@ internal class OutputTest : KaavioTest() {
 
         @BeforeEach
         fun beforeCase() {
+            ctx.clear()
             output connect input
-            output.transmit(42)
+            output.transmit(ctx,42)
         }
 
         @Test
         @DisplayName("Then connected Input should have a value")
         fun case1() {
-            assertTrue(input.hasValue())
+            assertTrue(input.hasValue(ctx))
         }
 
         @Test
         @DisplayName("Then should have cached Int value 42")
         fun case2() {
-            assertEquals(42, input.value)
+            assertEquals(42, input.get(ctx))
         }
     }
 

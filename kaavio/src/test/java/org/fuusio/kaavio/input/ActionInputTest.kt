@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -18,6 +18,7 @@
 package org.fuusio.kaavio.input
 
 import io.mockk.verify
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -26,9 +27,10 @@ import org.junit.jupiter.api.Assertions.assertTrue
 internal class ActionInputTest : KaavioTest() {
 
     private var flag = false
+    private val ctx = Ctx()
 
     // Test subject
-    private val actionInput = ActionInput<Int>(mockNode()) { int -> flag = int > 10 }
+    private val actionInput = ActionInput<Int>(mockNode()) { _, int -> flag = int > 10 }
 
     @DisplayName("When receiving Int value 42")
     @Nested
@@ -36,7 +38,8 @@ internal class ActionInputTest : KaavioTest() {
 
         @BeforeEach
         fun beforeCase() {
-            actionInput.onReceive(42)
+            ctx.clear()
+            actionInput.onReceive(ctx,42)
         }
 
         @Test

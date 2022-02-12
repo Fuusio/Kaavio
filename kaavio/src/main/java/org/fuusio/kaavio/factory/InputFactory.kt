@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.factory
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
@@ -31,13 +32,13 @@ interface InputFactory {
     /**
      * Creates and returns an [ActionInput] for the given [node] with the given [action]-
      */
-    fun <I :Any> createActionInput(node: Node, action: (I) -> Unit): ActionInput<I>
+    fun <I :Any> createActionInput(node: Node, action: (Ctx, I) -> Unit): ActionInput<I>
 
     /**
      * Creates and returns an [ActionInput] with debug functions for the given [node] with the given
      * [action].
      */
-    fun <I :Any> createDebugActionInput(node: Node, action: (I) -> Unit): ActionInput<I>
+    fun <I :Any> createDebugActionInput(node: Node, action: (Ctx, I) -> Unit): ActionInput<I>
 
     /**
      * Creates and returns an [Input] with debug functions for the given [node].

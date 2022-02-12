@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -19,6 +19,7 @@ package org.fuusio.kaavio.node.coroutines
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import org.fuusio.kaavio.coroutines.DispatcherType
 
@@ -30,10 +31,10 @@ import org.fuusio.kaavio.coroutines.DispatcherType
 class Dispatcher<I: Any>(private val type: DispatcherType = DispatcherType.DEFAULT)
     : SingleInputSingleOutputNode<I, I>() {
 
-    override fun onFired() {
+    override fun onFired(ctx: Ctx) {
         context.coroutineScope.launch {
             withContext(context.dispatcher(type)) {
-                output.transmit(input.value!!)
+                output.transmit(ctx, input.get(ctx))
             }
         }
     }

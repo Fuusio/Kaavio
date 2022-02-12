@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,14 +17,23 @@
  */
 package org.fuusio.kaavio.node.logic
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.node.debug.BooleanProbe
-import org.fuusio.kaavio.node.stream.BooleanInjector
+import org.fuusio.kaavio.node.debug.BooleanInjector
 
 import org.junit.Assert.*
 import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
 
 internal class AndTest : KaavioTest() {
+
+    private val ctx = Ctx()
+
+    @BeforeEach
+    fun beforeEachCase() {
+        ctx.clear()
+    }
 
     @Test
     fun `Test all inputs true`() {
@@ -36,7 +45,7 @@ internal class AndTest : KaavioTest() {
         node.output connect probe
 
         // When
-        injectors.forEach { injector -> injector.inject(true) }
+        injectors.forEach { injector -> injector.inject(ctx,true) }
 
         // Then
         assertTrue(probe.hasValue())
@@ -53,7 +62,7 @@ internal class AndTest : KaavioTest() {
         node.output connect probe
 
         // When
-        injectors.forEach { injector -> injector.inject(false) }
+        injectors.forEach { injector -> injector.inject(ctx, false) }
 
         // Then
         assertTrue(probe.hasValue())
@@ -75,7 +84,7 @@ internal class AndTest : KaavioTest() {
                             2 -> false
                             else -> true
                         }
-            injector.inject(value)
+            injector.inject(ctx, value)
         }
 
         // Then

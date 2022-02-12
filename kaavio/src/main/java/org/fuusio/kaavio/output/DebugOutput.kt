@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.output
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.Rx
@@ -30,10 +31,10 @@ import org.fuusio.kaavio.node.debug.Probes
  */
 class DebugOutput<O: Any>(node: Node, var name: String? = null) : Output<O>(node) {
 
-    override fun transmit() {
+    override fun transmit(ctx: Ctx) {
         value?.let { receivers.forEach { receiver ->
             GraphDebugger.onValueTransmitted(this, it, receiver)
-            receiver.onReceive(it) }
+            receiver.onReceive(ctx, it) }
         }
     }
 

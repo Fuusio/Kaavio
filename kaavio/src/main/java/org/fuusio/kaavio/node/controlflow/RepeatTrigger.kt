@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,10 +17,11 @@
  */
 package org.fuusio.kaavio.node.controlflow
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 class RepeatTrigger(private val count: Int) : SingleInputSingleOutputNode<Unit, Unit>() {
 
-    override fun onFired() = repeat(count) {
-        transmit(Unit) }
+    override fun onFired(ctx: Ctx) = repeat(count) {
+        transmit(ctx, Unit) }
 }

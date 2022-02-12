@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.factory
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
@@ -29,7 +30,7 @@ import org.fuusio.kaavio.input.DelegateInput
  */
 class DefaultInputFactory: InputFactory {
 
-    override fun <I :Any> createDebugActionInput(node: Node, action: (I) -> Unit) =
+    override fun <I :Any> createDebugActionInput(node: Node, action: (Ctx, I) -> Unit) =
         DebugActionInput(node, action = action)
 
     override fun <I :Any> createDebugInput(node: Node) =
@@ -38,7 +39,7 @@ class DefaultInputFactory: InputFactory {
     override fun <I : Any> createDelegateInput(input: Input<I>, node: Node) =
         DelegateInput(input, node)
 
-    override fun <I :Any> createActionInput(node: Node, action: (I) -> Unit) =
+    override fun <I :Any> createActionInput(node: Node, action: (Ctx, I) -> Unit) =
         ActionInput(node, action)
 
     override fun <I :Any> createInput(node: Node) = Input<I>(node)

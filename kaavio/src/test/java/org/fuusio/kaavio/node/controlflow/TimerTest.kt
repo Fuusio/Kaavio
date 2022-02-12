@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -21,8 +21,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.node.stream.IntSink
+import org.fuusio.kaavio.node.debug.Injector
+import org.fuusio.kaavio.node.state.IntSink
 import org.junit.Assert
 import org.junit.Assert.fail
 import org.junit.Test
@@ -35,7 +35,7 @@ class TimerTest : KaavioTest() {
         var start = 0L
         val timer = Timer(1000)
         val trigger = Trigger()
-        val actionInput = ActionInput<Unit>(mock()) {
+        val actionInput = ActionInput<Unit>(mock()) { _, _ ->
             val duration = System.currentTimeMillis() - start
             if (duration < 1000) fail()
         }

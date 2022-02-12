@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -18,8 +18,8 @@
 package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.node.stream.Sink
+import org.fuusio.kaavio.node.debug.Injector
+import org.fuusio.kaavio.node.state.Sink
 
 import org.junit.Assert.*
 import org.junit.Test
@@ -29,7 +29,7 @@ internal class ValidatorFunTest : KaavioTest() {
     @Test
     fun `Test valid input`() {
         // Given
-        val validator = ValidatorFun<Int> { value -> value >= 42 }
+        val validator = ValidatorFun<Int, Boolean> { value -> value >= 42 }
         val injector = Injector<Int>()
         val sink = Sink<Boolean>()
 
@@ -47,7 +47,7 @@ internal class ValidatorFunTest : KaavioTest() {
     @Test
     fun `Test invalid input`() {
         // Given
-        val validator = ValidatorFun<Int> { value -> value >= 42 }
+        val validator = ValidatorFun<Int, Boolean> { value -> value >= 42 }
         val injector = Injector<Int>()
         val sink = Sink<Boolean>()
 

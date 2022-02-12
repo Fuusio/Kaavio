@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,14 +17,23 @@
  */
 package org.fuusio.kaavio.node.logic
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.Input
 
 import org.junit.Assert.*
 import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
 
 internal class OrTest : KaavioTest() {
+
+    private val ctx = Ctx()
+
+    @BeforeEach
+    fun beforeEachCase() {
+        ctx.clear()
+    }
 
     @Test
     fun `Test all inputs true`() {
@@ -36,11 +45,11 @@ internal class OrTest : KaavioTest() {
         node.output connect receiver
 
         // When
-        outputs.forEach { output -> output.transmit(true) }
+        outputs.forEach { output -> output.transmit(ctx,true) }
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(true, receiver.value)
+        assertTrue(receiver.hasValue(ctx))
+        assertEquals(true, receiver.get(ctx))
     }
 
     @Test
@@ -53,11 +62,11 @@ internal class OrTest : KaavioTest() {
         receiver connect node.output
 
         // When
-        outputs.forEach { output -> output.transmit(false) }
+        outputs.forEach { output -> output.transmit(ctx,false) }
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(false, receiver.value)
+        assertTrue(receiver.hasValue(ctx))
+        assertEquals(false, receiver.get(ctx))
     }
 
     @Test
@@ -75,11 +84,11 @@ internal class OrTest : KaavioTest() {
                             2 -> true
                             else -> false
                         }
-            output.transmit(value)
+            output.transmit(ctx, value)
         }
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(true, receiver.value)
+        assertTrue(receiver.hasValue(ctx))
+        assertEquals(true, receiver.get(ctx))
     }
 }

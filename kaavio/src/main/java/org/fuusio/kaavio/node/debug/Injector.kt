@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -15,8 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.stream
+package org.fuusio.kaavio.node.debug
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
@@ -32,11 +33,20 @@ open class Injector<O :Any> : SingleInputSingleOutputNode<Unit, O>() {
      * Sets the current value of this [Injector] to be the given [value] and injects it.
      */
     fun inject(value: O) {
-        this.value = value
-        onFired()
+        inject(Ctx(), value)
     }
 
-    override fun onFired() = transmit(value!!)
+    /**
+     * Sets the current value of this [Injector] to be the given [value] and injects it using
+     * the given [ctx].
+     */
+    fun inject(ctx: Ctx, value: O) {
+        this.value = value
+        onFired(ctx)
+    }
+
+
+    override fun onFired(ctx: Ctx) = transmit(ctx, value!!)
 }
 
 class AnyInjector : Injector<Any>()

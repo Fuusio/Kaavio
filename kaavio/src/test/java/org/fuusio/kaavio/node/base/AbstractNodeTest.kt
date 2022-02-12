@@ -1,11 +1,19 @@
 package org.fuusio.kaavio.node.base
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 
 @DisplayName("Given AbstractNode implementation")
 internal class AbstractNodeTest : KaavioTest() {
+
+    private val ctx = Ctx()
+
+    @BeforeEach
+    fun beforeEachCase() {
+        ctx.clear()
+    }
 
     class IntInputsNode : AbstractNode() {
         val input1 = inputOf<Int>()
@@ -14,7 +22,7 @@ internal class AbstractNodeTest : KaavioTest() {
 
         var isOnFiredInvoked = false
 
-        override fun onFired() {
+        override fun onFired(ctx: Ctx) {
             isOnFiredInvoked = true
         }
     }
@@ -28,7 +36,7 @@ internal class AbstractNodeTest : KaavioTest() {
 
         @BeforeEach
         fun beforeCase() {
-            node.input1.onReceive(1)
+            node.input1.onReceive(ctx,1)
         }
 
         @Test
@@ -47,8 +55,8 @@ internal class AbstractNodeTest : KaavioTest() {
 
         @BeforeEach
         fun beforeCase() {
-            node.input1.onReceive(1)
-            node.input2.onReceive(2)
+            node.input1.onReceive(ctx,1)
+            node.input2.onReceive(ctx,2)
         }
 
         @Test
@@ -67,9 +75,9 @@ internal class AbstractNodeTest : KaavioTest() {
 
         @BeforeEach
         fun beforeCase() {
-            node.input1.onReceive(1)
-            node.input2.onReceive(2)
-            node.input3.onReceive(2)
+            node.input1.onReceive(ctx,1)
+            node.input2.onReceive(ctx,2)
+            node.input3.onReceive(ctx,2)
         }
 
         @Test

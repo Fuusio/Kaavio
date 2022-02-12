@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -20,6 +20,7 @@ package org.fuusio.kaavio.node.controlflow
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import java.util.concurrent.TimeUnit
 
@@ -32,22 +33,22 @@ class Timer(
     private val periodic: Boolean = false,
 ) : SingleInputSingleOutputNode<Unit, Unit>() {
 
-    override fun onFired() {
-        start()
+    override fun onFired(ctx: Ctx) {
+        start(ctx)
     }
 
-    private fun timerExpired() {
-        output.transmit(Unit)
+    private fun timerExpired(ctx: Ctx) {
+        output.transmit(ctx, Unit)
 
         if (periodic) {
-            start()
+            start(ctx)
         }
     }
 
-    private fun start() {
+    private fun start(ctx: Ctx) {
         GlobalScope.launch {
             delay(timeUnit.toMillis(period))
-            timerExpired()
+            timerExpired(ctx)
         }
     }
 }

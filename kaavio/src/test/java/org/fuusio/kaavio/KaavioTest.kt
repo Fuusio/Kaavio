@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -34,7 +34,7 @@ abstract class KaavioTest {
     protected fun mockNode(): Node {
         val node = mockk<Node>()
         every { node.attachInput(any()) } returns Unit
-        every { node.onInputValueReceived(any()) } returns Unit
+        every { node.onInputValueReceived(any(), any()) } returns Unit
         return node
     }
 
@@ -43,8 +43,8 @@ abstract class KaavioTest {
         val value = slot<I>()
         every { input.connect(any<Tx<I>>()) } returns input
         every { input.getProperty("value") } answers { value.captured }
-        every { input.onReceive(capture(value)) } returns Unit
-        every { input.hasValue() } answers { value.isCaptured }
+        every { input.onReceive(any(), capture(value)) } returns Unit
+        every { input.hasValue(any()) } answers { value.isCaptured }
         return input
     }
 

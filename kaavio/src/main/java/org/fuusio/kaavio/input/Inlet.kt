@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,10 +17,7 @@
  */
 package org.fuusio.kaavio.input
 
-import org.fuusio.kaavio.Input
-import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.Rx
-import org.fuusio.kaavio.Tx
+import org.fuusio.kaavio.*
 
 /**
  * [Inlet] implements a mechanism that enables dynamically attaching any number of
@@ -31,8 +28,9 @@ class Inlet<I : Any>(private val node: Node) : Rx<I> {
 
     private val inputs: MutableList<Input<I>> = mutableListOf()
 
-    val values: List<I>
-        get() = List(inputs.size) { i -> inputs[i].value }
+    // val values: List<I> get() = List(inputs.size) { i -> inputs[i].value }
+
+    fun getValues(ctx: Ctx): List<I> = List(inputs.size) { i -> inputs[i].get(ctx) }
 
     override infix fun connect(transmitter: Tx<I>): Rx<I> {
         val input = Input<I>(node)
@@ -48,5 +46,5 @@ class Inlet<I : Any>(private val node: Node) : Rx<I> {
         transmitters.forEach { transmitter -> this connect transmitter }
     }
 
-    override fun onReceive(value: I) {}
+    override fun onReceive(ctx: Ctx, value: I) {}
 }

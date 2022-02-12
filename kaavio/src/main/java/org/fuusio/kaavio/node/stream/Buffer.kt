@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,26 +17,27 @@
  */
 package org.fuusio.kaavio.node.stream
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 class Buffer<I : Any>(private val capacity: Int = Int.MAX_VALUE)
     : SingleInputSingleOutputNode<I, List<I>>() {
 
-    val flush = actionInputOf<Unit> { flush() }
+    val flush = actionInputOf<Unit> { ctx, _ -> flush(ctx) }
 
     private val buffer = mutableListOf<I>()
 
-    override fun onFired() {
-        buffer.add(input.value)
+    override fun onFired(ctx: Ctx) {
+        buffer.add(input.get(ctx))
         if (buffer.size >= capacity) {
-            flush()
+            flush(ctx)
         }
     }
 
-    fun flush() {
+    fun flush(ctx: Ctx) {
         val items = mutableListOf<I>()
         items.addAll(buffer)
-        output.transmit(items)
+        output.transmit(ctx, items)
         clear()
     }
 

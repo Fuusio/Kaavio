@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.input
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Input
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.debugger.GraphDebugger
@@ -25,11 +26,11 @@ import org.fuusio.kaavio.debugger.GraphDebugger
  * [DebugActionInput] implements an [Input] type which can be used for debugging the received values
  * by notifying [GraphDebugger] when ever a value is received by this [DebugInput].
  */
-class DebugActionInput<I: Any>(node: Node, var name: String? = null, action: (I) -> Unit)
+class DebugActionInput<I: Any>(node: Node, var name: String? = null, action: (Ctx, I) -> Unit)
     : ActionInput<I>(node, action) {
 
-    override fun onReceive(value: I) {
+    override fun onReceive(ctx: Ctx, value: I) {
         GraphDebugger.onValueReceived(this, value)
-        super.onReceive(value)
+        super.onReceive(ctx, value)
     }
 }

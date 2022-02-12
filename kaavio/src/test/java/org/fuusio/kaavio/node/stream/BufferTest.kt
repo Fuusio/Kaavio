@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,12 +17,23 @@
  */
 package org.fuusio.kaavio.node.stream
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
+import org.fuusio.kaavio.node.debug.CharInjector
+import org.fuusio.kaavio.node.state.Sink
 
 import org.junit.Assert.*
 import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
 
 class BufferTest : KaavioTest() {
+
+    private val ctx = Ctx()
+
+    @BeforeEach
+    fun beforeEachCase() {
+        ctx.clear()
+    }
 
     @Test
     fun `Test buffering and flush`() {
@@ -43,7 +54,7 @@ class BufferTest : KaavioTest() {
         assertFalse(sink.hasValue())
 
         // When
-        buffer.flush()
+        buffer.flush(ctx)
 
         // Then
         assertTrue(buffer.isEmpty())
@@ -72,7 +83,7 @@ class BufferTest : KaavioTest() {
         assertEquals("0123456789", String(sink.value!!.toCharArray()))
 
         // When
-        buffer.flush()
+        buffer.flush(ctx)
 
         // Then
         assertTrue(buffer.isEmpty())

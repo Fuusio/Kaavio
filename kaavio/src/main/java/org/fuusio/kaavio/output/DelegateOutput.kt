@@ -7,8 +7,8 @@ import org.fuusio.kaavio.*
  */
 open class DelegateOutput<O : Any>(val output: Output<O>, node: Node) : Output<O>(node) {
 
-    override fun transmit(value: O) {
-        output.transmit(value)
+    override fun transmit(ctx: Ctx, value: O) {
+        output.transmit(ctx, value)
     }
 
     override fun connect(receiver: Rx<O>) {

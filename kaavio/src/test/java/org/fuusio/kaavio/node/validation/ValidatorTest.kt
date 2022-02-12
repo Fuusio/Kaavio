@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -18,15 +18,15 @@
 package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.stream.Injector
-import org.fuusio.kaavio.node.stream.Sink
+import org.fuusio.kaavio.node.debug.Injector
+import org.fuusio.kaavio.node.state.Sink
 
 import org.junit.Assert.*
 import org.junit.Test
 
 internal class ValidatorTest : KaavioTest() {
 
-    class FooValidator() : Validator<String>() {
+    class FooValidator : Validator<String, Boolean>() {
         override fun validate(value: String): Boolean = value == "foo"
     }
 

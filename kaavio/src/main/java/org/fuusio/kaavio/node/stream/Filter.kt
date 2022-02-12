@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.stream
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 
 /**
@@ -25,8 +26,8 @@ import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
  */
 class Filter<I : Any>(private val function: (I) -> Boolean) : SingleInputSingleOutputNode<I, I>() {
 
-    override fun onFired() {
-        val value = input.value
-        if (function.invoke(value)) transmit(value)
+    override fun onFired(ctx: Ctx) {
+        val value = input.get(ctx)
+        if (function.invoke(value)) transmit(ctx, value)
     }
 }

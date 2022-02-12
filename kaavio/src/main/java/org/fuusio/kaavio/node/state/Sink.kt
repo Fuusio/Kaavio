@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -15,8 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fuusio.kaavio.node.stream
+package org.fuusio.kaavio.node.state
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputNode
 import org.fuusio.kaavio.StatefulNode
 
@@ -32,8 +33,8 @@ open class Sink<I : Any> : SingleInputNode<I>(), StatefulNode<I> {
     override val value: I?
         get() = _value
 
-    override fun onFired() {
-        _value = input.value
+    override fun onFired(ctx: Ctx) {
+        _value = input.get(ctx)
     }
 
     override fun hasValue(): Boolean = _value != null

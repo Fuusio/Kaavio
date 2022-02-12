@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.function
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.Input
@@ -25,8 +26,16 @@ import kotlin.math.floor
 
 import org.junit.Assert.*
 import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
 
 class FunTest : KaavioTest() {
+
+    private val ctx = Ctx()
+
+    @BeforeEach
+    fun beforeEachCase() {
+        ctx.clear()
+    }
 
     @Test
     fun `Test String reverse function`() {
@@ -38,11 +47,11 @@ class FunTest : KaavioTest() {
         node.output connect receiver
 
         // When
-        output.transmit("foo")
+        output.transmit(ctx,"foo")
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals("oof", receiver.value)
+        assertTrue(receiver.hasValue(ctx))
+        assertEquals("oof", receiver.get(ctx))
     }
 
     @Test
@@ -55,10 +64,10 @@ class FunTest : KaavioTest() {
         node.output connect receiver
 
         // When
-        output.transmit(PI)
+        output.transmit(ctx, PI)
 
         // Then
-        assertTrue(receiver.hasValue())
-        assertEquals(3L, receiver.value)
+        assertTrue(receiver.hasValue(ctx))
+        assertEquals(3L, receiver.get(ctx))
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -27,10 +27,10 @@ class MockNode(name: String? = null) : AbstractNode() {
 
     var onInputValueReceivedInvoked = false
 
-    override fun onInputValueReceived(input: Input<*>) {
+    override fun onInputValueReceived(ctx: Ctx, input: Input<*>) {
         onInputValueReceivedInvoked = true
-        super.onInputValueReceived(input)
+        super.onInputValueReceived(ctx, input)
     }
 
-    override fun onFired() {}
+    override fun onFired(ctx: Ctx) {}
 }

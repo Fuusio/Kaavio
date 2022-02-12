@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -18,10 +18,7 @@
 package org.fuusio.kaavio.node.base
 
 import androidx.annotation.CallSuper
-import org.fuusio.kaavio.Input
-import org.fuusio.kaavio.Kaavio
-import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.Output
+import org.fuusio.kaavio.*
 import org.fuusio.kaavio.graph.GraphContext
 import org.fuusio.kaavio.input.DelegateInput
 import org.fuusio.kaavio.input.Inlet
@@ -56,14 +53,14 @@ abstract class AbstractNode : Node {
     }
 
     @CallSuper
-    override fun onInputValueReceived(input: Input<*>) {
-        inputs.forEach {if (!it.hasValue()) return }
-        onFired()
+    override fun onInputValueReceived(ctx: Ctx, input: Input<*>) {
+        inputs.forEach {if (!it.hasValue(ctx)) return }
+        onFired(ctx)
     }
 
     override fun onDispose() {}
 
-    protected fun <I : Any> actionInputOf(action: (I) -> Unit): Input<I> =
+    protected fun <I : Any> actionInputOf(action: (Ctx, I) -> Unit): Input<I> =
         Kaavio.actionInput(this, action)
 
     protected fun <I : Any> delegateInputOf(input: Input<I>): DelegateInput<I> =

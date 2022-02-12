@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -27,7 +27,7 @@ import org.fuusio.kaavio.coroutines.DispatcherType
  * [org.fuusio.kaavio.Node]s contained by the [Graph].
  */
 data class GraphContext(val graph: Graph) {
-
+    
     /**
      * Gets the Default [CoroutineDispatcher].
      */

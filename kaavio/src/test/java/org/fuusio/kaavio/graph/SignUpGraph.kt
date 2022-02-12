@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -26,7 +26,7 @@ import org.fuusio.kaavio.node.validation.ValidatorFun
 
 data class SignUpGraph(
     val userName: StringVar = StringVar(),
-    val userNameValid: ValidatorFun<String> = ValidatorFun { string -> string.length > 2 },
+    val userNameValid: ValidatorFun<String, Boolean> = ValidatorFun { string -> string.length > 2 },
     val email1: StringVar = StringVar(),
     val email2: StringVar = StringVar(),
     val emailValid: EmailValidator = EmailValidator(),
@@ -34,7 +34,7 @@ data class SignUpGraph(
     val password1: StringVar = StringVar(),
     val password2: StringVar = StringVar(),
     val passwordsEqual: Equals<String> = Equals(),
-    val passwordValid: ValidatorFun<String> = ValidatorFun { string -> string.length >= 8 },
+    val passwordValid: ValidatorFun<String, Boolean> = ValidatorFun { string -> string.length >= 8 },
     val allInputsValid: And = And(),
     val loginInfo: Fun3<String, String, String, LoginInfo> =
         Fun3 { email, password, userName -> LoginInfo(email = email, password = password, userName = userName) },

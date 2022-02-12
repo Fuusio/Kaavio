@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.state
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 
@@ -31,9 +32,9 @@ open class Var<I : Any>(initialValue: I? = null) :
     override val value: I?
         get() = _value
 
-    override fun onFired() {
-        _value = input.value
-        output.transmit(_value!!)
+    override fun onFired(ctx: Ctx) {
+        _value = input.get(ctx)
+        output.transmit(ctx, _value!!)
     }
 
     override fun hasValue(): Boolean = _value != null

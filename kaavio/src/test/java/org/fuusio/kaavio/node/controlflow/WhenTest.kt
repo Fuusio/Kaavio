@@ -2,7 +2,7 @@ package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.node.stream.Injector
+import org.fuusio.kaavio.node.debug.Injector
 import org.fuusio.kaavio.testbench.SingleInputNodeTestBench
 import org.fuusio.kaavio.testbench.toValueOption
 

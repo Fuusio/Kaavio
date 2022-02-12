@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.debug
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.node.base.SingleInputNode
 import org.fuusio.kaavio.Tx
@@ -52,8 +53,8 @@ open class Probe<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I
         }
         set(value) { super.name = value }
 
-    override fun onFired() {
-        _values.add(input.value)
+    override fun onFired(ctx: Ctx) {
+        _values.add(input.get(ctx))
     }
 
     /**
@@ -66,8 +67,8 @@ open class Probe<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I
      */
     fun hasValue(value: Any): Boolean = hasValue() && latestValue == value
 
-    override fun onReceive(value: I) {
-        input.onReceive(value)
+    override fun onReceive(ctx: Ctx, value: I) {
+        input.onReceive(ctx, value)
     }
 
     override fun connect(transmitter: Tx<I>): Rx<I> =
@@ -76,11 +77,11 @@ open class Probe<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I
     /**
      * Resets this [Probe], e.g., by clearing the latest value.
      */
-    fun reset() {
+    fun reset(ctx: Ctx) {
         _values.clear()
 
         if (input is DebugInput) {
-            input.reset()
+            input.reset(ctx)
         }
     }
 }

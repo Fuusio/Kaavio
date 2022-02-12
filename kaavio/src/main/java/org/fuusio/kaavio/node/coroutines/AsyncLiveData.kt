@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -20,6 +20,7 @@ package org.fuusio.kaavio.node.coroutines
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleInputSingleOutputNode
 import org.fuusio.kaavio.StatefulNode
 import org.fuusio.kaavio.coroutines.DispatcherType
@@ -59,13 +60,13 @@ class AsyncLiveData<I : Any, O : Any>(
 
     fun hasObservers(): Boolean = liveData.hasObservers()
 
-    override fun onFired() {
+    override fun onFired(ctx: Ctx) {
         context.coroutineScope.launch {
             withContext(context.dispatcher(dispatcherType)) {
-                val value = liveDataFunction(input.value)
+                val value = liveDataFunction(input.get(ctx))
                 withContext(context.mainDispatcher) {
                     liveData.value = value
-                    output.transmit(value)
+                    output.transmit(ctx, value)
                 }
             }
         }

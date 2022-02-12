@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -21,6 +21,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.fuusio.kaavio.input.ActionInput
 import org.fuusio.kaavio.KaavioTest
+import org.fuusio.kaavio.node.debug.Injector
+import org.fuusio.kaavio.node.state.IntSink
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -32,7 +34,7 @@ class DelayTest : KaavioTest() {
         var start = 0L
         val delay = Delay<Int>(1000)
         val injector = Injector<Int>()
-        val actionInput = ActionInput<Int>(mock()) {
+        val actionInput = ActionInput<Int>(mock()) { _, _ ->
             val duration = System.currentTimeMillis() - start
             if (duration < 1000) fail()
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,14 +17,16 @@
  */
 package org.fuusio.kaavio.node.base
 
+import org.fuusio.kaavio.Ctx
+
 /**
- * [SingleOutputNode] is an abstract base class for all [Node] implementations that have only single
- * [output] of type [O].
+ * [SingleOutputNode] is an abstract base class for all [org.fuusio.kaavio.Node] implementations
+ * that have only single [output] of type [O].
  */
 abstract class SingleOutputNode<O :Any> : AbstractNode() {
     val output = outputOf<O>()
 
-    protected open fun transmit(value: O) {
-        output.transmit(value)
+    protected open fun transmit(ctx: Ctx, value: O) {
+        output.transmit(ctx, value)
     }
 }

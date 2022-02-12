@@ -3,6 +3,7 @@ package org.fuusio.kaavio.extensions
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Rx
 
 /**
@@ -14,7 +15,7 @@ infix fun EditText.connect(receiver: Rx<String>) {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
         override fun afterTextChanged(editable: Editable?) {
-            if (editable != null) receiver.onReceive(editable.toString())
+            if (editable != null) receiver.onReceive(Ctx(), editable.toString())
         }
     })
 }

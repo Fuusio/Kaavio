@@ -1,11 +1,14 @@
 package org.fuusio.kaavio.graph
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.debug.Probes
 import org.junit.jupiter.api.*
 
 @DisplayName("Given a SignUpGraph")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SignUpGraphTest : GraphTest() {
+
+    private val ctx = Ctx()
 
     @DisplayName("When receiving: [foo] -> userName")
     @Nested
@@ -16,13 +19,14 @@ class SignUpGraphTest : GraphTest() {
 
         @BeforeEach
         fun beforeEachCase() {
+            ctx.clear()
             graph.apply {
                 probes connect userNameValid.output
                 probes connect allInputsValid.output
 
                 activate()
 
-                userName.input.onReceive("foo")
+                userName.input.onReceive(ctx,"foo")
             }
         }
 
@@ -45,6 +49,7 @@ class SignUpGraphTest : GraphTest() {
 
         @BeforeEach
         fun beforeEachCase() {
+            ctx.clear()
             graph.apply {
                 probes connect userNameValid.output
                 probes connect emailValid.output
@@ -55,11 +60,11 @@ class SignUpGraphTest : GraphTest() {
 
                 activate()
 
-                userName.input.onReceive("foo")
-                email1.input.onReceive("foo@bar.com")
-                email2.input.onReceive("bar@foo.com")
-                password1.input.onReceive("abcd1234")
-                password2.input.onReceive("abcd1234")
+                userName.input.onReceive(ctx,"foo")
+                email1.input.onReceive(ctx,"foo@bar.com")
+                email2.input.onReceive(ctx,"bar@foo.com")
+                password1.input.onReceive(ctx,"abcd1234")
+                password2.input.onReceive(ctx,"abcd1234")
             }
         }
 
@@ -86,6 +91,8 @@ class SignUpGraphTest : GraphTest() {
 
         @BeforeEach
         fun beforeEachCase() {
+            ctx.clear()
+
             graph.apply {
                 probes connect userNameValid.output
                 probes connect emailValid.output
@@ -96,11 +103,11 @@ class SignUpGraphTest : GraphTest() {
 
                 activate()
 
-                userName.input.onReceive("foo")
-                email1.input.onReceive("foo@bar.com")
-                email2.input.onReceive("foo@bar.com")
-                password1.input.onReceive("abcd1234")
-                password2.input.onReceive("abcd1234")
+                userName.input.onReceive(ctx,"foo")
+                email1.input.onReceive(ctx,"foo@bar.com")
+                email2.input.onReceive(ctx,"foo@bar.com")
+                password1.input.onReceive(ctx,"abcd1234")
+                password2.input.onReceive(ctx,"abcd1234")
             }
         }
 

@@ -1,6 +1,7 @@
 package org.fuusio.kaavio.extensions
 
 import android.widget.Button
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Rx
 
 /**
@@ -8,5 +9,5 @@ import org.fuusio.kaavio.Rx
  * a [Unit] is send to attached receiver.
  */
 infix fun Button.connect(receiver: Rx<Unit>) {
-    setOnClickListener { receiver.onReceive(Unit) }
+    setOnClickListener { receiver.onReceive(Ctx(), Unit) }
 }

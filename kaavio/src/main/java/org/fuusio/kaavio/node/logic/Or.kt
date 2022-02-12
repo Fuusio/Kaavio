@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.logic
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.node.base.SingleOutputNode
 
 /**
@@ -27,13 +28,13 @@ import org.fuusio.kaavio.node.base.SingleOutputNode
 class Or : SingleOutputNode<Boolean>() {
     val input = inletOf<Boolean>()
 
-    override fun onFired() {
-        input.values.forEach { value ->
+    override fun onFired(ctx: Ctx) {
+        input.getValues(ctx).forEach { value ->
             if (value) {
-                output.transmit(true)
+                output.transmit(ctx,true)
                 return
             }
         }
-        output.transmit(false)
+        output.transmit(ctx,false)
     }
 }

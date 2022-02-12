@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -49,14 +49,14 @@ interface Node {
     fun onInit(context: GraphContext)
 
     /**
-     * Invoked when a value has been received by the given [input].
+     * Invoked when a value has been received by the given [input] in the given [ctx].
      */
-    fun onInputValueReceived(input: Input<*>)
+    fun onInputValueReceived(ctx: Ctx, input: Input<*>)
 
     /**
-     * Invoked when all attached [Input]s have received a value.
+     * Invoked when all attached [Input]s have received a value in the given [ctx].
      */
-    fun onFired()
+    fun onFired(ctx: Ctx)
 
     /**
      * Invoked when the [Graph] that contains this [Node] is disposed.

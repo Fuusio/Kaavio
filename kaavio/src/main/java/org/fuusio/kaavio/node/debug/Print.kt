@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 - 2021 Marko Salmela
+ * Copyright (C) 2019 - 2022 Marko Salmela
  *
  * http://fuusio.org
  *
@@ -17,6 +17,7 @@
  */
 package org.fuusio.kaavio.node.debug
 
+import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.node.base.SingleInputNode
@@ -30,12 +31,12 @@ import org.fuusio.kaavio.Tx
  */
 class Print<I : Any> : SingleInputNode<I>(), Rx<I> {
 
-    override fun onFired() {
-        Kaavio.out.println(input.value.toString())
+    override fun onFired(ctx: Ctx) {
+        Kaavio.out.println(input.get(ctx).toString())
     }
 
-    override fun onReceive(value: I) {
-        input.onReceive(value)
+    override fun onReceive(ctx: Ctx, value: I) {
+        input.onReceive(ctx, value)
     }
 
     override fun connect(transmitter: Tx<I>): Rx<I> =
