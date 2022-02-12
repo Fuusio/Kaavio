@@ -1,7 +1,7 @@
 package org.fuusio.kaavio.graph
 
 import org.fuusio.kaavio.Ctx
-import org.fuusio.kaavio.node.debug.Probes
+import org.fuusio.kaavio.node.debug.Observers
 import org.junit.jupiter.api.*
 
 @DisplayName("Given a SignUpGraph")
@@ -15,14 +15,14 @@ class SignUpGraphTest : GraphTest() {
     inner class InputsCases1 {
 
         private val graph = SignUpGraph()
-        private val probes = Probes()
+        private val observers = Observers()
 
         @BeforeEach
         fun beforeEachCase() {
             ctx.clear()
             graph.apply {
-                probes connect userNameValid.output
-                probes connect allInputsValid.output
+                observers connect userNameValid.output
+                observers connect allInputsValid.output
 
                 activate()
 
@@ -34,8 +34,8 @@ class SignUpGraphTest : GraphTest() {
         @DisplayName("Then output of the following nodes should be true: userNameValidator; and no value: allInputsValid")
         fun case1() {
             graph.apply {
-                probes.assertOutput(userNameValid,true)
-                probes.assertNoOutput(allInputsValid)
+                observers.assertOutput(userNameValid,true)
+                observers.assertNoOutput(allInputsValid)
             }
         }
     }
@@ -45,18 +45,18 @@ class SignUpGraphTest : GraphTest() {
     inner class InputsCases2 {
 
         private val graph = SignUpGraph()
-        private val probes = Probes()
+        private val observers = Observers()
 
         @BeforeEach
         fun beforeEachCase() {
             ctx.clear()
             graph.apply {
-                probes connect userNameValid.output
-                probes connect emailValid.output
-                probes connect emailsEqual.output
-                probes connect passwordValid.output
-                probes connect passwordsEqual.output
-                probes connect allInputsValid.output
+                observers connect userNameValid.output
+                observers connect emailValid.output
+                observers connect emailsEqual.output
+                observers connect passwordValid.output
+                observers connect passwordsEqual.output
+                observers connect allInputsValid.output
 
                 activate()
 
@@ -72,12 +72,12 @@ class SignUpGraphTest : GraphTest() {
         @DisplayName("Then output of the following nodes should be true: userNameValid, emailValid, passwordsEqual, passwordValid; and false: emailsEqual, allInputsValid")
         fun case1() {
             graph.apply {
-                probes.assertOutput(userNameValid,true)
-                probes.assertOutput(emailValid,true)
-                probes.assertOutput(emailsEqual,false)
-                probes.assertOutput(passwordValid,true)
-                probes.assertOutput(passwordsEqual,true)
-                probes.assertOutput(allInputsValid,false)
+                observers.assertOutput(userNameValid,true)
+                observers.assertOutput(emailValid,true)
+                observers.assertOutput(emailsEqual,false)
+                observers.assertOutput(passwordValid,true)
+                observers.assertOutput(passwordsEqual,true)
+                observers.assertOutput(allInputsValid,false)
             }
         }
     }
@@ -87,19 +87,19 @@ class SignUpGraphTest : GraphTest() {
     inner class InputsCases3 {
 
         private val graph = SignUpGraph()
-        private val probes = Probes()
+        private val observers = Observers()
 
         @BeforeEach
         fun beforeEachCase() {
             ctx.clear()
 
             graph.apply {
-                probes connect userNameValid.output
-                probes connect emailValid.output
-                probes connect emailsEqual.output
-                probes connect passwordValid.output
-                probes connect passwordsEqual.output
-                probes connect allInputsValid.output
+                observers connect userNameValid.output
+                observers connect emailValid.output
+                observers connect emailsEqual.output
+                observers connect passwordValid.output
+                observers connect passwordsEqual.output
+                observers connect allInputsValid.output
 
                 activate()
 
@@ -115,12 +115,12 @@ class SignUpGraphTest : GraphTest() {
         @DisplayName("Then output of the following nodes should be true: userNameValid, emailsEqual, emailValid, passwordsEqual, passwordValid, allInputsValid")
         fun case1() {
             graph.apply {
-                probes.assertOutput(userNameValid,true)
-                probes.assertOutput(emailValid,true)
-                probes.assertOutput(emailsEqual,true)
-                probes.assertOutput(passwordValid,true)
-                probes.assertOutput(passwordsEqual,true)
-                probes.assertOutput(allInputsValid,true)
+                observers.assertOutput(userNameValid,true)
+                observers.assertOutput(emailValid,true)
+                observers.assertOutput(emailsEqual,true)
+                observers.assertOutput(passwordValid,true)
+                observers.assertOutput(passwordsEqual,true)
+                observers.assertOutput(allInputsValid,true)
             }
         }
     }

@@ -1,7 +1,7 @@
 package org.fuusio.kaavio.testbench
 
 import org.fuusio.kaavio.Node
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.Graph
 import org.junit.jupiter.api.Assertions
 
@@ -14,14 +14,14 @@ import org.junit.jupiter.api.Assertions
 
 abstract class SingleOutputNodeTestBench<O: Any> : NodeTestBench() {
 
-    protected fun assertTestCase(node: Node, probe: Probe<O>, inputValues: List<Any>, valueOption: ValueOption<O>) {
+    protected fun assertTestCase(node: Node, observer: Observer<O>, inputValues: List<Any>, valueOption: ValueOption<O>) {
         when (valueOption) {
             is Value, is Trigger -> {
                 Assertions.assertTrue(
-                    probe.hasValue(),
+                    observer.hasValue(),
                     "Node '${Graph.getNodeName(node)}' did not output a value."
                 )
-                val value = probe.latestValue
+                val value = observer.latestValue
                 Assertions.assertEquals(
                     valueOption.value,
                     value,
@@ -30,7 +30,7 @@ abstract class SingleOutputNodeTestBench<O: Any> : NodeTestBench() {
             }
             is None -> {
                 Assertions.assertFalse(
-                    probe.hasValue(),
+                    observer.hasValue(),
                     "Node '${Graph.getNodeName(node)}' should not have outputted a value."
                 )
             }

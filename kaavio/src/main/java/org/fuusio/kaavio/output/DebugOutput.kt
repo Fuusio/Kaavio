@@ -22,8 +22,8 @@ import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.debugger.GraphDebugger
-import org.fuusio.kaavio.node.debug.Probe
-import org.fuusio.kaavio.node.debug.Probes
+import org.fuusio.kaavio.node.debug.Observer
+import org.fuusio.kaavio.node.debug.Observers
 
 /**
  * [DebugOutput] implements an [Output] type which can be used for debugging the transmitted values
@@ -39,12 +39,12 @@ class DebugOutput<O: Any>(node: Node, var name: String? = null) : Output<O>(node
     }
 
     /**
-     * Connects this [DebugOutput] to a [Probe] provided by invoking function [Probes.connect]
-     * for the given [probes]. Returns a [Probe] that is added to set of receivers i.e. [Rx] objects
+     * Connects this [DebugOutput] to a [Observer] provided by invoking function [Observers.connect]
+     * for the given [observers]. Returns a [Observer] that is added to set of receivers i.e. [Rx] objects
      * of this [DebugOutput].
      */
-    infix fun connect(probes: Probes): Probe<O> {
-        val probe = probes.connect(this)
+    infix fun connect(observers: Observers): Observer<O> {
+        val probe = observers.connect(this)
         addReceiver(probe)
         return probe
     }

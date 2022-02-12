@@ -19,7 +19,7 @@ package org.fuusio.kaavio.node.logic
 
 import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.debug.BooleanProbe
+import org.fuusio.kaavio.node.debug.BooleanObserver
 import org.fuusio.kaavio.node.debug.BooleanInjector
 
 import org.junit.Assert.*
@@ -40,7 +40,7 @@ internal class XorTest : KaavioTest() {
         // Given
         val node = Xor()
         val injectors = Array(4) { BooleanInjector() }
-        val probe = BooleanProbe()
+        val probe = BooleanObserver()
         injectors.forEach { injector -> injector.output connect node.input }
         node.output connect probe
 
@@ -57,7 +57,7 @@ internal class XorTest : KaavioTest() {
         // Given
         val node = Xor()
         val injectors = Array(4) { BooleanInjector() }
-        val probe = BooleanProbe()
+        val probe = BooleanObserver()
         injectors.forEach { injector -> injector.output connect node.input }
         node.output connect probe
 
@@ -74,7 +74,7 @@ internal class XorTest : KaavioTest() {
         // Given
         val node = Xor()
         val injectors = Array(4) { BooleanInjector() }
-        val probe = BooleanProbe()
+        val probe = BooleanObserver()
         injectors.forEach { injector -> injector.output connect node.input }
         node.output connect probe
 
@@ -97,7 +97,7 @@ internal class XorTest : KaavioTest() {
         // Given
         val node = Xor()
         val injectors = Array(4) { BooleanInjector() }
-        val probe = BooleanProbe()
+        val probe = BooleanObserver()
         injectors.forEach { injector -> injector.output connect node.input }
         node.output connect probe
 

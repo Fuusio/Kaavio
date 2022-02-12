@@ -30,9 +30,9 @@ internal class TrueTriggerTest : SingleInputNodeTestBench<Boolean, Unit>() {
         false to None,
     )
 
-    override fun node(injector: Tx<Boolean>, probe: Rx<Unit>) =
+    override fun node(injector: Tx<Boolean>, observer: Rx<Unit>) =
         TrueTrigger().apply {
             injector connect input
-            output connect probe
+            output connect observer
         }
 }

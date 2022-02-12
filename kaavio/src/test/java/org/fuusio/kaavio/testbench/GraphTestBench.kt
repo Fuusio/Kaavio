@@ -2,7 +2,7 @@ package org.fuusio.kaavio.testbench
 
 import org.fuusio.kaavio.*
 import org.fuusio.kaavio.debugger.GraphDebugger
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.node.debug.Injector
 import org.fuusio.kaavio.output.DebugOutput
@@ -36,7 +36,7 @@ abstract class GraphTestBench<G: Graph>
      *  * The map key is a [List] of input values that are injected to node inputs returned by
      *  [injectionInputs], and
      *  * The map value is a [List] of expected output values transmitted by the node outputs
-     *  returned by [probedOutputs].
+     *  returned by [observedOutputs].
      */
     protected abstract fun testCases(): Map<List<Any>, List<Any?>>
 
@@ -49,7 +49,7 @@ abstract class GraphTestBench<G: Graph>
      * Returns a [List] of [org.fuusio.kaavio.Output]s for capturing the **actual** output values to
      * be asserted against defined **expected** values.
      */
-    protected abstract fun probedOutputs(): List<Output<*>>
+    protected abstract fun observedOutputs(): List<Output<*>>
 
     /**
      * Returns the [org.fuusio.kaavio.graph.Graph] implementation to be tested.
@@ -78,7 +78,7 @@ abstract class GraphTestBench<G: Graph>
             }
 
             val injectors = createInjectors()
-            val probes = createProbes()
+            val observers = createObservers()
 
             graph.activate()
             mockNodes(graph)
@@ -88,7 +88,7 @@ abstract class GraphTestBench<G: Graph>
             for (i in 0 until 64) print("-")
             println()
             injectInputs(inputs, injectors)
-            assertOutputs(outputs, probes)
+            assertOutputs(outputs, observers)
 
             graph.dispose()
         }
@@ -118,17 +118,17 @@ abstract class GraphTestBench<G: Graph>
         }
     }
 
-    private fun assertOutputs(expectedValues: List<Any?>, probes: List<Probe<Any>>) {
+    private fun assertOutputs(expectedValues: List<Any?>, observers: List<Observer<Any>>) {
         val size = expectedValues.size
-        assertEquals(size, probes.size)
+        assertEquals(size, observers.size)
         for (i in 0 until size) {
-            val output = probedOutputs()[i]
+            val output = observedOutputs()[i]
             output as DebugOutput
-            if (probes[i].hasValue()) {
+            if (observers[i].hasValue()) {
                 assertEquals(
                     expectedValues[i],
-                    probes[i].latestValue,
-                    "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${probes[i].latestValue}].")
+                    observers[i].latestValue,
+                    "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${observers[i].latestValue}].")
             } else {
                 assertTrue(
                     expectedValues[i] == null || expectedValues[i] == None,
@@ -151,17 +151,17 @@ abstract class GraphTestBench<G: Graph>
         return injectors
     }
 
-    protected open fun createProbes(): List<Probe<Any>> {
-        val probes = mutableListOf<Probe<Any>>()
-        val outputs = probedOutputs()
+    protected open fun createObservers(): List<Observer<Any>> {
+        val observers = mutableListOf<Observer<Any>>()
+        val outputs = observedOutputs()
         for (i in outputs.indices) {
-            val probe = Probe<Any>()
-            probe.name = "Probe${i + 1}"
-            probe.onInit(graph.context)
-            probes.add(probe)
+            val observer = Observer<Any>()
+            observer.name = "Observer${i + 1}"
+            observer.onInit(graph.context)
+            observers.add(observer)
             @Suppress("UNCHECKED_CAST")
-            (outputs[i] as Tx<Any>) connect probe
+            (outputs[i] as Tx<Any>) connect observer
         }
-        return probes
+        return observers
     }
 }

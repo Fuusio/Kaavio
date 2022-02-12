@@ -36,8 +36,8 @@ data class SignUpGraph(
     val passwordsEqual: Equals<String> = Equals(),
     val passwordValid: ValidatorFun<String, Boolean> = ValidatorFun { string -> string.length >= 8 },
     val allInputsValid: And = And(),
-    val loginInfo: Fun3<String, String, String, LoginInfo> =
-        Fun3 { email, password, userName -> LoginInfo(email = email, password = password, userName = userName) },
+    val signUpInfo: Fun3<String, String, String, SignUpInfo> =
+        Fun3 { email, password, userName -> SignUpInfo(email = email, password = password, userName = userName) },
 ) : AbstractGraph() {
 
     override fun onConnectNodes() {
@@ -59,8 +59,8 @@ data class SignUpGraph(
         allInputsValid.input connect passwordsEqual.output
         allInputsValid.input connect passwordValid.output
 
-        loginInfo.arg1 connect email1.output
-        loginInfo.arg2 connect password1.output
-        loginInfo.arg3 connect userName.output
+        signUpInfo.arg1 connect email1.output
+        signUpInfo.arg2 connect password1.output
+        signUpInfo.arg3 connect userName.output
     }
 }

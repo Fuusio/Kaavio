@@ -30,9 +30,9 @@ internal class TrimTest : SingleInputNodeTestBench<String, String>() {
         "  Hello world! " to "Hello world!".toValueOption(),
     )
 
-    override fun node(injector: Tx<String>, probe: Rx<String>) =
+    override fun node(injector: Tx<String>, observer: Rx<String>) =
         Trim().apply {
             injector connect input
-            output connect probe
+            output connect observer
         }
 }

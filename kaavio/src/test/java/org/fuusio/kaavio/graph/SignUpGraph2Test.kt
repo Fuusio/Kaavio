@@ -13,7 +13,7 @@ internal class SignUpGraph2Test : GraphTestBench<SignUpGraph>() {
      *  * The map key is a [List] of input values that are injected to node inputs returned by
      *  [injectionInputs], and
      *  * The map value is a [List] of expected output values transmitted by the node outputs
-     *  returned by [probedOutputs].
+     *  returned by [observedOutputs].
      */
     override fun testCases() = cases(
         inputValues(None, "foo@bar.com", "foo@bar.com") to
@@ -43,7 +43,7 @@ internal class SignUpGraph2Test : GraphTestBench<SignUpGraph>() {
      * Returns a [List] of [org.fuusio.kaavio.Output]s for capturing the **actual** output values to
      * be asserted against defined **expected** values.
      */
-    override fun probedOutputs() = outputs(
+    override fun observedOutputs() = outputs(
         graph.userNameValid.output,
         graph.emailValid.output,
         graph.emailsEqual.output,
@@ -62,7 +62,7 @@ internal class SignUpGraph2Test : GraphTestBench<SignUpGraph>() {
     }
 
     /**
-     * Returns the [Graph] implementation to be tested.
+     * Returns the [org.fuusio.kaavio.Graph] implementation to be tested.
      */
     override fun graph() = SignUpGraph()
 }

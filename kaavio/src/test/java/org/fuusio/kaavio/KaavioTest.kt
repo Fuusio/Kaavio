@@ -20,7 +20,7 @@ package org.fuusio.kaavio
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.testbench.None
 import org.fuusio.kaavio.testbench.Trigger
 import org.fuusio.kaavio.util.Quadruple
@@ -56,18 +56,18 @@ abstract class KaavioTest {
     }
 
     /**
-     * Asserts that this [Probe] has received the specified [value].
+     * Asserts that this [Observer] has received the specified [value].
      */
-    fun Probe<*>.assertHasValue(value: Any) {
+    fun Observer<*>.assertHasValue(value: Any) {
         if (!hasValue(value)) {
             fail("Probe '$name' has not received value: '$value'")
         }
     }
 
     /**
-     * Asserts that this [Probe] has not transmitted any value to its connected [Probe].
+     * Asserts that this [Observer] has not transmitted any value to its connected [Observer].
      */
-    fun Probe<*>.assertHasNoValue() {
+    fun Observer<*>.assertHasNoValue() {
         if (hasValue()) {
             fail("Node '$name' has received value: '$latestValue'")
         }

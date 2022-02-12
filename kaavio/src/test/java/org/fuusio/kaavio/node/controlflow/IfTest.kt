@@ -30,9 +30,9 @@ internal class IfTest : SingleInputNodeTestBench<Int, Unit>() {
         10 to None,
     )
 
-    override fun node(injector: Tx<Int>, probe: Rx<Unit>) =
+    override fun node(injector: Tx<Int>, observer: Rx<Unit>) =
         If { int: Int -> int > 42 }.apply {
             injector connect input
-            output connect probe
+            output connect observer
         }
 }

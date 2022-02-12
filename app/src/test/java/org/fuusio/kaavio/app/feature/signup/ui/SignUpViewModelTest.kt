@@ -1,6 +1,6 @@
 package org.fuusio.kaavio.app.feature.signup.ui
 
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.testbench.GraphTestBench
 import org.fuusio.kaavio.testbench.None
 
@@ -14,7 +14,7 @@ internal class SignUpViewModelTest : GraphTestBench<SignUpViewModel>() {
      *  * The map key is a [List] of input values that are injected to node inputs returned by
      *  [injectionInputs], and
      *  * The map value is a [List] of expected output values transmitted by the node outputs
-     *  returned by [probedOutputs].
+     *  returned by [observedOutputs].
      */
     override fun testCases() = cases(
         inputs(None, "foo@bar.com", "foo@bar.com") to
@@ -30,9 +30,9 @@ internal class SignUpViewModelTest : GraphTestBench<SignUpViewModel>() {
     )
 
     /**
-     * A [Probe] node needed for mocking [SignUpViewModel.signUpState] node.
+     * A [Observer] node needed for mocking [SignUpViewModel.signUpState] node.
      */
-    private val signUpStateProbe = Probe<SignUpState>()
+    private val signUpStateProbe = Observer<SignUpState>()
 
     init {
         signUpStateProbe.name = "SignUpStateProbe"
@@ -53,7 +53,7 @@ internal class SignUpViewModelTest : GraphTestBench<SignUpViewModel>() {
      * Returns a [List] of [org.fuusio.kaavio.Output]s for capturing the **actual** output values to
      * be asserted against defined **expected** values.
      */
-    override fun probedOutputs() = outputs(
+    override fun observedOutputs() = outputs(
         graph.isUserNameValid.output,
         graph.isEmailValid.output,
         graph.areEmailsEqual.output,

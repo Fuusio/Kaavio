@@ -33,9 +33,9 @@ internal class EmailValidatorTest : SingleInputNodeTestBench<String, Boolean>() 
         "foo.the.bar@baz.com" to true.toValueOption(),
     )
 
-    override fun node(injector: Tx<String>, probe: Rx<Boolean>) =
+    override fun node(injector: Tx<String>, observer: Rx<Boolean>) =
         EmailValidator().apply {
             injector connect input
-            output connect probe
+            output connect observer
         }
 }

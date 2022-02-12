@@ -28,9 +28,9 @@ internal class NotTest : SingleInputNodeTestBench<Boolean, Boolean>() {
         false to true.toValueOption(),
     )
 
-    override fun node(injector: Tx<Boolean>, probe: Rx<Boolean>) =
+    override fun node(injector: Tx<Boolean>, observer: Rx<Boolean>) =
         Not().apply {
             injector connect input
-            output connect probe
+            output connect observer
         }
 }

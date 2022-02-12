@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.comparison
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.debug.BooleanProbe
+import org.fuusio.kaavio.node.debug.BooleanObserver
 import org.fuusio.kaavio.node.debug.IntInjector
 import org.fuusio.kaavio.node.debug.StringInjector
 import org.junit.jupiter.api.*
@@ -59,7 +59,7 @@ internal class EqualsTest : KaavioTest() {
     inner class Cases2 {
 
         private val injectors = Array(5) { StringInjector() }
-        private val probe = BooleanProbe()
+        private val probe = BooleanObserver()
 
         // Test subject
         private val node = Equals<String>()
@@ -83,7 +83,7 @@ internal class EqualsTest : KaavioTest() {
     inner class Cases3 {
 
         private val injectors = Array(5) { IntInjector() }
-        private val probe = BooleanProbe()
+        private val probe = BooleanObserver()
 
         // Test subject
         private val node = Equals<Int>()
@@ -107,7 +107,7 @@ internal class EqualsTest : KaavioTest() {
     inner class Cases4 {
 
         private val injectors = Array(5) { StringInjector() }
-        private val probe = BooleanProbe()
+        private val probe = BooleanObserver()
 
         // Test subject
         private val node = Equals<String>()

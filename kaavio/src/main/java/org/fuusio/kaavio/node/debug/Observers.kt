@@ -4,32 +4,32 @@ import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
 import org.fuusio.kaavio.output.DebugOutput
 
-class Probes {
+class Observers {
 
-    private val probes = mutableMapOf<Node, Probe<*>>()
+    private val probes = mutableMapOf<Node, Observer<*>>()
 
     /**
-     * Returns the [Probe] connected to a given [node].
+     * Returns the [Observer] connected to a given [node].
      */
-    operator fun get(node: Node): Probe<*> = probes[node]!!
+    operator fun get(node: Node): Observer<*> = probes[node]!!
 
     /**
-     * Returns the latest value received by the [Probe] connected to a given [node].
+     * Returns the latest value received by the [Observer] connected to a given [node].
      */
     fun getValue(node: Node) = probes[node]!!.latestValue
 
     /**
-     * Creates a [Probe] and connects it to given [output]. Returns the created [Probe].
+     * Creates a [Observer] and connects it to given [output]. Returns the created [Observer].
      */
-    infix fun <O :Any>connect(output: Output<O>): Probe<O> {
-        val probe = Probe(output as DebugOutput<O>)
+    infix fun <O :Any>connect(output: Output<O>): Observer<O> {
+        val probe = Observer(output as DebugOutput<O>)
         probes[output.node] = probe
         output.addReceiver(probe)
         return probe
     }
 
     /**
-     * Tests if the given [Node] has transmitted the specified [value] to its connected [Probe].
+     * Tests if the given [Node] has transmitted the specified [value] to its connected [Observer].
      */
     fun hasOutputValue(node: Node, value: Any): Boolean =
         when (val probe = probes[node]) {
@@ -38,7 +38,7 @@ class Probes {
         }
 
     /**
-     * Tests if the given [Node] has not transmitted the any value to its connected [Probe].
+     * Tests if the given [Node] has not transmitted the any value to its connected [Observer].
      */
     fun hasNoOutputValue(node: Node): Boolean =
         when (val probe = probes[node]) {

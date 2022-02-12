@@ -1,7 +1,7 @@
 package org.fuusio.kaavio.node.state
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.debug.IntProbe
+import org.fuusio.kaavio.node.debug.IntObserver
 import org.fuusio.kaavio.node.function.Fun2
 import org.fuusio.kaavio.node.debug.IntInjector
 import org.fuusio.kaavio.node.debug.StringInjector
@@ -35,7 +35,7 @@ class VarTest : KaavioTest() {
         // Given
         val intVar = IntVar(2)
         val injector = IntInjector()
-        val probe = IntProbe()
+        val probe = IntObserver()
         val funNode = Fun2<Int, Int, Int> { int1: Int, int2: Int -> int1 + int2}
 
         injector.output connect funNode.arg1

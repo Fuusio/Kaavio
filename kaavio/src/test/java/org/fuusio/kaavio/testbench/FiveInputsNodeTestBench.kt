@@ -1,7 +1,7 @@
 package org.fuusio.kaavio.testbench
 
 import org.fuusio.kaavio.*
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.node.debug.Injector
 import org.fuusio.kaavio.output.DebugOutput
@@ -23,11 +23,11 @@ internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
 
     /**
      * Creates the instance of [Node] for testing and connects it to given [injector1], [injector2],
-     * [injector3], [injector4], [injector5], and [probe]. The first two are used to inject
-     * the input values to the created node and the [probe] is used to receive the output produced
+     * [injector3], [injector4], [injector5], and [observer]. The first two are used to inject
+     * the input values to the created node and the [observer] is used to receive the output produced
      * by the node.
      */
-    protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, injector3: Tx<I3>, injector4: Tx<I4>, injector5: Tx<I5>,probe: Rx<O>): Node
+    protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, injector3: Tx<I3>, injector4: Tx<I4>, injector5: Tx<I5>, observer: Rx<O>): Node
 
     @Suppress("UNCHECKED_CAST")
     @Test
@@ -42,14 +42,14 @@ internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
         injector3.name = "Injector3"
         injector4.name = "Injector4"
         injector5.name = "Injector5"
-        val probe = Probe<O>()
+        val observer = Observer<O>()
         val node = node(
             injector1.output as DebugOutput<I1>,
             injector2.output as DebugOutput<I2>,
             injector3.output as DebugOutput<I3>,
             injector4.output as DebugOutput<I4>,
             injector5.output as DebugOutput<I5>,
-            probe.input as DebugInput<O>)
+            observer.input as DebugInput<O>)
         getInputAndOutputNames(node)
         testCases().forEach { (inputs, valueOption) ->
             injector1.inject(inputs[0] as I1)
@@ -57,7 +57,7 @@ internal abstract class FiveInputsNodeTestBench<I1: Any, I2: Any, I3: Any, I4: A
             injector3.inject(inputs[2] as I3)
             injector4.inject(inputs[3] as I4)
             injector5.inject(inputs[4] as I5)
-            assertTestCase(node, probe, listOf(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]), valueOption)
+            assertTestCase(node, observer, listOf(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4]), valueOption)
         }
     }
 }

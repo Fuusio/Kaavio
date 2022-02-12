@@ -22,8 +22,8 @@ import org.fuusio.kaavio.Kaavio
 import org.fuusio.kaavio.KaavioTest
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Output
-import org.fuusio.kaavio.node.debug.Probe
-import org.fuusio.kaavio.node.debug.Probes
+import org.fuusio.kaavio.node.debug.Observer
+import org.fuusio.kaavio.node.debug.Observers
 import org.fuusio.kaavio.output.DebugOutput
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -48,22 +48,22 @@ abstract class GraphTest : KaavioTest() {
         Kaavio.isDebugMode = false
     }
 
-    infix fun <O: Any> Output<O>.connect(probes: Probes): Probe<O> =
-        probes.connect(this as DebugOutput<O>)
+    infix fun <O: Any> Output<O>.connect(observers: Observers): Observer<O> =
+        observers.connect(this as DebugOutput<O>)
 
     /**
-     * Asserts that the given [Node] has transmitted the specified value to its connected [Probe].
+     * Asserts that the given [Node] has transmitted the specified value to its connected [Observer].
      */
-    fun Probes.assertOutput(node: Node, value: Any) {
+    fun Observers.assertOutput(node: Node, value: Any) {
         if (!hasOutputValue(node, value)) {
             fail("Node '${node.name}' has not outputted value: '$value'")
         }
     }
 
     /**
-     * Asserts that the given [Node] has not transmitted any value to its connected [Probe].
+     * Asserts that the given [Node] has not transmitted any value to its connected [Observer].
      */
-    fun Probes.assertNoOutput(node: Node) {
+    fun Observers.assertNoOutput(node: Node) {
         if (!hasNoOutputValue(node)) {
             fail("Node '${node.name}' has an outputted value: '${getValue(node)}'")
         }

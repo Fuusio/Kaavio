@@ -15,7 +15,7 @@ internal class WhenTest : SingleInputNodeTestBench<String, Int>() {
         "X" to 4.toValueOption(),
         )
 
-    override fun node(injector: Tx<String>, probe: Rx<Int>) =
+    override fun node(injector: Tx<String>, observer: Rx<Int>) =
         When(listOf("A", "B", "C")).apply {
             val injector1 = Injector<Int>()
             val injector2 = Injector<Int>()
@@ -30,9 +30,9 @@ internal class WhenTest : SingleInputNodeTestBench<String, Int>() {
             caseOutput("B") connect injector2.input
             caseOutput("C") connect injector3.input
             elseOutput connect injector4.input
-            injector1.output connect probe
-            injector2.output connect probe
-            injector3.output connect probe
-            injector4.output connect probe
+            injector1.output connect observer
+            injector2.output connect observer
+            injector3.output connect observer
+            injector4.output connect observer
         }
 }

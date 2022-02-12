@@ -18,7 +18,7 @@
 package org.fuusio.kaavio.node.controlflow
 
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.node.debug.BooleanInjector
 import org.junit.Assert
 import org.junit.Test
@@ -30,8 +30,8 @@ class BooleanSwitchTest : KaavioTest() {
         // Given
         val switch = BooleanSwitch()
         val injector = BooleanInjector()
-        val trueProbe = Probe<Unit>()
-        val falseProbe = Probe<Unit>()
+        val trueProbe = Observer<Unit>()
+        val falseProbe = Observer<Unit>()
 
         injector.output connect switch.input
         switch.onTrue connect trueProbe
@@ -50,8 +50,8 @@ class BooleanSwitchTest : KaavioTest() {
         // Given
         val switch = BooleanSwitch()
         val injector = BooleanInjector()
-        val trueProbe = Probe<Unit>()
-        val falseProbe = Probe<Unit>()
+        val trueProbe = Observer<Unit>()
+        val falseProbe = Observer<Unit>()
 
         injector.output connect switch.input
         switch.onTrue connect trueProbe

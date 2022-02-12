@@ -31,9 +31,9 @@ internal class RegexValidatorTest : SingleInputNodeTestBench<String, Boolean>() 
         "fxbcd" to false.toValueOption(),
     )
 
-    override fun node(injector: Tx<String>, probe: Rx<Boolean>) =
+    override fun node(injector: Tx<String>, observer: Rx<Boolean>) =
         RegexValidator("a[bc]+d?").apply {
             injector connect input
-            output connect probe
+            output connect observer
         }
 }

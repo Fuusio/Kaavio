@@ -3,7 +3,7 @@ package org.fuusio.kaavio.testbench
 import org.fuusio.kaavio.Node
 import org.fuusio.kaavio.Rx
 import org.fuusio.kaavio.Tx
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.node.debug.Injector
 import org.fuusio.kaavio.output.DebugOutput
@@ -26,10 +26,10 @@ internal abstract class ThreeInputsNodeTestBench<I1: Any, I2: Any, I3: Any, O: A
 
     /**
      * Creates the instance of [Node] for testing and connects it to given [injector1], [injector2],
-     * [injector3], and [probe]. The first two are used to inject the input values to the created node and
-     * the [probe] is used to receive the output produced by the node.
+     * [injector3], and [observer]. The first two are used to inject the input values to the created node and
+     * the [observer] is used to receive the output produced by the node.
      */
-    protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, injector3: Tx<I3>, probe: Rx<O>): Node
+    protected abstract fun node(injector1: Tx<I1>, injector2: Tx<I2>, injector3: Tx<I3>, observer: Rx<O>): Node
 
     @Suppress("UNCHECKED_CAST")
     @Test
@@ -40,18 +40,18 @@ internal abstract class ThreeInputsNodeTestBench<I1: Any, I2: Any, I3: Any, O: A
         injector1.name = "Injector1"
         injector2.name = "Injector2"
         injector3.name = "Injector3"
-        val probe = Probe<O>()
+        val observer = Observer<O>()
         val node = node(
             injector1.output as DebugOutput<I1>,
             injector2.output as DebugOutput<I2>,
             injector3.output as DebugOutput<I3>,
-            probe.input as DebugInput<O>)
+            observer.input as DebugInput<O>)
         getInputAndOutputNames(node)
         testCases().forEach { (inputs, valueOption) ->
             injector1.inject(inputs[0] as I1)
             injector2.inject(inputs[1] as I2)
             injector3.inject(inputs[2] as I3)
-            assertTestCase(node, probe, listOf(inputs[0], inputs[1], inputs[2]), valueOption)
+            assertTestCase(node, observer, listOf(inputs[0], inputs[1], inputs[2]), valueOption)
         }
     }
 }

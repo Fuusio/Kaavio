@@ -28,11 +28,11 @@ internal class Fun3Test : ThreeInputsNodeTestBench<String, String, String, Strin
         inputValues("Kotlin ", "is ", "fun!") to "Kotlin is fun!".toValueOption()
     )
 
-    override fun node(injector1: Tx<String>, injector2: Tx<String>, injector3: Tx<String>, probe: Rx<String>) =
+    override fun node(injector1: Tx<String>, injector2: Tx<String>, injector3: Tx<String>, observer: Rx<String>) =
         Fun3 { string1: String, string2: String, string3: String -> string1 + string2 + string3 }.apply {
             injector1 connect arg1
             injector2 connect arg2
             injector3 connect arg3
-            output connect probe
+            output connect observer
         }
 }

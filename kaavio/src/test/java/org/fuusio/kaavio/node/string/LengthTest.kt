@@ -30,9 +30,9 @@ internal class LengthTest : SingleInputNodeTestBench<String, Int>() {
         "Hello world!" to "Hello world!".length.toValueOption(),
     )
 
-    override fun node(injector: Tx<String>, probe: Rx<Int>) =
+    override fun node(injector: Tx<String>, observer: Rx<Int>) =
         Length().apply {
             injector connect input
-            output connect probe
+            output connect observer
         }
 }

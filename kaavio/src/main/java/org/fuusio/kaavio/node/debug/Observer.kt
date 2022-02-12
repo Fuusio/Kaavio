@@ -26,21 +26,21 @@ import org.fuusio.kaavio.input.DebugInput
 import org.fuusio.kaavio.output.DebugOutput
 
 /**
- * [Probe] is a testing and debugging utility [org.fuusio.kaavio.Node] that has only a single input
- * of specified type. [Probe] is capable of receiving values, but it does not transmit the received
- * value. A [Probe] stores all the values it receives.
+ * [Observer] is a testing and debugging utility [org.fuusio.kaavio.Node] that has only a single input
+ * of specified type. [Observer] is capable of receiving values, but it does not transmit the received
+ * value. A [Observer] stores all the values it receives.
  */
-open class Probe<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I>(), Rx<I> {
+open class Observer<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I>(), Rx<I> {
     private val _values = mutableListOf<I>()
 
     /**
-     * All the values as a [List] received by this [Probe] since last invocation of [reset].
+     * All the values as a [List] received by this [Observer] since last invocation of [reset].
      */
     val values: List<I>
         get() = _values
 
     /**
-     * The latest value received by this [Probe] or [null if no values have received since last
+     * The latest value received by this [Observer] or [null if no values have received since last
      * invocation of [reset].
      */
     val latestValue: I?
@@ -58,12 +58,12 @@ open class Probe<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I
     }
 
     /**
-     * Test if this [Probe] has received a value.
+     * Test if this [Observer] has received a value.
      */
     fun hasValue(): Boolean = _values.isNotEmpty()
 
     /**
-     * Test if this [Probe] has received the given [value] as a latest value.
+     * Test if this [Observer] has received the given [value] as a latest value.
      */
     fun hasValue(value: Any): Boolean = hasValue() && latestValue == value
 
@@ -75,7 +75,7 @@ open class Probe<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I
         input.connect(transmitter)
 
     /**
-     * Resets this [Probe], e.g., by clearing the latest value.
+     * Resets this [Observer], e.g., by clearing the latest value.
      */
     fun reset(ctx: Ctx) {
         _values.clear()
@@ -86,22 +86,22 @@ open class Probe<I :Any>(var output: DebugOutput<I>? = null) : SingleInputNode<I
     }
 }
 
-class AnyProbe(output: DebugOutput<Any>? = null) : Probe<Any>(output)
+class AnyObserver(output: DebugOutput<Any>? = null) : Observer<Any>(output)
 
-class BooleanProbe(output: DebugOutput<Boolean>? = null) : Probe<Boolean>(output)
+class BooleanObserver(output: DebugOutput<Boolean>? = null) : Observer<Boolean>(output)
 
-class ByteProbe(output: DebugOutput<Byte>? = null) : Probe<Byte>(output)
+class ByteObserver(output: DebugOutput<Byte>? = null) : Observer<Byte>(output)
 
-class CharProbe(output: DebugOutput<Char>? = null) : Probe<Char>(output)
+class CharObserver(output: DebugOutput<Char>? = null) : Observer<Char>(output)
 
-class DoubleProbe(output: DebugOutput<Double>? = null) : Probe<Double>(output)
+class DoubleObserver(output: DebugOutput<Double>? = null) : Observer<Double>(output)
 
-class FloatProbe(output: DebugOutput<Float>? = null) : Probe<Float>(output)
+class FloatObserver(output: DebugOutput<Float>? = null) : Observer<Float>(output)
 
-class IntProbe(output: DebugOutput<Int>? = null) : Probe<Int>(output)
+class IntObserver(output: DebugOutput<Int>? = null) : Observer<Int>(output)
 
-class LongProbe(output: DebugOutput<Long>? = null) : Probe<Long>(output)
+class LongObserver(output: DebugOutput<Long>? = null) : Observer<Long>(output)
 
-class ShortProbe(output: DebugOutput<Short>? = null) : Probe<Short>(output)
+class ShortObserver(output: DebugOutput<Short>? = null) : Observer<Short>(output)
 
-class StringProbe(output: DebugOutput<String>? = null) : Probe<String>(output)
+class StringObserver(output: DebugOutput<String>? = null) : Observer<String>(output)

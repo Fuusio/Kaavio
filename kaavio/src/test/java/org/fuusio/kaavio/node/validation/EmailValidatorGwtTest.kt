@@ -19,7 +19,7 @@ package org.fuusio.kaavio.node.validation
 
 import org.fuusio.kaavio.Ctx
 import org.fuusio.kaavio.KaavioTest
-import org.fuusio.kaavio.node.debug.BooleanProbe
+import org.fuusio.kaavio.node.debug.BooleanObserver
 import org.junit.jupiter.api.*
 
 @DisplayName("Given EmailValidator")
@@ -28,7 +28,7 @@ internal class EmailValidatorGwtTest : KaavioTest() {
 
     // Test subject
     private val node = EmailValidator()
-    private val probe = BooleanProbe()
+    private val probe = BooleanObserver()
     private val ctx = Ctx()
 
     @BeforeEach

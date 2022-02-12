@@ -3,7 +3,7 @@ package org.fuusio.kaavio.testbench
 import io.mockk.mockk
 import org.fuusio.kaavio.*
 import org.fuusio.kaavio.debugger.GraphDebugger
-import org.fuusio.kaavio.node.debug.Probe
+import org.fuusio.kaavio.node.debug.Observer
 import org.fuusio.kaavio.Graph
 import org.fuusio.kaavio.graph.GraphContext
 import org.fuusio.kaavio.node.graph.NestedGraphNode
@@ -69,7 +69,7 @@ abstract class NestedGraphNodeTestBench<N : NestedGraphNode<*>> : NodeTestBench(
             }
 
             val injectors = createInjectors(context)
-            val probes = createProbes(context)
+            val sensors = createObservers(context)
 
             node.onInit(context)
             mockNodes()
@@ -79,7 +79,7 @@ abstract class NestedGraphNodeTestBench<N : NestedGraphNode<*>> : NodeTestBench(
             for (i in 0 until 64) print("-")
             println()
             injectInputs(inputs, injectors)
-            assertOutputs(outputs, probes)
+            assertOutputs(outputs, sensors)
 
             node.onDispose()
         }
@@ -109,17 +109,17 @@ abstract class NestedGraphNodeTestBench<N : NestedGraphNode<*>> : NodeTestBench(
         }
     }
 
-    private fun assertOutputs(expectedValues: List<Any?>, probes: List<Probe<Any>>) {
+    private fun assertOutputs(expectedValues: List<Any?>, observers: List<Observer<Any>>) {
         val size = expectedValues.size
-        Assertions.assertEquals(size, probes.size)
+        Assertions.assertEquals(size, observers.size)
         for (i in 0 until size) {
             val output = probedOutputs()[i]
             output as DelegateOutput
-            if (probes[i].hasValue()) {
+            if (observers[i].hasValue()) {
                 Assertions.assertEquals(
                     expectedValues[i],
-                    probes[i].latestValue,
-                    "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${probes[i].latestValue}]."
+                    observers[i].latestValue,
+                    "Output from ${Graph.getNodeName(output.node)} is not the expected value: [${expectedValues[i]}], but [${observers[i].latestValue}]."
                 )
             } else {
                 Assertions.assertTrue(
@@ -144,17 +144,17 @@ abstract class NestedGraphNodeTestBench<N : NestedGraphNode<*>> : NodeTestBench(
         return injectors
     }
 
-    protected open fun createProbes(context: GraphContext): List<Probe<Any>> {
-        val probes = mutableListOf<Probe<Any>>()
+    protected open fun createObservers(context: GraphContext): List<Observer<Any>> {
+        val sensors = mutableListOf<Observer<Any>>()
         val outputs = probedOutputs()
         for (i in outputs.indices) {
-            val probe = Probe<Any>()
-            probe.name = "Probe${i + 1}"
-            probe.onInit(context)
-            probes.add(probe)
+            val observer = Observer<Any>()
+            observer.name = "Probe${i + 1}"
+            observer.onInit(context)
+            sensors.add(observer)
             @Suppress("UNCHECKED_CAST")
-            (outputs[i] as Tx<Any>) connect probe
+            (outputs[i] as Tx<Any>) connect observer
         }
-        return probes
+        return sensors
     }
 }

@@ -28,12 +28,12 @@ internal class Fun4Test : FourInputsNodeTestBench<String, String, String, String
                 to "Kotlin is freaking fun!".toValueOption()
     )
 
-    override fun node(injector1: Tx<String>, injector2: Tx<String>, injector3: Tx<String>, injector4: Tx<String>, probe: Rx<String>) =
+    override fun node(injector1: Tx<String>, injector2: Tx<String>, injector3: Tx<String>, injector4: Tx<String>, observer: Rx<String>) =
         Fun4 { string1: String, string2: String, string3: String, string4: String -> string1 + string2 + string3 + string4 }.apply {
             injector1 connect arg1
             injector2 connect arg2
             injector3 connect arg3
             injector4 connect arg4
-            output connect probe
+            output connect observer
         }
 }

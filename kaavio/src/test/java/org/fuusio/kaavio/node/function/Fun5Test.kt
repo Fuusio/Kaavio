@@ -28,13 +28,13 @@ internal class Fun5Test : FiveInputsNodeTestBench<Int, Int, Int, Int, Int, Int>(
                 to 54321.toValueOption()
     )
 
-    override fun node(injector1: Tx<Int>, injector2: Tx<Int>, injector3: Tx<Int>, injector4: Tx<Int>, injector5: Tx<Int>, probe: Rx<Int>) =
+    override fun node(injector1: Tx<Int>, injector2: Tx<Int>, injector3: Tx<Int>, injector4: Tx<Int>, injector5: Tx<Int>, observer: Rx<Int>) =
         Fun5 { int1: Int, int2: Int, int3: Int, int4: Int, int5: Int -> int1 + int2 + int3 + int4 + int5 }.apply {
             injector1 connect arg1
             injector2 connect arg2
             injector3 connect arg3
             injector4 connect arg4
             injector5 connect arg5
-            output connect probe
+            output connect observer
         }
 }
